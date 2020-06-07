@@ -16,10 +16,10 @@ install_requires = [
     # For testing:
     'pytest',
 ]
-import setuptools
-
 with open('README.md', 'r') as f:
   long_description = f.read()
+
+import setuptools
 
 setuptools.setup(
     name=project_name,
