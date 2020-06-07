@@ -1,11 +1,11 @@
 Taichi GLSL
------------
+===========
 
 This package enables you to manipulate Taichi with GLSL-alike functions / APIs.
 
 
 How to use
-==========
+----------
 
 First, import Taichi and Taichi GLSL:
 ```py
@@ -14,7 +14,7 @@ import taichi_glsl as ts
 ```
 
 Or simply:
-```
+```py
 from taichi_glsl import *
 ```
 
