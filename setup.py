@@ -1,8 +1,13 @@
 project_name = 'taichi_glsl'
 version = '0.0.1'
-description = 'Manipulate Taichi with GLSL-alike functions / APIs'
+description = 'Manipulate Taichi with GLSL-alike helper functions'
+long_description = '''
+Taichi GLSL
+===========
+
+Taichi GLSL provides a set of helper functions, which enables you to manipulate the `Taichi Programming Language <https://github.com/taichi-dev/taichi>`_ in a GLSL-alike manner (work in progress).
+'''
 classifiers = [
-    'Programming Lauguage :: Python :: 3',
     'Intended Audience :: Developers',
     'Intended Audience :: Science/Research',
     'Topic :: Multimedia :: Graphics',
@@ -27,7 +32,7 @@ setuptools.setup(
     author='彭于斌',
     author_email='1931127624@qq.com',
     description=description,
-    long_description=long_description,
+    #long_description=long_description,
     classifiers=classifiers,
     python_requires=python_requires,
     install_requies=install_requires,

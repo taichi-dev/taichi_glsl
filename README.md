@@ -1,7 +1,7 @@
 Taichi GLSL
 ===========
 
-Taichi GLSL provides a set of helper functions, which enables you to manipulate the [Taichi Programming Language](https://github.com/taichi-dev/taichi) in a OpenGL-alike or GLSL-alike manner (work in progress).
+Taichi GLSL provides a set of helper functions, which enables you to manipulate the [Taichi Programming Language](https://github.com/taichi-dev/taichi) in a GLSL-alike manner (work in progress).
 
 
 Installation
