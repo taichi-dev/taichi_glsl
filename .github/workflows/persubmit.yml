@@ -24,9 +24,10 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install Taichi
+      - name: Install Requirements
         run: |
           pip install taichi==${{ matrix.taichi }}
+          pip install coverage
 
       - name: Functionallity Test
         run: |
@@ -34,6 +35,7 @@ jobs:
           coverage run -m pytest tests
 
       - name: Upload to Codecov
+        if: ${{ matrix.python == '3.8' && matrix.taichi == '0.6.8' }}
         run: |
           coverage report
           bash <(curl -s https://codecov.io/bash)
