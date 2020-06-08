@@ -1,6 +1,7 @@
 /dist/
 /build/
 /*.egg-info/
+/Makefile
+/.coverage
+/coverage.xml
 __pycache__
-.*_localrc
-Makefile
