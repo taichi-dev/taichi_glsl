@@ -61,7 +61,6 @@ def distance(a, b):
     return (a - b).norm()
 
 
-@ti.taichi_scope
 def shuffle(a, *indices):
     ret = []
     for i in indices:

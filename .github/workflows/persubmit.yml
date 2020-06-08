@@ -42,7 +42,14 @@ jobs:
         with:
           python-version: 3.8
 
+      - name: Install YAPF
+        run: |
+          pip install yapf
+
       - name: Run YAPF
         run: |
           yapf --style style.yapf -ir .
+
+      - name: Check Git Diff
+        run: |
           git diff --exit-code
