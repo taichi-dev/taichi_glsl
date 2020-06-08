@@ -16,13 +16,10 @@ classifiers = [
 ]
 python_requires = '>=3.6'
 install_requires = [
-    'numpy',
     'taichi>=0.6.7',
-    # For testing:
-    'pytest',
 ]
 with open('README.md', 'r') as f:
-  long_description = f.read()
+    long_description = f.read()
 
 import setuptools
 

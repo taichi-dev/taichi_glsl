@@ -1,0 +1,106 @@
+import pytest
+import taichi as ti
+import taichi_glsl as ts
+import numpy as np
+
+test_range = [
+    -1e3 + 0.1,
+    -1e-4 + 1,
+    -15.9,
+    -1.501,
+    -1.499,
+    -1.0,
+    -0.34,
+    0.5,
+    0.0,
+    0.33,
+    0.5,
+    1.0,
+    1.499,
+    1.501,
+    4.0,
+    9.99,
+    1e5,
+]
+test_range_2 = [
+    (-1.0, 0.0),
+    (-1.0, 0.5),
+    (0.0, 0.5),
+    (0.0, -1.0),
+    (0.5, 1.0),
+    (0.5, 1.5),
+    (1e5, 0.0),
+    (1e5, 0.5),
+    (0.5, -1e5),
+    (-3.5, 0.5),
+]
+
+
+@pytest.mark.parametrize('a', test_range)
+def test_step(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return ts.step(a)
+
+    r = calc(a)
+    if a > 0:
+        assert r == 1
+    elif a == 0:
+        assert r == 0
+    else:
+        assert r == -1
+
+
+@pytest.mark.parametrize('a', test_range)
+def test_round(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return ts.round(a)
+
+    r = calc(a)
+    # According to https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/round.xhtml:
+    # round returns a value equal to the nearest integer to x. The fraction 0.5 will round in a direction chosen by the implementation, presumably the direction that is fastest. This includes the possibility that round(x) returns the same value as roundEven(x) for all values of x.
+    # So our implementation could:     ts.round(0.5) = 1.0
+    # However,                         np.round(0.5) = 0.0
+    # So let's play a trick on it:
+    assert r == pytest.approx(np.round(a + 1e-7))
+
+
+@pytest.mark.parametrize('a', test_range)
+def test_floor(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return ts.fract(a)
+
+    r = calc(a)
+    assert r == pytest.approx(a - np.floor(a), rel=1e-3)
+
+
+@pytest.mark.parametrize('a', test_range)
+def test_fract(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return ts.fract(a)
+
+    r = calc(a)
+    assert r == pytest.approx(a - np.floor(a), rel=1e-3)
+
+
+@pytest.mark.parametrize('a', test_range)
+def test_atan(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return ts.atan(a)
+
+    r = calc(a)
+    assert r == pytest.approx(np.arctan(a))
+
+
+@pytest.mark.parametrize('a,b', test_range_2)
+def test_atan2(a, b):
+    @ti.kernel
+    def calc(a: ti.f32, b: ti.f32) -> ti.f32:
+        return ts.atan(a, b)
+
+    r = calc(a, b)
+    assert r == pytest.approx(np.arctan2(a, b))
