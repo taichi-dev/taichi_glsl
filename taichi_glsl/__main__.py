@@ -18,7 +18,7 @@ class Main:
         return os.system('coverage run -m pytest tests')
 
     def cmd_report(self, argv):
-        return os.system('coverage report')
+        return os.system('coverage report && coverage html')
 
     def cmd_format(self, argv):
         return os.system(f'{sys.executable} -m yapf --style style.yapf -ir .')

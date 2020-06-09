@@ -4,5 +4,6 @@
 /Makefile
 /.coverage
 /coverage.xml
+/htmlcov
 __pycache__
 tags
