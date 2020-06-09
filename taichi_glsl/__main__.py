@@ -14,6 +14,9 @@ class Main:
     def cmd_test(self, argv):
         return os.system('coverage run -m pytest tests -n 4')
 
+    def cmd_coverage(self, argv):
+        return os.system('coverage run -m pytest tests')
+
     def cmd_report(self, argv):
         return os.system('coverage report')
 
