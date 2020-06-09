@@ -3,7 +3,7 @@ Taichi GLSL
 
 Taichi GLSL provides a set of helper functions, which enables you to manipulate the [Taichi Programming Language](https://github.com/taichi-dev/taichi) in a GLSL-alike manner (work in progress).
 
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks) ![Codecov](https://img.shields.io/codecov/c/github/taichi-dev/taichi_glsl)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks)](https://github.com/taichi-dev/taichi_glsl/actions?query=workflow%3A%22Persubmit+Checks%22) [![Codecov](https://img.shields.io/codecov/c/github/taichi-dev/taichi_glsl)](https://codecov.io/gh/taichi-dev/taichi_glsl/)
 
 Installation
 ------------
