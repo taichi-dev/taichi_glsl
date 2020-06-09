@@ -9,9 +9,8 @@ def paint(t: ti.f32):
     for i, j in image:
         # TODO: for coor in view(image):
         coor = view(image, i, j)
-        image[i,
-              j] = smoothstep(distance(coor, vec(0.5, 0.5)), t, t - 0.06) * vec(
-                  coor.x, coor.y, 0.0)
+        image[i, j] = smoothstep(distance(coor, vec(0.5, 0.5)), t,
+                                 t - 0.06) * vec(coor.x, coor.y, 0.0)
 
 
 with ti.GUI('Step UV') as gui:

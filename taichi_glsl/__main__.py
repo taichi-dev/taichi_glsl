@@ -21,7 +21,7 @@ class Main:
         return os.system('coverage report')
 
     def cmd_format(self, argv):
-        return os.system(f'{sys.executable} yapf --style style.yapf -ir .')
+        return os.system(f'{sys.executable} -m yapf --style style.yapf -ir .')
 
     def cmd_dist(self, argv):
         return os.system(f'{sys.executable} setup.py bdist_wheel')
