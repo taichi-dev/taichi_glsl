@@ -16,7 +16,7 @@ classifiers = [
 ]
 python_requires = '>=3.6'
 install_requires = [
-    'taichi>=0.6.7',
+    'taichi>=0.6.8',
 ]
 with open('README.md', 'r') as f:
     long_description = f.read()

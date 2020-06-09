@@ -18,7 +18,7 @@ dt_map = {
     int: ti.i32,
 }
 
-shapes = [(), (2,), (3, 4)]
+shapes = [(), (2, ), (3, 4)]
 
 
 @pytest.mark.parametrize('dt_name,dt', dt_map.items())
