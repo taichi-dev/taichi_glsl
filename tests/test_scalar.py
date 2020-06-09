@@ -1,7 +1,5 @@
+from taichi_glsl import *
 import pytest
-import taichi as ti
-import numpy as np
-import taichi_glsl as ts
 
 test_range = [
     -1e3 + 0.1,
@@ -40,7 +38,7 @@ test_range_2 = [
 def test_step(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return ts.step(a)
+        return step(a)
 
     r = calc(a)
     if a > 0:
@@ -55,7 +53,7 @@ def test_step(a):
 def test_round(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return ts.round(a)
+        return round(a)
 
     r = calc(a)
     # According to https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/round.xhtml:
@@ -70,7 +68,7 @@ def test_round(a):
 def test_floor(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return ts.fract(a)
+        return fract(a)
 
     r = calc(a)
     assert r == pytest.approx(a - np.floor(a), rel=1e-3)
@@ -80,7 +78,7 @@ def test_floor(a):
 def test_fract(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return ts.fract(a)
+        return fract(a)
 
     r = calc(a)
     assert r == pytest.approx(a - np.floor(a), rel=1e-3)
@@ -90,7 +88,7 @@ def test_fract(a):
 def test_atan(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return ts.atan(a)
+        return atan(a)
 
     r = calc(a)
     assert r == pytest.approx(np.arctan(a))
@@ -100,7 +98,7 @@ def test_atan(a):
 def test_atan2(a, b):
     @ti.kernel
     def calc(a: ti.f32, b: ti.f32) -> ti.f32:
-        return ts.atan(a, b)
+        return atan(a, b)
 
     r = calc(a, b)
     assert r == pytest.approx(np.arctan2(a, b))

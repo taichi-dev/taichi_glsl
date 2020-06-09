@@ -12,16 +12,16 @@ class Main:
         getattr(self, f'cmd_{args.command}')(argv[2:])
 
     def cmd_test(self, argv):
-        os.system('coverage run -m pytest tests')
+        return os.system('coverage run -m pytest tests -n 4')
 
     def cmd_report(self, argv):
-        os.system('coverage report')
+        return os.system('coverage report')
 
     def cmd_format(self, argv):
-        os.system('yapf --style style.yapf -ir .')
+        return os.system('yapf --style style.yapf -ir .')
 
     def cmd_dist(self, argv):
-        os.system(f'{sys.executable} setup.py bdist_wheel')
+        return os.system(f'{sys.executable} setup.py bdist_wheel')
 
 
 if __name__ == '__main__':

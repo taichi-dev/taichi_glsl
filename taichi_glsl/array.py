@@ -1,4 +1,5 @@
 import taichi as ti
+from typing import List, NewType
 
 
 def dtype(dt):
@@ -14,15 +15,7 @@ def dtype(dt):
         'uint32': ti.u32,
         'uint64': ti.u64,
         'float': ti.f32,
-        'double': ti.f64,
-        'char': ti.i8,
-        'short': ti.i16,
         'int': ti.i32,
-        'int64_t': ti.i64,
-        'uchar': ti.u8,
-        'ushort': ti.u16,
-        'uint': ti.u32,
-        'uint64_t': ti.u64,
         float: ti.f32,
         int: ti.i32,
     }
@@ -32,25 +25,28 @@ def dtype(dt):
         return dt
 
 
-def array(dt, *shape):
-    return ti.var(dtype(dt), shape)
+DataType = NewType('DataType', (str, type))
 
 
-def vec_array(n, dt, *shape):
-    return ti.Vector(n, dtype(dt), shape)
+def array(dt: DataType, *shape: List[int]):
+    return ti.var(dt=dtype(dt), shape=shape)
 
 
-def mat_array(n, m, dt, *shape):
-    return ti.Matrix(n, m, dtype(dt), shape)
+def vec_array(n: int, dt, *shape: List[int]):
+    return ti.Vector(n, dt=dtype(dt), shape=shape)
 
 
-def uniform(dt):
-    return ti.var(dtype(dt), ())
+def mat_array(n: int, m: int, dt: DataType, *shape: List[int]):
+    return ti.Matrix(n, m, dt=dtype(dt), shape=shape)
 
 
-def vec_uniform(n, dt):
-    return ti.Vector(n, dtype(dt), ())
+def uniform(dt: DataType):
+    return ti.var(dt=dtype(dt), shape=())
 
 
-def mat_uniform(n, m, dt):
-    return ti.Matrix(n, m, dtype(dt), ())
+def vec_uniform(n: int, dt: DataType):
+    return ti.Vector(n, dt=dtype(dt), shape=())
+
+
+def mat_uniform(n: int, m: int, dt: DataType):
+    return ti.Matrix(n, m, dt=dtype(dt), shape=())
