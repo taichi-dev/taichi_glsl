@@ -3,5 +3,6 @@ import numpy as np
 from .glsl import *
 from .array import *
 from .linalg import *
+from .transform import *
 
 ti.init()

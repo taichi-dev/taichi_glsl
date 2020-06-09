@@ -80,7 +80,7 @@ from taichi_glsl import *
 
 image = vec_array(3, float, 512, 512)
 
-@shader
+@ti.kernel
 def paint(img, coor):
     img[coor] = vec(coor.x, coor.y, 0.0)
 
