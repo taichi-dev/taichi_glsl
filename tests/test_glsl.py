@@ -1,7 +1,7 @@
 import pytest
 import taichi as ti
-import taichi_glsl as ts
 import numpy as np
+import taichi_glsl as ts
 
 test_range = [
     -1e3 + 0.1,
