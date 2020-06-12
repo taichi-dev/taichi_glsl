@@ -50,3 +50,15 @@ def vec_uniform(n: int, dt: DataType):
 
 def mat_uniform(n: int, m: int, dt: DataType):
     return ti.Matrix(n, m, dt=dtype(dt), shape=())
+
+
+def tensor(dt: DataType, shape: (List[int], None) = None):
+    return ti.var(dt=dtype(dt), shape=shape)
+
+
+def vec_tensor(n: int, dt: DataType, shape: (List[int], None) = None):
+    return ti.Vector(n, dt=dtype(dt), shape=shape)
+
+
+def mat_tensor(n: int, m: int, dt: DataType, shape: (List[int], None) = None):
+    return ti.Matrix(n, m, dt=dtype(dt), shape=shape)

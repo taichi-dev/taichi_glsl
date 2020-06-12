@@ -1,5 +1,5 @@
 import taichi as ti
-from taichi import sin, cos, tan, asin, acos, floor, ceil, sqrt
+from taichi import sin, cos, tan, asin, acos, floor, ceil, sqrt, exp, log
 
 
 @ti.func
