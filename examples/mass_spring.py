@@ -22,6 +22,7 @@ cir_radius = tensor(ti.f32)
 ti.root.dense(ti.ij, (N, N)).place(pos, vel)
 ti.root.place(cir_pos, cir_radius, attr_pos, attr_stren)
 
+
 @ti.func
 def reaction(I, J, k):
     ret = pos[I] * 0
@@ -29,6 +30,7 @@ def reaction(I, J, k):
         dis = pos[I] - pos[J]
         ret = K0 * dis.normalized() * (k * L0 - dis.norm())
     return ret
+
 
 @ti.kernel
 def substep():
@@ -97,6 +99,6 @@ while True:
         attr_stren[None] = 0
     for i in range(120):
         substep()
-    gui.circles(pos.to_numpy().reshape(N ** 2, 2), radius=1.8)
+    gui.circles(pos.to_numpy().reshape(N**2, 2), radius=1.8)
     gui.circle(cir_pos[None], radius=cir_radius[None] * 512)
     gui.show()

@@ -1,5 +1,5 @@
 project_name = 'taichi_glsl'
-version = '0.0.1'
+version = '0.0.2'
 description = 'Manipulate Taichi with GLSL-alike helper functions'
 long_description = '''
 Taichi GLSL

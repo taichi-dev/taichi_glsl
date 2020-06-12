@@ -44,6 +44,7 @@ def smoothstep(x, a=0, b=1):
 def isnan(x):
     return not (x >= 0 or x <= 0)
 
+
 @ti.func
 def isinf(x):
     return 2 * x == x and x != 0
