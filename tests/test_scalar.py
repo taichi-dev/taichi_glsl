@@ -102,3 +102,33 @@ def test_atan2(a, b):
 
     r = calc(a, b)
     assert r == pytest.approx(np.arctan2(a, b))
+
+
+@pytest.mark.parametrize('a,b,c', [
+    (0, 0, 1),
+    (1, 0, 0),
+    (0, 1, 0),
+    (1, 1, 0),
+    ])
+def test_isnan(a, b, c):
+    @ti.kernel
+    def calc(a: ti.f32, b: ti.f32) -> ti.i32:
+        return isnan(a / b)
+
+    r = calc(a, b)
+    assert r == c
+
+
+@pytest.mark.parametrize('a,b,c', [
+    (0, 0, 0),
+    (1, 0, 1),
+    (0, 1, 0),
+    (1, 1, 0),
+    ])
+def test_isinf(a, b, c):
+    @ti.kernel
+    def calc(a: ti.f32, b: ti.f32) -> ti.i32:
+        return isinf(a / b)
+
+    r = calc(a, b)
+    assert r == c

@@ -38,3 +38,12 @@ def round(x):
 def smoothstep(x, a=0, b=1):
     t = clamp((x - a) / (b - a))
     return t * t * (3 - 2 * t)
+
+
+@ti.func
+def isnan(x):
+    return not (x >= 0 or x <= 0)
+
+@ti.func
+def isinf(x):
+    return 2 * x == x and x != 0
