@@ -1,0 +1,2 @@
+sphinx-automodapi==0.12
+taichi==0.6.9
