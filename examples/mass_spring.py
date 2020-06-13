@@ -1,6 +1,6 @@
 from taichi_glsl import *
 
-ti.init(ti.cuda)
+ti.init(ti.gpu)
 ti.core.toggle_advanced_optimization(False)
 
 dt = 0.01

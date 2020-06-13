@@ -1,5 +1,5 @@
 project_name = 'taichi_glsl'
-version = '0.0.2'
+from taichi_glsl.version import version, taichi_version
 description = 'Manipulate Taichi with GLSL-alike helper functions'
 long_description = '''
 Taichi GLSL
@@ -16,7 +16,7 @@ classifiers = [
 ]
 python_requires = '>=3.6'
 install_requires = [
-    'taichi>=0.6.8',
+    'taichi>=' + taichi_version,
 ]
 
 import setuptools

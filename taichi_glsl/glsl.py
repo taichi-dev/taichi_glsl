@@ -4,6 +4,28 @@ from taichi import sin, cos, tan, asin, acos, floor, ceil, sqrt, exp, log
 
 @ti.func
 def clamp(x, xmin=0, xmax=1):
+    '''
+    constrain a value to lie between two further values
+
+    Parameters
+
+    x
+
+        Specify the value to constrain.
+
+    xmin
+
+        Specify the lower end of the range into which to constrain x.
+
+    xmax
+
+        Specify the upper end of the range into which to constrain x.
+
+    Description
+
+        clamp returns the value of x constrained to the range xmin to xmax.
+        The returned value is computed as min(xmax, max(xmin, x)).
+    '''
     return min(xmax, max(xmin, x))
 
 
