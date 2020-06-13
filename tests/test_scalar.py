@@ -35,10 +35,10 @@ test_range_2 = [
 
 
 @pytest.mark.parametrize('a', test_range)
-def test_step(a):
+def test_sign(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return step(a)
+        return sign(a)
 
     r = calc(a)
     if a > 0:
@@ -102,6 +102,34 @@ def test_atan2(a, b):
 
     r = calc(a, b)
     assert r == pytest.approx(np.arctan2(a, b))
+
+
+@pytest.mark.parametrize('a,b', test_range_2)
+def test_step(a, b):
+    @ti.kernel
+    def calc(a: ti.f32, b: ti.f32) -> ti.f32:
+        return step(a, b)
+
+    r = calc(a, b)
+    if a < b:
+        assert r == 1
+    else:
+        assert r == 0
+
+
+@pytest.mark.parametrize('a,b', test_range_2)
+def test_sign2(a, b):
+    @ti.kernel
+    def calc(a: ti.f32, b: ti.f32) -> ti.f32:
+        return sign(a, b)
+
+    r = calc(a, b)
+    if a > b:
+        assert r == 1
+    elif a == b:
+        assert r == 0
+    else:
+        assert r == -1
 
 
 @pytest.mark.parametrize('a,b,c', [

@@ -4,7 +4,8 @@ import sys, os
 
 class Main:
     def __init__(self):
-        self.parser = argparse.ArgumentParser(description='Taichi GLSL CLI')
+        self.parser = argparse.ArgumentParser(
+            description='Taichi GLSL CLI Tools')
         self.parser.add_argument('command')
 
     def __call__(self, argv):

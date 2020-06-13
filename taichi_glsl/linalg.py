@@ -1,3 +1,7 @@
+'''
+GLSL-alike linear algebra helper functions / aliases.
+'''
+
 import taichi as ti
 
 

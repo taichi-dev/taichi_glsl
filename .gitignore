@@ -6,5 +6,6 @@
 /coverage.xml
 /htmlcov
 /docs/_build
+/docs/api
 __pycache__
 tags

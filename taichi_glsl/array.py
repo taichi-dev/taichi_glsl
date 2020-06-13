@@ -1,3 +1,7 @@
+'''
+(Experimental) Function aliases on Taichi tensor definitions.
+'''
+
 import taichi as ti
 from typing import List, NewType
 

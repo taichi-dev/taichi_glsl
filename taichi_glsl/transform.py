@@ -1,3 +1,7 @@
+'''
+(Experimental) OpenGL-alike view transformations.
+'''
+
 import taichi as ti
 
 
