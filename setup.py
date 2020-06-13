@@ -18,8 +18,6 @@ python_requires = '>=3.6'
 install_requires = [
     'taichi>=0.6.8',
 ]
-with open('README.md', 'r') as f:
-    long_description = f.read()
 
 import setuptools
 
@@ -29,7 +27,7 @@ setuptools.setup(
     author='彭于斌',
     author_email='1931127624@qq.com',
     description=description,
-    #long_description=long_description,
+    long_description=long_description,
     classifiers=classifiers,
     python_requires=python_requires,
     install_requies=install_requires,

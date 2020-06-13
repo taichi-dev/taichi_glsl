@@ -6,7 +6,7 @@ Taichi GLSL provides a set of helper functions, which enables you to manipulate 
 [![Build Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks)](https://github.com/taichi-dev/taichi_glsl/actions?query=workflow%3A%22Persubmit+Checks%22)
 [![Coverage Status](https://img.shields.io/codecov/c/github/taichi-dev/taichi_glsl)](https://codecov.io/gh/taichi-dev/taichi_glsl/)
 [![Downloads](https://pepy.tech/badge/taichi-glsl/month)](https://pepy.tech/project/taichi-glsl/)
-[![Latest Release](https://img.shields.io/github/v/release/taichi-dev/taichi_glsl?color=orange)](https://github.com/taichi-dev/taichi_glsl/releases)
+[![Latest Release](https://img.shields.io/github/v/release/taichi-dev/taichi_glsl?color=red)](https://github.com/taichi-dev/taichi_glsl/releases)
 
 Installation
 ------------

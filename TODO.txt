@@ -1,3 +1,0 @@
-atomicAdd/Sub
-reflect/refract
-for coor in view(img):
