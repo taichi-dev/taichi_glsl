@@ -1,11 +1,8 @@
 /dist/
 /build/
 /*.egg-info/
-/Makefile
 /.coverage
-/coverage.xml
 /htmlcov
 /docs/_build
 /docs/api
 __pycache__
-tags
