@@ -121,7 +121,7 @@ def atan(y, x=1):
     :return:
         The return value is `arctan(x / y)`.
     '''
-    return ti.atan2(a, b)
+    return ti.atan2(y, x)
 
 
 @ti.func
@@ -197,7 +197,7 @@ def isnan(x):
     if x[i] is posititve or negative floating point NaN (Not a Number)
     and False otherwise.
 
-    :parameter:
+    :parameter x:
         Specifies the value to test for NaN.
 
     :return:
@@ -215,7 +215,7 @@ def isinf(x):
     if x[i] is posititve or negative floating point infinity and
     False otherwise.
 
-    :parameter:
+    :parameter x:
         Specifies the value to test for infinity.
 
     :return:

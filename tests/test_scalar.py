@@ -68,10 +68,10 @@ def test_round(a):
 def test_floor(a):
     @ti.kernel
     def calc(a: ti.f32) -> ti.f32:
-        return fract(a)
+        return floor(a)
 
     r = calc(a)
-    assert r == pytest.approx(a - np.floor(a), rel=1e-3)
+    assert r == pytest.approx(np.floor(a), rel=1e-3)
 
 
 @pytest.mark.parametrize('a', test_range)

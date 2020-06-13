@@ -6,7 +6,7 @@ class Main:
     def __init__(self):
         self.parser = argparse.ArgumentParser(
             description='Taichi GLSL CLI Tools')
-        self.parser.add_argument('command')
+        self.parser.add_argument('command', default='test', nargs='?')
 
     def __call__(self, argv):
         args = self.parser.parse_args(argv[1:2])
