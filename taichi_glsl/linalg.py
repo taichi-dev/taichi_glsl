@@ -3,6 +3,7 @@ GLSL-alike linear algebra helper functions / aliases.
 '''
 
 import taichi as ti
+from .common import ti_func
 
 
 def vec(*xs):
@@ -13,32 +14,32 @@ def mat(*xs):
     return ti.Matrix(xs)
 
 
-@ti.func
+@ti_func
 def normalize(x):
     return x.normalized()
 
 
-@ti.func
+@ti_func
 def dot(a, b):
     return a.dot(b)
 
 
-@ti.func
+@ti_func
 def cross(a, b):
     return a.cross(b)
 
 
-@ti.func
+@ti_func
 def outerProduct(a, b):
     return a.outer_product(b)
 
 
-@ti.func
+@ti_func
 def length(x):
     return x.norm()
 
 
-@ti.func
+@ti_func
 def distance(a, b):
     return (a - b).norm()
 

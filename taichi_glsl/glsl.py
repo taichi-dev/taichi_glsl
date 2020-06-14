@@ -4,9 +4,10 @@ GLSL-alike scalar arithmetic functions.
 
 import taichi as ti
 from taichi import sin, cos, tan, asin, acos, floor, ceil, sqrt, exp, log
+from .common import ti_func
 
 
-@ti.func
+@ti_func
 def clamp(x, xmin=0, xmax=1):
     '''
     Constrain a value to lie between two further values.
@@ -25,7 +26,7 @@ def clamp(x, xmin=0, xmax=1):
     return min(xmax, max(xmin, x))
 
 
-@ti.func
+@ti_func
 def mix(x, y, a):
     '''
     Linearly interpolate between two values.
@@ -46,7 +47,7 @@ def mix(x, y, a):
     return x * (1 - a) + y * a
 
 
-@ti.func
+@ti_func
 def sign(x, edge=0):
     '''
     Extract the sign of the parameter.
@@ -71,7 +72,7 @@ def sign(x, edge=0):
     return ret
 
 
-@ti.func
+@ti_func
 def step(edge, x):
     '''
     Generate a step function by comparing two values.
@@ -93,7 +94,7 @@ def step(edge, x):
     return ret
 
 
-@ti.func
+@ti_func
 def atan(y, x=1):
     '''
     Return the arc-tangent of the parameters
@@ -124,7 +125,7 @@ def atan(y, x=1):
     return ti.atan2(y, x)
 
 
-@ti.func
+@ti_func
 def fract(x):
     '''
     Compute the fractional part of the argument.
@@ -140,7 +141,7 @@ def fract(x):
     return x - floor(x)
 
 
-@ti.func
+@ti_func
 def round(x):
     '''
     Find the nearest integer less than or equal to the parameter.
@@ -158,7 +159,7 @@ def round(x):
     return floor(x + 0.5)
 
 
-@ti.func
+@ti_func
 def smoothstep(x, a=0, b=1):
     '''
     Perform Hermite interpolation between two values.
@@ -188,7 +189,7 @@ def smoothstep(x, a=0, b=1):
     return t * t * (3 - 2 * t)
 
 
-@ti.func
+@ti_func
 def isnan(x):
     '''
     Determine whether the parameter is a number.
@@ -206,7 +207,7 @@ def isnan(x):
     return not (x >= 0 or x <= 0)
 
 
-@ti.func
+@ti_func
 def isinf(x):
     '''
     Determine whether the parameter is positive or negative infinity.
