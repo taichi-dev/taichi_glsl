@@ -22,3 +22,10 @@ Linear alegbra
 .. automodapi:: taichi_glsl.linalg
 
     :no-heading:
+
+Random generator
+----------------
+
+.. automodapi:: taichi_glsl.rand
+
+    :no-heading:
