@@ -4,6 +4,7 @@ res = 512
 
 img = array(float, res, res)
 
+
 @ti.kernel
 def render():
     for i, j in img:
@@ -13,6 +14,7 @@ def render():
         #p = 0.5 + 0.3 * randUnit2D()
         p = 0.5 + 0.3 * randSolid2D()
         img[int(p * res + 0.5)] = 1
+
 
 gui = ti.GUI('Random')
 while not gui.get_event(ti.GUI.ESCAPE):
