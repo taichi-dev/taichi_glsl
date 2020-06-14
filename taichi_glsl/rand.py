@@ -130,8 +130,9 @@ def randSolid2D():
 
         ::
 
-            r = rand() * math.tau
-            return vec(ti.cos(r), ti.sin(r))
+            a = rand() * math.tau
+            r = ti.sqrt(rand())
+            return ti.Vector([ti.cos(a), ti.sin(a)]) * r
     '''
     a = rand() * math.tau
     r = ti.sqrt(rand())
