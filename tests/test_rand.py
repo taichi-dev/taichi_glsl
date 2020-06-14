@@ -1,15 +1,17 @@
 from taichi_glsl import *
 from pytest import approx
 
+
 def mean_approx_test(x, xmin, xmax, rel=1e-2):
     x = x.to_numpy()
     x = (x - xmin) / (xmax - xmin)
     for i in range(1, 4):
-        assert (x ** i).mean() == approx(1 / (i + 1), rel=rel)
+        assert (x**i).mean() == approx(1 / (i + 1), rel=rel)
+
 
 @ti.host_arch_only
 def test_rand():
-    n = 1024 ** 2
+    n = 1024**2
     x = array(float, n)
 
     @ti.kernel
@@ -20,9 +22,10 @@ def test_rand():
     fill()
     mean_approx_test(x, 0, 1)
 
+
 @ti.host_arch_only
 def test_rand_independent_product():
-    n = 1024 ** 2
+    n = 1024**2
     x = array(float, n)
 
     @ti.kernel
@@ -33,9 +36,10 @@ def test_rand_independent_product():
     fill()
     assert x.to_numpy().mean() == approx(1 / 4, rel=1e-2)
 
+
 @ti.host_arch_only
 def test_rand_range():
-    n = 1024 ** 2
+    n = 1024**2
     a, b = 0.6, 1.4
     x = array(ti.f32, n)
 
@@ -46,6 +50,7 @@ def test_rand_range():
 
     fill()
     mean_approx_test(x, a, b)
+
 
 @ti.host_arch_only
 def test_rand_2d():
@@ -67,9 +72,10 @@ def test_rand_2d():
     for c in range(4):
         assert counters[c] / n == approx(1 / 4, rel=0.2)
 
+
 @ti.host_arch_only
 def test_rand_int():
-    n = 1024 ** 2
+    n = 1024**2
     a, b = 768, 1131
     x = array(float, n)
 
