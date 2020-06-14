@@ -36,6 +36,7 @@ def array(dt: DataType, *shape: List[int]):
     return ti.var(dt=dtype(dt), shape=shape)
 
 
+# TODO: use array(Vec[n, dt], *shape) instead:
 def vec_array(n: int, dt, *shape: List[int]):
     return ti.Vector(n, dt=dtype(dt), shape=shape)
 
