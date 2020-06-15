@@ -1,13 +1,27 @@
 Taichi GLSL
 ===========
 
-Taichi GLSL provides a set of helper functions, which enables you to manipulate the [Taichi Programming Language](https://github.com/taichi-dev/taichi) in a GLSL-alike manner (work in progress).
+Taichi GLSL is an external library of the [Taichi Programming Language](https://github.com/taichi-dev/taichi), which provides a set of useful helper functions including but not limited to:
+
+1. Handy scalar functions like `clamp`, `smoothstep`, `mix`, `round`.
+2. GLSL-alike vector functions like `normalize`, `distance`, `reflect`.
+3. Well-behaved random generators including `randUnit2D`, `randNDRange`.
+4. Possible Taichi BUG hotfixes that are not yet released in it's cycle.
+
 
 [![Build Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks)](https://github.com/taichi-dev/taichi_glsl/actions?query=workflow%3A%22Persubmit+Checks%22)
 [![Documentation Status](https://readthedocs.org/projects/taichi-glsl/badge?version=latest)](https://taichi-glsl.readthedocs.io/en/latest)
 [![Coverage Status](https://img.shields.io/codecov/c/github/taichi-dev/taichi_glsl)](https://codecov.io/gh/taichi-dev/taichi_glsl)
 [![Downloads](https://pepy.tech/badge/taichi-glsl/month)](https://pepy.tech/project/taichi-glsl)
 [![Latest Release](https://img.shields.io/github/v/release/taichi-dev/taichi_glsl?color=red)](https://github.com/taichi-dev/taichi_glsl/releases)
+
+
+Documentation
+-------------
+
+Taichi GLSL documentation can be found [here](https://taichi-glsl.readthedocs.io).
+For Taichi documentation, click [here](https://taichi.readthedocs.io/en/stable) | [这里](https://taichi.readthedocs.io/zh_CN/stable)。
+
 
 Installation
 ------------
@@ -41,8 +55,6 @@ def kern():
   d = int(a)              # cast to ivec2, vector of integers
   print(b, c, d)          # [0.554700, -0.832050] [1.000000, 0.000000] [2, -3]
 ```
-
-For Taichi documentations, click [here](https://taichi.readthedocs.io/en/stable) | [这里](https://taichi.readthedocs.io/zh_CN/stable)。
 
 Hints
 -----

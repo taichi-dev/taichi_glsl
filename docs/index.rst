@@ -1,6 +1,14 @@
 Taichi GLSL API references
 ==========================
 
+Taichi GLSL is an external library of the `Taichi Programming Language <https://github.com/taichi-dev/taichi>`_, which provides a set of useful helper functions including but not limited to:
+
+1. Handy scalar functions like ``clamp``, ``smoothstep``, ``mix``, ``round``.
+2. GLSL-alike vector functions like ``normalize``, ``distance``, ``reflect``.
+3. Well-behaved random generators including ``randUnit2D``, ``randNDRange``.
+4. Possible Taichi BUG hotfixes that are not yet released in it's cycle.
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
