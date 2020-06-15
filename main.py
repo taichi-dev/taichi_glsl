@@ -29,6 +29,9 @@ class Main:
     def cmd_format(self, argv):
         return os.system(f'yapf -ir .')
 
+    def cmd_doc(self, argv):
+        return os.system(f'make -C docs ' + ' '.join(argv))
+
     def cmd_dist(self, argv):
         return os.system(f'{sys.executable} setup.py bdist_wheel')
 

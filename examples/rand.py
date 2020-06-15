@@ -10,6 +10,7 @@ def render():
     for i, j in img:
         img[i, j] *= 0.94
     for i in range(200):
+        # Try comment and uncomment these:
         #p = randND(2)
         #p = 0.5 + 0.3 * randUnit2D()
         p = 0.5 + 0.3 * randSolid2D()
