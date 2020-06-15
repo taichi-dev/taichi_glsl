@@ -22,7 +22,6 @@ def dot(a, b):
 
     :parameter x:
         Specifies the first of two vectors.
-
     :parameter y:
         Specifies the second of two vectors.
 
@@ -124,7 +123,6 @@ def cross(a, b):
 
     :parameter x:
         Specifies the first of two vectors, can be 2D or 3D.
-
     :parameter y:
         Specifies the second of two vectors, can be 2D or 3D.
 
@@ -181,6 +179,63 @@ def distance(a, b):
         :func:`length`, :func:`normalize`, :func:`dot`.
     '''
     return (a - b).norm()
+
+
+@ti.func
+def reflect(I, N):
+    '''
+    Calculate the reflection direction for an incident vector.
+
+    :parameter I:
+        Specifies the incident vector.
+    :parameter N:
+        Specifies the normal vector.
+
+    :return:
+        For a given incident vector I and surface normal N, `reflect`
+        returns the reflection direction calculated as
+        `I - 2 * dot(N, I) * N`.
+
+    :note:
+        N should be normalized in order to achieve the desired result.
+
+    :see also:
+        :func:`refract`, :func:`normalize`, :func:`dot`.
+    '''
+    return I - 2 * dot(N, I) * N
+
+
+@ti.func
+def refract(I, N, eta):
+    '''
+    Calculate the refraction direction for an incident vector.
+
+    For a given incident vector I, surface normal N and ratio of indices
+    of refraction, eta, refract returns the refraction vector, R.
+
+    :parameter I:
+        Specifies the incident vector.
+    :parameter N:
+        Specifies the normal vector.
+    :parameter eta:
+        Specifies the ratio of indices of refraction.
+
+    :return:
+        The return value is calculated as::
+
+            k = 1 - eta * eta * (1 - dot(N, I) * dot(N, I))
+            if (k < 0.0)
+                return I * 0
+            else
+                return eta * I - (eta * dot(N, I) + sqrt(k)) * N
+
+    :note:
+        The input parameters I and N should be normalized in order to
+        achieve the desired result.
+
+    :see also:
+        :func:`reflect`, :func:`normalize`, :func:`dot`.
+    '''
 
 
 def shuffle(a, *indices):

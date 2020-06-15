@@ -177,10 +177,7 @@ def smoothstep(x, a=0, b=1):
         Specifies the source value for interpolation.
 
     :return:
-        The return value is is computed as:
-
-        ::
-
+        The return value is is computed as::
             t = clamp((x - a) / (b - a), 0, 1)
             return t * t * (3 - 2 * t)
     '''

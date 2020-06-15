@@ -28,7 +28,7 @@ def reaction(I, J, k):
     ret = pos[I] * 0
     if all(J < N) and all(J >= 0):
         dis = pos[I] - pos[J]
-        ret = K0 * dis.normalized() * (k * L0 - dis.norm())
+        ret = K0 * normalize(dis) * (k * L0 - length(dis))
     return ret
 
 
@@ -44,7 +44,7 @@ def substep():
         acc += reaction(I, I + vec(1, -1), math.sqrt(2))
         acc += reaction(I, I - vec(1, -1), math.sqrt(2))
         acc[1] -= G0
-        acc += attr_stren[None] * (attr_pos[None] - pos[I]).normalized()
+        acc += attr_stren[None] * normalize(attr_pos[None] - pos[I])
         vel[I] *= exp(-dt * D0)
         vel[I] += acc * dt
 

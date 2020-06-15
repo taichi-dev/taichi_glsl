@@ -10,13 +10,14 @@ def rand():
     '''
     Generate a random floating number distributed evenly in range [0, 1].
 
-    :note:
+    :return:
+        The return value a pseudo-random floating number in range [0, 1].
+
+    .. note::
+
         Depending on Taichi backend design, the generated random number
         may have the **same seed** on start up. And Taichi doesn't provide
         any way to set a random seed yet, so does Taichi GLSL.
-
-    :return:
-        The return value a pseudo-random floating number in range [0, 1].
     '''
 
     return ti.random()
@@ -106,9 +107,7 @@ def randUnit2D():
     **on the border** of a unit circle.
 
     :return:
-        The return value is computed as:
-
-        ::
+        The return value is computed as::
 
             a = rand() * math.tau
             return vec(ti.cos(a), ti.sin(a))
@@ -126,9 +125,7 @@ def randSolid2D():
     **inside** a unit circle.
 
     :return:
-        The return value is computed as:
-
-        ::
+        The return value is computed as::
 
             a = rand() * math.tau
             r = ti.sqrt(rand())

@@ -7,6 +7,7 @@ Taichi GLSL is an external library of the [Taichi Programming Language](https://
 2. GLSL-alike vector functions like `normalize`, `distance`, `reflect`.
 3. Well-behaved random generators including `randUnit2D`, `randNDRange`.
 4. Possible Taichi BUG hotfixes that are not yet released in it's cycle.
+5. Handy vector and matrix initializer: `vec` and `mat`.
 
 
 [![Build Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks)](https://github.com/taichi-dev/taichi_glsl/actions?query=workflow%3A%22Persubmit+Checks%22)
