@@ -224,10 +224,10 @@ def refract(I, N, eta):
         The return value is calculated as::
 
             k = 1 - eta * eta * (1 - dot(N, I) * dot(N, I))
-            if (k < 0.0)
-                return I * 0
-            else
-                return eta * I - (eta * dot(N, I) + sqrt(k)) * N
+            R = I * 0
+            if k >= 0:
+                R = eta * I - (eta * dot(N, I) + sqrt(k)) * N
+            return R
 
     :note:
         The input parameters I and N should be normalized in order to
@@ -236,6 +236,11 @@ def refract(I, N, eta):
     :see also:
         :func:`reflect`, :func:`normalize`, :func:`dot`.
     '''
+    NoI = dot(N, I)
+    k = 1 - eta ** 2 * (1 - NoI ** 2)
+    R = I * 0
+    if k >= 0:
+        R = eta * I - (eta * NoI + sqrt(k)) * N
 
 
 def shuffle(a, *indices):

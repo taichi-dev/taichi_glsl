@@ -7,9 +7,11 @@ img = vec_array(3, float, 512, 512)
 mouse = vec_uniform(2, float)
 eps = 1e-5
 
+
 @ti.func
 def sdfSphere(p, c, r):
     return distance(p, c) - r
+
 
 @ti.func
 def mUnion(a, b):
@@ -17,25 +19,30 @@ def mUnion(a, b):
         a = b
     return a
 
+
 @ti.func
 def mIntersect(a, b):
     if a[0] < b[0]:
         a = b
     return a
 
+
 @ti.func
 def mScene(p):
     m = mouse[None]
-    return mUnion(        #       center         rad   emi  spec
-            vec(sdfSphere(p, vec(m.x, m.y, 0.0), 0.2), 1.0, 0.0),
-            vec(sdfSphere(p, vec(0.0, 0.0, 0.4), 0.5), 0.2, 1.0))
+    return mUnion(  #       center         rad   emi  spec
+        vec(sdfSphere(p, vec(m.x, m.y, 0.0), 0.2), 1.0, 0.0),
+        vec(sdfSphere(p, vec(0.0, 0.0, 0.4), 0.5), 0.2, 1.0))
+
 
 @ti.func
 def gradScene(p, sdf):
-    return normalize(vec(
-        mScene(p + vec(eps, 0, 0))[0],
-        mScene(p + vec(0, eps, 0))[0],
-        mScene(p + vec(0, 0, eps))[0]) - sdf)
+    return normalize(
+        vec(
+            mScene(p + vec(eps, 0, 0))[0],
+            mScene(p + vec(0, eps, 0))[0],
+            mScene(p + vec(0, 0, eps))[0]) - sdf)
+
 
 @ti.func
 def radiance(eye, dir):
@@ -57,6 +64,7 @@ def radiance(eye, dir):
         depth += sdf
         p += sdf * dir
     return clr
+
 
 @ti.kernel
 def render():
