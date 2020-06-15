@@ -3,7 +3,8 @@ from pytest import approx
 
 
 def mean_approx_test(x, xmin, xmax, rel=1e-2):
-    x = x.to_numpy()
+    if not isinstance(x, np.ndarray):
+        x = x.to_numpy()
     x = (x - xmin) / (xmax - xmin)
     for i in range(1, 4):
         assert (x**i).mean() == approx(1 / (i + 1), rel=rel)
@@ -86,3 +87,21 @@ def test_rand_int():
 
     fill()
     mean_approx_test(x, a, b, rel=1e-1)
+
+
+@ti.host_arch_only
+def test_rand_unit_2d():
+    n = 1024
+    x = vec_array(2, float, n)
+
+    @ti.kernel
+    def fill():
+        for i in x:
+            x[i] = randUnit2D()
+
+    fill()
+    x = x.to_numpy()
+    len = np.sum(x ** 2, axis=1)
+    ang = np.arctan2(x[:, 1], x[:, 0])
+    assert len == approx(np.ones(n))
+    mean_approx_test(ang, -math.pi, math.pi, rel=1e-1)
