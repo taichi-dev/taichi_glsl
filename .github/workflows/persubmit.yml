@@ -59,7 +59,7 @@ jobs:
 
       - name: Run YAPF
         run: |
-          yapf --style style.yapf -ir .
+          yapf -ir .
 
       - name: Check Git Diff
         run: |
