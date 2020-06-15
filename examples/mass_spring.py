@@ -13,12 +13,12 @@ G0 = 0.00005
 A0 = 0.0001
 B0 = 0.2
 
-pos = vec_tensor(2, ti.f32)
-vel = vec_tensor(2, ti.f32)
-cir_pos = vec_tensor(2, ti.f32)
-attr_pos = vec_tensor(2, ti.f32)
-attr_stren = tensor(ti.f32)
-cir_radius = tensor(ti.f32)
+pos = vec_tensor(2, float)
+vel = vec_tensor(2, float)
+cir_pos = vec_tensor(2, float)
+attr_pos = vec_tensor(2, float)
+attr_stren = tensor(float)
+cir_radius = tensor(float)
 ti.root.dense(ti.ij, (N, N)).place(pos, vel)
 ti.root.place(cir_pos, cir_radius, attr_pos, attr_stren)
 

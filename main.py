@@ -13,7 +13,12 @@ class Main:
         getattr(self, f'cmd_{args.command}')(argv[2:])
 
     def cmd_test(self, argv):
-        return os.system(f'{sys.executable} -m pytest tests -n 4')
+        pytest = 'pytest -nauto '
+        tests = 'tests'
+        if len(argv):
+            tests = ' '.join(f'tests/test_{a}.py' for a in argv)
+
+        return os.system(pytest + tests)
 
     def cmd_coverage(self, argv):
         return os.system('coverage run -m pytest tests')
@@ -22,7 +27,7 @@ class Main:
         return os.system('coverage report && coverage html')
 
     def cmd_format(self, argv):
-        return os.system(f'{sys.executable} -m yapf --style style.yapf -ir .')
+        return os.system(f'yapf -ir .')
 
     def cmd_dist(self, argv):
         return os.system(f'{sys.executable} setup.py bdist_wheel')

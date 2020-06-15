@@ -24,5 +24,5 @@ help:
 
 ### Custom commands
 
-view:
+view: html
 	firefox-developer-edition _build/html/index.html
