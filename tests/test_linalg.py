@@ -1,5 +1,6 @@
 from taichi_glsl import *
 
+
 @ti.host_arch_only
 def test_vec_fill():
     p = vec_uniform(2, int)
@@ -17,6 +18,7 @@ def test_vec_fill():
     assert np.allclose(q.to_numpy(), np.ones(3) * 5)
     assert np.allclose(r.to_numpy(), np.ones(4) * 5)
 
+
 @ti.host_arch_only
 def test_vec_compose():
     q = vec_uniform(3, int)
@@ -32,6 +34,7 @@ def test_vec_compose():
     func()
     assert np.allclose(q.to_numpy(), np.array([1, 2, 3]))
     assert np.allclose(r.to_numpy(), np.array([2, 3, 5, 6]))
+
 
 @ti.host_arch_only
 def test_vec_compose_nd():
@@ -49,6 +52,7 @@ def test_vec_compose_nd():
     assert np.allclose(q.to_numpy(), np.array([1, 2, 3]))
     assert np.allclose(r.to_numpy(), np.array([2, 3, 5, 6]))
 
+
 @ti.host_arch_only
 @ti.must_throw(ValueError)
 def test_vec_compose_mismatch_less():
@@ -60,6 +64,7 @@ def test_vec_compose_mismatch_less():
         q[None] = vec2(1, p1)
 
     func()
+
 
 @ti.host_arch_only
 @ti.must_throw(ValueError)

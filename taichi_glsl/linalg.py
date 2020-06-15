@@ -18,6 +18,7 @@ def vecSimple(*xs):
     '''
     return ti.Vector(xs)
 
+
 def vec(*xs):
     '''
     Create a vector by scalars or vectors in arguments (GLSL-alike).
@@ -42,6 +43,7 @@ def vec(*xs):
         else:
             ys.append(x)
     return vecSimple(*ys)
+
 
 def vecND(n, *xs):
     '''
@@ -84,9 +86,10 @@ def vecND(n, *xs):
 
     if len(ys) != n:
         raise ValueError(f'Cannot generate {n}-D vector from '
-                f'{len(ys)} scalars')
+                         f'{len(ys)} scalars')
 
     return vecSimple(*ys)
+
 
 def vecFill(n, x):
     '''
@@ -103,6 +106,7 @@ def vecFill(n, x):
     '''
     return ti.Vector([x for _ in range(n)])
 
+
 def vec2(*xs):
     '''
     An alias for `vecND(2, *xs)`.
@@ -112,6 +116,7 @@ def vec2(*xs):
     '''
     return vecND(2, *xs)
 
+
 def vec3(*xs):
     '''
     An alias for `vecND(3, *xs)`.
@@ -120,6 +125,7 @@ def vec3(*xs):
         :func:`vecND`, :func:`vec`, :func:`vec2`.
     '''
     return vecND(3, *xs)
+
 
 def vec4(*xs):
     '''
