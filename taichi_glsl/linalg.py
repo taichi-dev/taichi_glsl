@@ -237,7 +237,7 @@ def refract(I, N, eta):
         :func:`reflect`, :func:`normalize`, :func:`dot`.
     '''
     NoI = dot(N, I)
-    k = 1 - eta ** 2 * (1 - NoI ** 2)
+    k = 1 - eta**2 * (1 - NoI**2)
     R = I * 0
     if k >= 0:
         R = eta * I - (eta * NoI + sqrt(k)) * N
