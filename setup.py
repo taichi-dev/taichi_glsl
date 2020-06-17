@@ -1,5 +1,7 @@
 project_name = 'taichi_glsl'
 from taichi_glsl.version import version, taichi_version
+version = '.'.join(map(str, version))
+taichi_version = '.'.join(map(str, taichi_version))
 description = 'A Taichi extension library providing a set of GLSL-alike helper functions'
 long_description = '''
 Taichi GLSL
@@ -36,6 +38,6 @@ setuptools.setup(
     long_description=long_description,
     classifiers=classifiers,
     python_requires=python_requires,
-    install_requies=install_requires,
+    install_requires=install_requires,
     packages=setuptools.find_packages(),
 )
