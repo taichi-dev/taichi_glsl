@@ -5,11 +5,153 @@ GLSL-alike linear algebra helper functions / aliases.
 import taichi as ti
 
 
-def vec(*xs):
+def vecSimple(*xs):
+    '''
+    Create a n-D vector whose components are specified by arguments.
+
+    :parameter xs:
+        Specify the scalar values to initialize the vector components.
+
+    :return:
+        The return value is a n-D vector, where `n = len(xs)`.
+        And the i-th component is initialized to be `xs[i]`.
+    '''
     return ti.Vector(xs)
 
 
+def vec(*xs):
+    '''
+    Create a vector by scalars or vectors in arguments (GLSL-alike).
+
+    The return vector dimension depends on **the count of scalars in xs**.
+
+    :parameter xs:
+        Specify the scalar or vector values to initialize the
+        vector components. If xs[i] is vector, it will be **flatten**
+        into a series of scalars.
+
+    :return:
+        A n-D vector initialized as described above.
+
+    :see also:
+        :func:`vecND`, :func:`vecSimple`, :func:`vecFill`.
+    '''
+    ys = []
+    for x in xs:
+        if isinstance(x, ti.Matrix):
+            ys.extend(x.entries)
+        else:
+            ys.append(x)
+    return vecSimple(*ys)
+
+
+def vecND(n, *xs):
+    '''
+    Create a n-D vector by scalars or vectors in arguments (GLSL-alike).
+
+    The return vector dimension depends on **the specified argument n**.
+    If the dimension mismatch the count of scalars in xs, an error
+    will be raised.
+    However, if only one scalar is specified, then `vecND(n, x)` is
+    equivalent to `vecFill(n, x)`, see :func:`vecFill`.
+
+    :parameter n:
+        Specify the dimension of return vector.
+    :parameter xs:
+        Specify the scalar or vector values to initialize the
+        vector components. If xs[i] is vector, it will be **flatten**
+        into a series of scalars.
+
+    :return:
+        A n-D vector initialized as described above.
+
+    :note:
+        `vecND(n, x)` -> `vecFill(n, x)`
+        `vecND(n, x, y, ...)` -> `vec(x, y, ...)`
+
+    :see also:
+        :func:`vec`, :func:`vec2`, :func:`vec3`.
+    '''
+    # This's not inside of `@ti.func`, so it's safe to multi-return.
+    # The `if` statement here is branched at compile-time.
+    if len(xs) == 1:
+        return vecFill(n, xs[0])
+
+    ys = []
+    for x in xs:
+        if isinstance(x, ti.Matrix):
+            ys.extend(x.entries)
+        else:
+            ys.append(x)
+
+    if len(ys) != n:
+        raise ValueError(f'Cannot generate {n}-D vector from '
+                         f'{len(ys)} scalars')
+
+    return vecSimple(*ys)
+
+
+def vecFill(n, x):
+    '''
+    Create a n-D vector whose all components are initialized by x.
+
+    :parameter x:
+        Specify the scalar value to fill the vector.
+
+    :return:
+        The return value is calculated as `vec(x for _ in range(n))`.
+
+    :see also:
+        :func:`vecND`, :func:`vec`, :func:`vec3`.
+    '''
+    return ti.Vector([x for _ in range(n)])
+
+
+def vec2(*xs):
+    '''
+    An alias for `vecND(2, *xs)`.
+
+    :see also:
+        :func:`vecND`, :func:`vec`, :func:`vec3`.
+    '''
+    return vecND(2, *xs)
+
+
+def vec3(*xs):
+    '''
+    An alias for `vecND(3, *xs)`.
+
+    :see also:
+        :func:`vecND`, :func:`vec`, :func:`vec2`.
+    '''
+    return vecND(3, *xs)
+
+
+def vec4(*xs):
+    '''
+    An alias for `vecND(4, *xs)`.
+
+    :see also:
+        :func:`vecND`, :func:`vec`, :func:`vec3`.
+    '''
+    return vecND(4, *xs)
+
+
 def mat(*xs):
+    '''
+    Matrix initializer
+
+    :parameter xs:
+        A row-major list of list, which contains the elements of matrix.
+
+    :return:
+        A matrix, size depends on the input xs.
+
+    For example::
+        mat([1, 2], [3, 4])
+
+    (TODO: WIP)
+    '''
     return ti.Matrix(xs)
 
 
@@ -240,12 +382,12 @@ def refract(I, N, eta):
     k = 1 - eta**2 * (1 - NoI**2)
     R = I * 0
     if k >= 0:
-        R = eta * I - (eta * NoI + sqrt(k)) * N
+        R = eta * I - (eta * NoI + ti.sqrt(k)) * N
 
 
-def shuffle(a, *indices):
+def shuffle(a, *ks):
     ret = []
-    for i in indices:
-        t = a.subscript(i)
+    for k in ks:
+        t = a.subscript(k)
         ret.append(t)
     return ti.Vector(ret)

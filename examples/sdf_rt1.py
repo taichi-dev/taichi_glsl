@@ -47,13 +47,13 @@ def gradScene(p, sdf):
 @ti.func
 def radiance(eye, dir):
     p = eye
-    clr = vec(0.0, 0.0, 0.0)
+    clr = vec3(0.0)
     depth = 0.0
     for i in range(50):
         res = mScene(p)
         sdf, emi, spec = res[0], res[1], res[2]
         if sdf < eps:
-            clr += vec(1.0, 1.0, 1.0) * emi
+            clr += vec3(emi)
             if spec != 0:
                 if rand() < spec:
                     norm = gradScene(p, sdf)
@@ -71,10 +71,11 @@ def render():
     eye = vec(0.0, 0.0, -1.8)
     for i, j in img:
         coor = fov * (view(img, i, j) * 2.0 - 1.0)
-        dir = normalize(vec(coor.x, coor.y, 1.0))
+        dir = normalize(vec(coor, 1.0))
         img[i, j] = radiance(eye, dir)
 
 
+mouse[None] = [-0.5, 0.5]
 gui = ti.GUI('SDF-RT1')
 while gui.running:
     gui.running = not gui.get_event(gui.ESCAPE)

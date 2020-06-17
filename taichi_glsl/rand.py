@@ -119,8 +119,7 @@ def randUnit2D():
 @ti.func
 def randSolid2D():
     '''
-    Generate a 2-D random unit vector whose length is less than or
-    equal to 1.0.
+    Generate a 2-D random unit vector whose length is <= 1.0.
     The return value is a 2-D vector, whose tip distributed evenly
     **inside** a unit circle.
 
@@ -128,8 +127,8 @@ def randSolid2D():
         The return value is computed as::
 
             a = rand() * math.tau
-            r = ti.sqrt(rand())
-            return ti.Vector([ti.cos(a), ti.sin(a)]) * r
+            r = sqrt(rand())
+            return vec(cos(a), sin(a)) * r
     '''
     a = rand() * math.tau
     r = ti.sqrt(rand())
