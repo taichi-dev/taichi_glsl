@@ -1,11 +1,11 @@
 project_name = 'taichi_glsl'
 from taichi_glsl.version import version, taichi_version
-description = 'Manipulate Taichi with GLSL-alike helper functions'
+description = 'A Taichi extension library providing a set of GLSL-alike helper functions'
 long_description = '''
 Taichi GLSL
 ===========
 
-Taichi GLSL is an external library of the `Taichi Programming Language <https://github.com/taichi-dev/taichi>`_, which provides a set of useful helper functions including but not limited to:
+Taichi GLSL is an extension library of the `Taichi Programming Language <https://github.com/taichi-dev/taichi>`_, which provides a set of useful helper functions including but not limited to:
 
 1. Handy scalar functions like ``clamp``, ``smoothstep``, ``mix``, ``round``.
 2. GLSL-alike vector functions like ``normalize``, ``distance``, ``reflect``.

@@ -5,9 +5,6 @@ Some hacks / hooks on Taichi to make Taichi GLSL work
 import taichi as ti
 
 
-# A hotfix for taichi<=0.6.10 not preserving function info.
-# We needs this hijack function to make documentation strings work.
-# We can remove this after taichi-dev/taichi#1233 merged in v0.6.11.
 def _deco_fix(old_deco):
     def decorator(foo):
         from functools import wraps
@@ -22,4 +19,8 @@ def _deco_fix(old_deco):
     return decorator
 
 
-ti.func = _deco_fix(ti.func)
+# A hotfix for taichi<=0.6.10 not preserving function info.
+# We needs this hijack function to make documentation strings work.
+# We can remove this after taichi-dev/taichi#1233 merged in v0.6.11.
+if ti.__version__ < (0, 6, 11):
+    ti.func = _deco_fix(ti.func)
