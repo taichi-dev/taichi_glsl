@@ -24,7 +24,7 @@ author = '彭于斌'
 with open('../taichi_glsl/version.py') as f:
     env = dict()
     exec(f.read(), env)
-    release = env['version']
+    release = '.'.join(map(str, env['version']))
 
 # -- General configuration ---------------------------------------------------
 
