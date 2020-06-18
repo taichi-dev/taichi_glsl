@@ -66,7 +66,7 @@ def momentumExchange(v1, v2, disp, m1=1, m2=1, gamma=1):
     kero1 = vel1 * sm1
     kero2 = vel2 * sm2
 
-    smd1 =  sm2 * itsm
+    smd1 = sm2 * itsm
     smd2 = -sm1 * itsm
 
     kos = 2 * (kero1 * smd1 + kero2 * smd2)
