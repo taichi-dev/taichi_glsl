@@ -145,5 +145,5 @@ def randUnit3D():
     from .linalg import vec3
     u = randUnit2D()
     s = rand() * 2 - 1
-    c = ti.sqrt(1 - s ** 2)
+    c = ti.sqrt(1 - s**2)
     return vec3(c * u, s)
