@@ -38,3 +38,10 @@ Random generator
 .. automodapi:: taichi_glsl.rand
 
     :no-heading:
+
+Physics computation
+-------------------
+
+.. automodapi:: taichi_glsl.phys
+
+    :no-heading:
