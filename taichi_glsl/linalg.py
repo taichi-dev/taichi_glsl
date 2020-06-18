@@ -74,7 +74,7 @@ def vecND(n, *xs):
     '''
     # This's not inside of `@ti.func`, so it's safe to multi-return.
     # The `if` statement here is branched at compile-time.
-    if len(xs) == 1:
+    if len(xs) == 1 and not isinstance(xs[0], ti.Matrix):
         return vecFill(n, xs[0])
 
     ys = []

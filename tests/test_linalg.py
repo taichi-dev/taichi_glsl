@@ -23,6 +23,7 @@ def test_vec_fill():
 def test_vec_compose():
     q = vec_uniform(3, int)
     r = vec_uniform(4, int)
+    s = vec_uniform(3, int)
 
     @ti.kernel
     def func():
@@ -30,10 +31,12 @@ def test_vec_compose():
         p2 = vec(5, 6)
         q[None] = vec(1, p1)
         r[None] = vec(p1, p2)
+        s[None] = vec3(q[None])
 
     func()
     assert np.allclose(q.to_numpy(), np.array([1, 2, 3]))
     assert np.allclose(r.to_numpy(), np.array([2, 3, 5, 6]))
+    assert np.allclose(s.to_numpy(), np.array([1, 2, 3]))
 
 
 @ti.host_arch_only
