@@ -84,6 +84,17 @@ def test_fract(a):
     assert r == pytest.approx(a - np.floor(a), rel=1e-3)
 
 
+@pytest.mark.parametrize('a',
+        [4e-2, 0.3, 0.8, 1.0, 1.55, 2.0, 4.2, 141.0, 1e3])
+def test_inversesqrt(a):
+    @ti.kernel
+    def calc(a: ti.f32) -> ti.f32:
+        return inversesqrt(a)
+
+    r = calc(a)
+    assert r == pytest.approx(a ** -0.5, rel=1e-3)
+
+
 @pytest.mark.parametrize('a', test_range)
 def test_atan(a):
     @ti.kernel

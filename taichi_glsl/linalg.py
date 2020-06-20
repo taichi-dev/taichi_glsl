@@ -188,10 +188,10 @@ def normalize(v):
         Specifies the vector to normalize.
 
     :return:
-        The return value can be calculated as `v / length(v)`.
+        The return value can be calculated as `v * inverseLength(v)`.
 
     :see also:
-        :func:`dot`, :func:`length`.
+        :func:`dot`, :func:`length`, :func:`inverseLength`.
     '''
     return v.normalized()
 
@@ -290,6 +290,25 @@ def outerProduct(a, b):
     return a.outer_product(b)
 
 
+def squareLength(x):
+    '''
+    Calculate the square of the length of a vector.
+
+    `squareLength` returns the square of length of the vector, i.e.,
+    `x[0] ** 2 + x[1] * 2 + ...`.
+
+    :parameter x:
+        Specifies a vector of which to calculate the length.
+
+    :return:
+        The return value can be calculated as `dot(x, x)`.
+
+    :see also:
+        :func:`length`, :func:`dot`, :func:`inverseLength`.
+    '''
+    return x.norm_sqr()
+
+
 def length(x):
     '''
     Calculate the length of a vector.
@@ -300,10 +319,33 @@ def length(x):
     :parameter x:
         Specifies a vector of which to calculate the length.
 
+    :return:
+        The return value can be calculated as `sqrt(dot(x, x))`.
+
     :see also:
-        :func:`distance`, :func:`normalize`, :func:`dot`.
+        :func:`distance`, :func:`inverseLength`, :func:`dot`.
     '''
     return x.norm()
+
+
+def inverseLength(x):
+    '''
+    Calculate the inverse of length of a vector.
+
+    `inverseLength` returns the inverse of the magnitude of the vector, i.e.,
+    `1 / sqrt(x[0] ** 2 + x[1] * 2 + ...)`.
+
+    :parameter x:
+        Specifies a vector of which to calculate the length.
+
+    :return:
+        The return value can be calculated as `inversesqrt(dot(x, x))`.
+
+    :see also:
+        :func:`length`, :func:`normalize`, :func:`inversesqrt`.
+    '''
+    # Taichi developers should add a norm_rcp after introducing rsqrt:
+    return 1 / x.norm()
 
 
 @ti.func
@@ -316,6 +358,9 @@ def distance(a, b):
 
     :parameter b:
         Specifies the second of two points.
+
+    :return:
+        The return value is calculated as `length(a - b)`.
 
     :see also:
         :func:`length`, :func:`normalize`, :func:`dot`.

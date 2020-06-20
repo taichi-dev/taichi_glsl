@@ -186,6 +186,23 @@ def smoothstep(x, a=0, b=1):
 
 
 @ti.func
+def inversesqrt(x):
+    '''
+    Return the inverse of the square root of the parameter.
+
+    `inversesqrt` returns the inverse of the square root of x; i.e.
+    the value `1 / sqrt(x)`. The result is undefined if x <= 0.
+
+    :parameter x:
+        Specify the value of which to take the inverse of the square root.
+
+    :return:
+        The return value can be calculated as `1 / sqrt(x)` or `pow(x, -0.5)`.
+    '''
+    return 1 / ti.sqrt(x)
+
+
+@ti.func
 def isnan(x):
     '''
     Determine whether the parameter is a number.
