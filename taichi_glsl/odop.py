@@ -12,11 +12,11 @@ class TaichiClass:
         self.entries = entries
 
     @classmethod
-    def var(cls):
-        var_list = cls._var()
+    def var(cls, *args, **kwargs):
+        var_list = cls._var(*args, **kwargs)
         if not isinstance(var_list, (list, tuple)):
             var_list = [var_list]
-        cls(*var_list)
+        return cls(*var_list)
 
     @classmethod
     def _var(cls):
