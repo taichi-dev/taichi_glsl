@@ -37,7 +37,7 @@ class Main:
 
     def cmd_install(self, argv):
         return os.system(f'{sys.executable} setup.py bdist_wheel && '
-                'pip install --user --upgrade dist/*.whl')
+                         'pip install --user --upgrade dist/*.whl')
 
 
 if __name__ == '__main__':

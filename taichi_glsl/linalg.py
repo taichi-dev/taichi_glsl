@@ -441,10 +441,13 @@ def shuffle(a, *ks):
 
 
 for num in range(2, 4):
+
     def make_shuffler(indices):
         def wrapped(u):
             return shuffle(u, *indices)
+
         return wrapped
+
     from itertools import product
     for indices in product(list(range(4)), repeat=num):
         name = ''.join('xyzw'[i] for i in indices)
