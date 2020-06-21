@@ -1,4 +1,4 @@
-version = (0, 0, 4)
+version = (0, 0, 5)
 taichi_version = (0, 6, 8)
 
 print(f'[TaiGLSL] version {".".join(map(str, version))}')
