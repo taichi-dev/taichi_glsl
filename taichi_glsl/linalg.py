@@ -432,7 +432,6 @@ def refract(I, N, eta):
 
 def shuffle(a, *ks):
     ret = []
-    print(ks)
     for k in ks:
         t = a.subscript(k)
         ret.append(t)
