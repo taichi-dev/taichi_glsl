@@ -188,10 +188,10 @@ def normalize(v):
         Specifies the vector to normalize.
 
     :return:
-        The return value can be calculated as `v * inverseLength(v)`.
+        The return value can be calculated as `v * invLength(v)`.
 
     :see also:
-        :func:`dot`, :func:`length`, :func:`inverseLength`.
+        :func:`dot`, :func:`length`, :func:`invLength`.
     '''
     return v.normalized()
 
@@ -290,11 +290,11 @@ def outerProduct(a, b):
     return a.outer_product(b)
 
 
-def squareLength(x):
+def sqrLength(x):
     '''
     Calculate the square of the length of a vector.
 
-    `squareLength` returns the square of length of the vector, i.e.,
+    `sqrLength` returns the square of length of the vector, i.e.,
     `x[0] ** 2 + x[1] * 2 + ...`.
 
     :parameter x:
@@ -304,7 +304,7 @@ def squareLength(x):
         The return value can be calculated as `dot(x, x)`.
 
     :see also:
-        :func:`length`, :func:`dot`, :func:`inverseLength`.
+        :func:`length`, :func:`dot`, :func:`invLength`.
     '''
     return x.norm_sqr()
 
@@ -323,16 +323,16 @@ def length(x):
         The return value can be calculated as `sqrt(dot(x, x))`.
 
     :see also:
-        :func:`distance`, :func:`inverseLength`, :func:`dot`.
+        :func:`distance`, :func:`invLength`, :func:`dot`.
     '''
     return x.norm()
 
 
-def inverseLength(x):
+def invLength(x):
     '''
     Calculate the inverse of length of a vector.
 
-    `inverseLength` returns the inverse of the magnitude of the vector, i.e.,
+    `invLength` returns the inverse of the magnitude of the vector, i.e.,
     `1 / sqrt(x[0] ** 2 + x[1] * 2 + ...)`.
 
     :parameter x:
@@ -344,8 +344,10 @@ def inverseLength(x):
     :see also:
         :func:`length`, :func:`normalize`, :func:`inversesqrt`.
     '''
-    # Taichi developers should add a norm_rcp after introducing rsqrt:
-    return 1 / x.norm()
+    try:
+        return x.norm_inv()
+    except:
+        return 1 / x.norm()
 
 
 @ti.func
