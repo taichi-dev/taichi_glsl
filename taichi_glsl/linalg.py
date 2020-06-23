@@ -442,7 +442,7 @@ def shuffle(a, *ks):
 
 for num in range(2, 4):
 
-    def make_shuffler(indices):
+    def _make_shuffler(indices):
         def wrapped(u):
             return shuffle(u, *indices)
 
@@ -451,4 +451,4 @@ for num in range(2, 4):
     from itertools import product
     for indices in product(list(range(4)), repeat=num):
         name = ''.join('xyzw'[i] for i in indices)
-        setattr(ti.Matrix, name, property(make_shuffler(indices)))
+        setattr(ti.Matrix, name, property(_make_shuffler(indices)))

@@ -10,6 +10,7 @@ Taichi GLSL is an extension library of the [Taichi Programming Language](https:/
 5. Handy vector and matrix initializer: ``vec`` and ``mat``.
 6. Handy vector component shuffle accessor like ``v.xy``.
 
+[[Clike me for documentation]](https://taichi-glsl.readthedocs.io)
 
 [![Build Status](https://img.shields.io/github/workflow/status/taichi-dev/taichi_glsl/Persubmit%20Checks)](https://github.com/taichi-dev/taichi_glsl/actions?query=workflow%3A%22Persubmit+Checks%22)
 [![Documentation Status](https://readthedocs.org/projects/taichi-glsl/badge?version=latest)](https://taichi-glsl.readthedocs.io/en/latest)
@@ -18,10 +19,15 @@ Taichi GLSL is an extension library of the [Taichi Programming Language](https:/
 [![Latest Release](https://img.shields.io/github/v/release/taichi-dev/taichi_glsl)](https://github.com/taichi-dev/taichi_glsl/releases)
 
 
-Documentation
--------------
+Links
+-----
 
-[Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io) | [Taichi Documentation](https://taichi.readthedocs.io/en/stable) | [Taichi 中文文档](https://taichi.readthedocs.io/zh_CN/stable)
+[Taichi Main Repo](https://github.com/taichi-dev/taichi)
+[Taichi THREE / Tai3D](https://github.com/taichi-dev/taichi_three)
+[Taichi Documentation](https://taichi.readthedocs.io/en/stable)
+[Taichi 中文文档](https://taichi.readthedocs.io/zh_CN/stable)
+[Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io)
+[Forum Thread of Taichi GLSL](https://taichi-glsl.readthedocs.io)
 
 
 Installation
