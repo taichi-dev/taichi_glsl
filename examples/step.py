@@ -15,6 +15,6 @@ def paint(t: ti.f32):
 
 with ti.GUI('Step UV') as gui:
     while not gui.get_event(ti.GUI.ESCAPE, ti.GUI.EXIT):
-        paint(0.4 + 0.4 * math.cos(time.time() % 10000))
+        paint(0.4 + 0.4 * math.cos(time.time()))
         gui.set_image(image)
         gui.show()

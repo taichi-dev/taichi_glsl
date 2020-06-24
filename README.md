@@ -23,11 +23,11 @@ Links
 -----
 
 [Taichi Main Repo](https://github.com/taichi-dev/taichi)
-[Taichi THREE / Tai3D](https://github.com/taichi-dev/taichi_three)
+[Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io)
+[Taichi THREE Repo](https://github.com/taichi-dev/taichi_three)
 [Taichi Documentation](https://taichi.readthedocs.io/en/stable)
 [Taichi 中文文档](https://taichi.readthedocs.io/zh_CN/stable)
-[Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io)
-[Forum Thread of Taichi GLSL](https://taichi-glsl.readthedocs.io)
+[Forum Thread for Taichi GLSL](https://forum.taichi.graphics/t/taichi-glsl-a-handy-extension-library-for-taichi/867)
 
 
 Installation
