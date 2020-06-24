@@ -31,14 +31,14 @@ class MyAnimation(ts.Animation):
                 acc = self.iKeyDirection
             if any(self.iMouseButton):
                 dir = ts.normalize(self.iMouse - self.pos[i]) * 2
-                if self.iMouseButton.x: # LMB pressed?
+                if self.iMouseButton.x:  # LMB pressed?
                     acc += dir
-                if self.iMouseButton.z: # RMB pressed?
+                if self.iMouseButton.z:  # RMB pressed?
                     acc -= dir
             self.vel[i] += acc * self.dt
         for i in self.pos:
-            self.vel[i] = ts.boundaryReflect(self.pos[i], self.vel[i],
-                    0, 1, 0.8)
+            self.vel[i] = ts.boundaryReflect(self.pos[i], self.vel[i], 0, 1,
+                                             0.8)
         for i in self.pos:
             self.pos[i] += self.vel[i] * self.dt
 

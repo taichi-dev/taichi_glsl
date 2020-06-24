@@ -9,8 +9,11 @@ import os
 
 @ti.data_oriented
 class Animation:
-    def __init__(self, img=None, circles=None,
-            title='Animation', res=(512, 512)):
+    def __init__(self,
+                 img=None,
+                 circles=None,
+                 title='Animation',
+                 res=(512, 512)):
         self.title = title
         self.img = img
         self.circles = circles
