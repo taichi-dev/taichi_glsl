@@ -6,6 +6,7 @@ import taichi as ti
 import time
 import os
 
+
 @ti.data_oriented
 class Animation:
     def __init__(self, img=None, circles=None, title='Animation'):
@@ -25,13 +26,21 @@ class Animation:
     def set_output_video(self, path, framerate=24):
         output_dir = os.path.dirname(path)
         output_file = os.path.basename(path)
-        output_ext = output_file.split(os.path.extsep)[-1]
-        assert output_ext in ['gif', 'mp4']
-        self.video_manager = ti.VideoManager(output_dir, framerate=framerate)
+        try:
+            output_ext = output_file.split(os.path.extsep)[-1]
+            assert output_ext in ['gif', 'mp4']
+        except:
+            output_ext = None
+        self.video_manager = ti.VideoManager(output_dir,
+                                             framerate=framerate,
+                                             automatic_build=False)
         self.video_manager.taichi_glsl_output_ext = output_ext
 
         def _get_output_filename(suffix):
-                path[:-(len(output_ext) + 2)] + suffix
+            if output_ext is not None:
+                return path[:-(len(output_ext) + 1)] + suffix
+            else:
+                return path + suffix
 
         self.video_manager.get_output_filename = _get_output_filename
 
@@ -77,11 +86,17 @@ class Animation:
     def on_pre_start(self):
         pass
 
+    def on_post_render(self):
+        pass
+
     def on_pre_exit(self):
         if hasattr(self, 'video_manager'):
             ext = self.video_manager.taichi_glsl_output_ext
-            self.video_manager.make_video(
-                    gif=(ext == 'gif'), mp4=(ext == 'mp4'))
+            ti.info('Saving result to {}.{}',
+                    self.video_manager.get_output_filename(''), ext
+                    or 'gif and mp4')
+            self.video_manager.make_video(gif=(not ext or ext == 'gif'),
+                                          mp4=(not ext or ext == 'mp4'))
 
     def on_exit(self):
         pass
@@ -102,8 +117,8 @@ class Animation:
     def iTime(self):
         if not self.has_input:
             raise Exception(
-                    'Add ``self.define_input()`` to ``on_init`` if you '
-                    'wish to use inputs')
+                'Add ``self.define_input()`` to ``on_init`` if you '
+                'wish to use inputs')
         if ti.inside_kernel():
             return ti.subscript(self._iTime, None)
         else:
@@ -113,8 +128,8 @@ class Animation:
     def iFrame(self):
         if not self.has_input:
             raise Exception(
-                    'Add ``self.define_input()`` to ``on_init`` if you '
-                    'wish to use inputs')
+                'Add ``self.define_input()`` to ``on_init`` if you '
+                'wish to use inputs')
         if ti.inside_kernel():
             return ti.subscript(self._iFrame, None)
         else:
@@ -124,8 +139,8 @@ class Animation:
     def iMouse(self):
         if not self.has_input:
             raise Exception(
-                    'Add ``self.define_input()`` to ``on_init`` if you '
-                    'wish to use inputs')
+                'Add ``self.define_input()`` to ``on_init`` if you '
+                'wish to use inputs')
         if ti.inside_kernel():
             return self._iMouse.subscript(None)
         else:
@@ -178,8 +193,9 @@ class Animation:
 
     def start(self):
         self.on_pre_start()
-        with ti.GUI(self.title, self.resolution,
-                background_color=self.background_color) as self.gui:
+        with ti.GUI(self.title,
+                    self.resolution,
+                    background_color=self.background_color) as self.gui:
             if not hasattr(self.gui, 'running'):
                 self.gui.running = True
             if not hasattr(self.gui, 'frame'):
@@ -199,14 +215,18 @@ class Animation:
         self.on_advance()
         self.on_update_input()
         self.on_render()
+        self.on_post_render()
         if self.img is not None:
             self.gui.set_image(self.img)
         if self.circles is not None:
-            self.gui.circles(self.circles,
-                    self.circle_color, self.circle_radius)
+            self.gui.circles(self.circles, self.circle_color,
+                             self.circle_radius)
         self.on_show()
         if self.screenshot_directory is None:
             self.gui.show()
         else:
             self.gui.show(f'{self.screenshot_directory}/{self.frame:06d}.png')
+        if hasattr(self, 'video_manager'):
+            self.video_manager.write_frame(self.img.to_numpy())
+            ti.debug('Frame {} recorded', self.gui.frame)
         self.gui.frame += 1
