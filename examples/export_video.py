@@ -6,10 +6,7 @@ class MyAnimation(ts.Animation):
     def on_init(self):
         self.img = ti.Vector(3, ti.f32, (512, 512))
         self.define_input()
-        self.set_output_video('/tmp/video')
-
-    def on_drag(self, x, y):
-        self.circles = np.array([[x, y]])
+        self.set_output_video('/tmp/video.gif')
 
     @ti.kernel
     def on_render(self):

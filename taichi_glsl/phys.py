@@ -6,6 +6,38 @@ import taichi as ti
 
 
 @ti.func
+def boundaryReflect(pos, vel, pmin=0, pmax=1, gamma=1, gamma_perpendicular=1):
+    '''
+    reflect particle velocity from a rectangular boundary.
+
+    `boundaryReflect` takes particle position, velocity and other parameters.
+    Detect if the particle collides with the rect boundary given by ``pmin``
+    and ``pmax``, if collide, returns the velocity after bounced with boundary,
+    otherwise return the original velocity without any change.
+
+    :parameter pos: (Vector)
+        The particle position.
+
+    :parameter vel: (Vector)
+        The particle velocity.
+
+    :parameter pmin: (scalar or Vector)
+        The position lower boundary. If vector, it's the bottom-left of rect.
+
+    :parameter pmin: (scalar or Vector)
+        The position upper boundary. If vector, it's the top-right of rect.
+    '''
+    cond = pos < pmin and vel < 0 or pos > pmax and vel > 0
+    for j in ti.static(range(pos.n)):
+        if cond[j]:
+            vel[j] *= -gamma
+            for k in ti.static(range(pos.n)):
+                if k != j:
+                    vel[k] *= gamma_perpendicular
+    return vel
+
+
+@ti.func
 def momentumExchange(v1, v2, disp, m1=1, m2=1, gamma=1):
     '''
     Exchange momentum (bounce) between two objects.

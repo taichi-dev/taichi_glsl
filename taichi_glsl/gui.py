@@ -1,5 +1,5 @@
 '''
-Display images or animations using Taichi GUI
+Display images or animations using Taichi GUI (WIP)
 '''
 
 import taichi as ti
@@ -9,7 +9,8 @@ import os
 
 @ti.data_oriented
 class Animation:
-    def __init__(self, img=None, circles=None, title='Animation'):
+    def __init__(self, img=None, circles=None,
+            title='Animation', res=(512, 512)):
         self.title = title
         self.img = img
         self.circles = circles
@@ -21,6 +22,7 @@ class Animation:
         self.screenshot_directory = None
         self.output_video = None
         self.start_time = time.time()
+        self._resolution = res
         self.on_init()
 
     def set_output_video(self, path, framerate=24):
@@ -59,10 +61,22 @@ class Animation:
     def on_press(self, key):
         pass
 
+    def on_pressing(self, key):
+        pass
+
+    def on_not_pressing(self):
+        pass
+
     def on_release(self, key):
         pass
 
     def on_click(self, x, y, btn):
+        pass
+
+    def on_clicking(self, x, y, btn):
+        pass
+
+    def on_not_clicking(self, x, y):
         pass
 
     def on_unclick(self, x, y, btn):
@@ -81,9 +95,23 @@ class Animation:
         self.on_close()
 
     def on_pre_event(self):
-        pass
+        MOUSE = [ti.GUI.LMB, ti.GUI.MMB, ti.GUI.RMB]
+        had_any = False
+        for btn in MOUSE:
+            if self.gui.is_pressed(btn):
+                self.on_clicking(*self.mouse, btn)
+                had_any = True
+        if not had_any:
+            self.on_not_clicking(*self.mouse)
+        had_any = False
+        for key in self.gui.key_pressed:
+            if key not in MOUSE:
+                self.on_pressing(key)
+                had_any = True
+        if not had_any:
+            self.on_not_pressing()
 
-    def on_pre_start(self):
+    def on_start(self):
         pass
 
     def on_post_render(self):
@@ -173,7 +201,7 @@ class Animation:
                     self.on_drag(*e.pos, btn)
                     had_any = True
             if not had_any:
-                self.on_hover(*e.pos, btn)
+                self.on_hover(*e.pos)
 
     @property
     def mouse(self):
@@ -181,7 +209,14 @@ class Animation:
 
     @property
     def resolution(self):
-        return self.img.shape()[0:2]
+        if self.img is not None:
+            return self.img.shape()[0:2]
+        else:
+            return self._resolution
+
+    @resolution.setter
+    def resolution(self, value):
+        self._resolution = value
 
     @property
     def time(self):
@@ -192,7 +227,7 @@ class Animation:
         return self.gui.frame
 
     def start(self):
-        self.on_pre_start()
+        self.on_start()
         with ti.GUI(self.title,
                     self.resolution,
                     background_color=self.background_color) as self.gui:
@@ -219,7 +254,7 @@ class Animation:
         if self.img is not None:
             self.gui.set_image(self.img)
         if self.circles is not None:
-            self.gui.circles(self.circles, self.circle_color,
+            self.gui.circles(self.circles.to_numpy(), self.circle_color,
                              self.circle_radius)
         self.on_show()
         if self.screenshot_directory is None:
