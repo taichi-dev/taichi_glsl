@@ -141,6 +141,14 @@ def randUnit3D():
     Generate a 3-D random unit vector whose length is equal to 1.0.
     The return value is a 3-D vector, whose tip distributed evenly
     **on the surface** of a unit sphere.
+
+    :return:
+        The return value is computed as::
+
+            u = randUnit2D()
+            s = rand() * 2 - 1
+            c = sqrt(1 - s ** 2)
+            return vec3(c * u, s)
     '''
     from .linalg import vec3
     u = randUnit2D()

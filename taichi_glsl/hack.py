@@ -45,3 +45,17 @@ def _ts_static(x, *xs):
 
 
 ti.static = _ts_static
+
+
+# Fix `FileNotFoundError: [Errno 2] No such file or directory: 'palette.png'`:
+_ti_mp4_to_gif = ti.tools.video.mp4_to_gif
+
+
+def _ts_mp4_to_gif(*args, **kwargs):
+    try:
+        _ti_mp4_to_gif(*args, **kwargs)
+    except FileNotFoundError:
+        pass
+
+
+ti.tools.video.mp4_to_gif = _ts_mp4_to_gif

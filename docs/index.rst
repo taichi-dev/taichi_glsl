@@ -15,7 +15,7 @@ issue on GitHub <https://github.com/taichi-dev/taichi_glsl/issues/new>`_.
 
 .. note::
 
-    Here's the documentation of Taichi GLSL, the extension library.
+    Here's the documentation of **Taichi GLSL, the extension library**.
     For the documentation of **Taichi itself**, please click
     `here <https://taichi.readthedocs.io/en/stable>`_ |
     `这里 <https://taichi.readthedocs.io/zh_CN/stable>`_.
