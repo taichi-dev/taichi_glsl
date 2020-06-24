@@ -8,7 +8,7 @@ import taichi as ti
 @ti.func
 def boundaryReflect(pos, vel, pmin=0, pmax=1, gamma=1, gamma_perpendicular=1):
     '''
-    reflect particle velocity from a rectangular boundary.
+    Reflect particle velocity from a rectangular boundary (if collides).
 
     `boundaryReflect` takes particle position, velocity and other parameters.
     Detect if the particle collides with the rect boundary given by ``pmin``
