@@ -133,13 +133,22 @@ class Animation:
         self._iTime = ti.var(ti.f32, ())
         self._iFrame = ti.var(ti.i32, ())
         self._iMouse = ti.Vector(2, ti.f32, ())
+        self._iMouseButton = ti.Vector(3, ti.i32, ())
+        self._iKeyDirection = ti.Vector(2, ti.f32, ())
         self.has_input = True
 
     def on_update_input(self):
-        if self.has_input:
-            self._iTime[None] = self.time
-            self._iFrame[None] = self.frame
-            self._iMouse[None] = self.mouse
+        if not self.has_input:
+            return
+        self._iTime[None] = self.time
+        self._iFrame[None] = self.frame
+        self._iMouse[None] = self.mouse
+        ip = lambda *x: int(self.gui.is_pressed(*x))
+        lmb, mmb, rmb = ip(ti.GUI.LMB), ip(ti.GUI.MMB), ip(ti.GUI.RMB)
+        self._iMouseButton[None] = [lmb, mmb, rmb]
+        dx = ip('d', ti.GUI.RIGHT) - ip('a', ti.GUI.LEFT)
+        dy = ip('w', ti.GUI.UP) - ip('s', ti.GUI.DOWN)
+        self._iKeyDirection[None] = [dx, dy]
 
     @property
     def iTime(self):
@@ -173,6 +182,28 @@ class Animation:
             return self._iMouse.subscript(None)
         else:
             return self._iMouse[None]
+
+    @property
+    def iMouseButton(self):
+        if not self.has_input:
+            raise Exception(
+                'Add ``self.define_input()`` to ``on_init`` if you '
+                'wish to use inputs')
+        if ti.inside_kernel():
+            return self._iMouseButton.subscript(None)
+        else:
+            return self._iMouseButton[None]
+
+    @property
+    def iKeyDirection(self):
+        if not self.has_input:
+            raise Exception(
+                'Add ``self.define_input()`` to ``on_init`` if you '
+                'wish to use inputs')
+        if ti.inside_kernel():
+            return self._iKeyDirection.subscript(None)
+        else:
+            return self._iKeyDirection[None]
 
     @property
     def iResolution(self):
