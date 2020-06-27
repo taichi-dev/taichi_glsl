@@ -21,17 +21,6 @@ Taichi GLSL is an extension library of the [Taichi Programming Language](https:/
 [![Latest Release](https://img.shields.io/github/v/release/taichi-dev/taichi_glsl)](https://github.com/taichi-dev/taichi_glsl/releases)
 
 
-Links
------
-
-[Taichi Main Repo](https://github.com/taichi-dev/taichi)
-[Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io)
-[Taichi THREE Repo](https://github.com/taichi-dev/taichi_three)
-[Taichi Documentation](https://taichi.readthedocs.io/en/stable)
-[Taichi 中文文档](https://taichi.readthedocs.io/zh_CN/stable)
-[Forum Thread for Taichi GLSL](https://forum.taichi.graphics/t/taichi-glsl-a-handy-extension-library-for-taichi/867)
-
-
 Installation
 ------------
 
@@ -98,22 +87,41 @@ Thanks to the python syntax of `vec(*args)`.
 Example
 -------
 
-The following codes shows up an red-green UV map in the window:
+The following codes shows up an [Shadertoy](https://shadertoy.com/new)-style rainbow UV
+in the window:
 
 ```py
-from taichi_glsl import *
+import taichi as ti
+import taichi_glsl as ts
 
-image = vec_array(3, float, 512, 512)
-
-@ti.kernel
-def paint():
-    for i, j in image:
-        coor = view(image, i, j)
-        image[i, j] = vec(coor.x, coor.y, 0.0)
+ti.init()
 
 
-paint()
-ti.imshow(image)
+class MyAnimation(ts.Animation):
+    def on_init(self):
+        self.img = ti.Vector(3, ti.f32, (512, 512))
+        self.define_input()
+
+    @ti.kernel
+    def on_render(self):
+        for I in ti.grouped(self.img):
+            uv = I / self.iResolution
+            self.img[I] = ti.cos(uv.xyx + self.iTime +
+                                 ts.vec(0, 2, 4)) * 0.5 + 0.5
+
+
+MyAnimation().start()
 ```
 
 Check out more examples in the `examples/` folder.
+
+
+Links
+-----
+
+* [Taichi Main Repo](https://github.com/taichi-dev/taichi)
+* [Taichi GLSL Documentation](https://taichi-glsl.readthedocs.io)
+* [Taichi THREE Repo](https://github.com/taichi-dev/taichi_three)
+* [Taichi Documentation](https://taichi.readthedocs.io/en/stable)
+* [Taichi 中文文档](https://taichi.readthedocs.io/zh_CN/stable)
+* [Forum Thread for Taichi GLSL](https://forum.taichi.graphics/t/taichi-glsl-a-handy-extension-library-for-taichi/867)

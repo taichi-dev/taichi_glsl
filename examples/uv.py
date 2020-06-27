@@ -1,14 +1,18 @@
 from taichi_glsl import *
 
-image = vec_array(3, float, 512, 512)
+ti.init()
 
 
-@ti.kernel
-def paint():
-    for i, j in image:
-        coor = view(image, i, j)
-        image[i, j] = vec(coor.x, coor.y, 0.0)
+class MyAnimation(Animation):
+    def on_init(self):
+        self.title = 'UV'
+        self.img = vec_array(3, float, 512, 512)
+
+    @ti.kernel
+    def on_render(self):
+        for i, j in self.img:
+            uv = view(self.img, i, j)
+            self.img[i, j] = vec(uv.xy, 0.0)
 
 
-paint()
-ti.imshow(image)
+MyAnimation().start()
