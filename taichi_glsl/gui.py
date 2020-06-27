@@ -9,6 +9,69 @@ import os
 
 @ti.data_oriented
 class Animation:
+    '''
+    Handy Shadertoy-alike GUI base class.
+
+    I'm able to:
+
+    1. Enable you to focus on computation, no need to hand-write a GUI event loop.
+
+    2. Easy-to-use image / video export wrapper like ``self.set_output_video(path)``.
+
+    3. Shadertoy-alike input variables including ``self.iMouse``, ``self.iKeyDirection``.
+
+    4. Callback style event processing system incuding ``self.on_click(x, y)``.
+
+    See `examples/particles.py <https://github.com/taichi-dev/taichi_glsl/blob/master/examples/particles.py>`_ for usage example:
+
+    .. code-block:: python
+
+        import taichi as ti
+        import taichi_glsl as ts
+
+        ti.init()
+
+
+        class MyAnimation(ts.Animation):
+            def on_init(self):
+                self.N = 8192
+                self.dt = 0.01
+                self.pos = ti.Vector(2, ti.f32, self.N)
+                self.vel = ti.Vector(2, ti.f32, self.N)
+                self.circles = self.pos  # alias to make ts.Animation know
+                self.attract_strength = ti.var(ti.f32, ())
+                self.attract_pos = ti.Vector(2, ti.f32, ())
+                self.resolution = (512, 512)
+                self.title = 'Particles'
+                self.define_input()
+
+            @ti.kernel
+            def on_start(self):
+                for i in self.pos:
+                    self.pos[i] = ts.randND(2)
+                    self.vel[i] = ts.randSolid2D()
+
+            @ti.kernel
+            def on_advance(self):
+                for i in self.pos:
+                    acc = ts.vec(0.0, -1.0)
+                    if any(self.iKeyDirection):  # ASWD?
+                        acc = self.iKeyDirection
+                    if any(self.iMouseButton):
+                        dir = ts.normalize(self.iMouse - self.pos[i]) * 2
+                        if self.iMouseButton[0]:  # LMB pressed?
+                            acc += dir
+                        if self.iMouseButton[1]:  # RMB pressed?
+                            acc -= dir
+                    self.vel[i] += acc * self.dt
+                for i in self.pos:
+                    self.vel[i] = ts.boundReflect(self.pos[i], self.vel[i], 0, 1, 0.8)
+                for i in self.pos:
+                    self.pos[i] += self.vel[i] * self.dt
+
+
+        MyAnimation().start()
+    '''
     def __init__(self,
                  img=None,
                  circles=None,
@@ -62,22 +125,38 @@ class Animation:
         | Property           | Type         | Default         | Description                   |
         +--------------------+--------------+-----------------+-------------------------------+
         | ``img``            | ``np.array`` | ``None``        | Image to display.             |
+        +--------------------+--------------+-----------------+-------------------------------+
         | ``circles``        | ``np.array`` | ``None``        | Circles to paint.             |
+        +--------------------+--------------+-----------------+-------------------------------+
         | ``circle_radius``  |   scalar     | ``1``           | Radius of circles.            |
+        +--------------------+--------------+-----------------+-------------------------------+
         | ``circle_color``   |   RGB hex    | ``0x000000``    | Color of circles.             |
-        | ``background_color`` | RGB hex    | ``0x000000``    | Color of circles.             |
-        | ``title``          |   string     | ``'Animation'`` | Title of the window.          |
-        | ``has_input``      |   boolean    | ``False``       | Use ``self.iXXX`` or not?     |
+        +--------------------+--------------+-----------------+-------------------------------+
+        |``background_color``|   RGB hex    | ``0x000000``    | background color of window.   |
+        +--------------------+--------------+-----------------+-------------------------------+
+        | ``title``          |   string     | ``"Animation"`` | Title of the window.          |
+        +--------------------+--------------+-----------------+-------------------------------+
         | ``screenshot_dir`` |   boolean    | ``None``        | Path to save screenshots.     |
+        +--------------------+--------------+-----------------+-------------------------------+
         | ``resolution``     |   tuple      | ``img.shape()`` | The size of window / screen.  |
         +--------------------+--------------+-----------------+-------------------------------+
         '''
         pass
 
     def on_advance(self):
+        '''
+        Called to advance / step the physics scene.
+
+        I.e. update ``self.circles`` if you're using it.
+        '''
         pass
 
     def on_render(self):
+        '''
+        Called to render the displayed image.
+
+        I.e. update ``self.img`` if it's used.
+        '''
         pass
 
     def on_show(self):
@@ -120,6 +199,9 @@ class Animation:
         self.on_close()
 
     def on_pre_event(self):
+        '''
+        Called per GUI main loop.
+        '''
         MOUSE = [ti.GUI.LMB, ti.GUI.MMB, ti.GUI.RMB]
         had_any = False
         for btn in MOUSE:
@@ -137,6 +219,9 @@ class Animation:
             self.on_not_pressing()
 
     def on_start(self):
+        '''
+        Called when GUI main loop started, i.e. ``Animation().start()``.
+        '''
         pass
 
     def on_post_render(self):
@@ -155,6 +240,11 @@ class Animation:
         pass
 
     def define_input(self):
+        '''
+        Should be called if you wish to use ``self.iXXX`` as uniform scalars.
+
+        If you are familiar with `Shadertoy <https://shadertoy.com>`_, then this is for you :)
+        '''
         self._iTime = ti.var(ti.f32, ())
         self._iFrame = ti.var(ti.i32, ())
         self._iMouse = ti.Vector(2, ti.f32, ())
@@ -177,6 +267,9 @@ class Animation:
 
     @property
     def iTime(self):
+        '''
+        (TS, float32, RO) Current time in seconds.
+        '''
         if not self.has_input:
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
@@ -188,6 +281,9 @@ class Animation:
 
     @property
     def iFrame(self):
+        '''
+        (TS, int32, RO) Current frame number start from 0.
+        '''
         if not self.has_input:
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
@@ -199,6 +295,9 @@ class Animation:
 
     @property
     def iMouse(self):
+        '''
+        (TS, 2D float32 vector, RO) Current mouse position from 0 to 1.
+        '''
         if not self.has_input:
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
@@ -210,6 +309,14 @@ class Animation:
 
     @property
     def iMouseButton(self):
+        '''
+        (TS, 3D int32 vector, RO) Current mouse button status.
+
+        ``self.iMouseButton[0]`` is ``1`` if LMB is pressed.
+        ``self.iMouseButton[1]`` is ``1`` if MMB is pressed.
+        ``self.iMouseButton[2]`` is ``1`` if RMB is pressed.
+        Otherwise, ``0``.
+        '''
         if not self.has_input:
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
@@ -221,6 +328,14 @@ class Animation:
 
     @property
     def iKeyDirection(self):
+        '''
+        (TS, 2D float32 vector, RO) Direction according to ASWD / arrow keys.
+
+        If A or left arrow is pressed, then ``self.iKeyDirection`` is ``vec(-1.0, 0.0)``.
+        If D or right arrow is pressed, then ``self.iKeyDirection`` is ``vec(1.0, 0.0)``.
+        If W or up arrow is pressed, then ``self.iKeyDirection`` is ``vec(0.0, 1.0)``.
+        If S or down arrow is pressed, then ``self.iKeyDirection`` is ``vec(0.0, -1.0)``.
+        '''
         if not self.has_input:
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
@@ -232,9 +347,15 @@ class Animation:
 
     @property
     def iResolution(self):
+        '''
+        (TS, 2D int32 vector, RO) Window size / screen resolution.
+        '''
         return self.resolution
 
     def on_event(self, e):
+        '''
+        Called when a event occurred, hook me if you want a raw event control.
+        '''
         MOUSE = [ti.GUI.LMB, ti.GUI.MMB, ti.GUI.RMB]
         if e.type == ti.GUI.PRESS:
             if e.key in MOUSE:
@@ -261,10 +382,16 @@ class Animation:
 
     @property
     def mouse(self):
+        '''
+        (PS, tuple of two float, RO) Get mouse position / cursor coordinate from 0 to 1.
+        '''
         return self.gui.get_cursor_pos()
 
     @property
     def resolution(self):
+        '''
+        (PS, tuple of two int, RW) Get or set window size / screen resolution.
+        '''
         if self.img is not None:
             return self.img.shape()[0:2]
         else:
@@ -276,13 +403,24 @@ class Animation:
 
     @property
     def time(self):
+        '''
+        (PS, float32, RO) Get current time in seconds.
+        '''
         return time.time() - self.start_time
 
     @property
     def frame(self):
+        '''
+        (PS, int, RO) Get current frame number start from 0.
+        '''
         return self.gui.frame
 
     def start(self):
+        '''
+        Call me when GUI is ready to start shows up.
+
+        A common usage for application can be: ``MyAnimation().start()``.
+        '''
         self.on_start()
         with ti.GUI(self.title,
                     self.resolution,
@@ -303,8 +441,8 @@ class Animation:
         self.on_pre_event()
         for e in self.gui.get_events():
             self.on_event(e)
-        self.on_advance()
         self.on_update_input()
+        self.on_advance()
         self.on_render()
         self.on_post_render()
         if self.img is not None:

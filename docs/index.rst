@@ -9,6 +9,8 @@ Taichi GLSL is an extension library of the `Taichi Programming Language <https:/
 4. Possible Taichi BUG hotfixes that are not yet released in it's cycle.
 5. Handy vector and matrix initializer: ``vec`` and ``mat``.
 6. Handy vector component shuffle accessor like ``v.xy``.
+7. Useful physics helper functions like ``boundReflect``.
+8. Shadertoy-alike inputed GUI base class ``Animation``.
 
 Let me know if you encountered bugs or got a good idea by `opening an
 issue on GitHub <https://github.com/taichi-dev/taichi_glsl/issues/new>`_.
@@ -63,12 +65,13 @@ Linear alegbra
 
     :no-heading:
 
-GUI Base Class 
+GUI Base Class
 --------------
 
 .. automodapi:: taichi_glsl.gui
 
     :no-heading:
+    :no-inheritance-diagram:
 
 Random generator
 ----------------

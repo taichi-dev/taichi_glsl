@@ -25,4 +25,4 @@ help:
 ### Custom commands
 
 view: html
-	firefox-developer-edition _build/html/index.html
+	firefox _build/html/index.html
