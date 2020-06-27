@@ -22,13 +22,16 @@ class Animation:
         self.background_color = 0x000000
         self.gui = None
         self.has_input = False
-        self.screenshot_directory = None
+        self.screenshot_dir = None
         self.output_video = None
         self.start_time = time.time()
         self._resolution = res
         self.on_init()
 
     def set_output_video(self, path, framerate=24):
+        '''
+        Export frames painted in GUI to a video.
+        '''
         output_dir = os.path.dirname(path)
         output_file = os.path.basename(path)
         try:
@@ -50,6 +53,25 @@ class Animation:
         self.video_manager.get_output_filename = _get_output_filename
 
     def on_init(self):
+        '''
+        Called when initializing ``Animation()``.
+
+        Set up self.* properties for application usage here:
+
+        +--------------------+--------------+-----------------+-------------------------------+
+        | Property           | Type         | Default         | Description                   |
+        +--------------------+--------------+-----------------+-------------------------------+
+        | ``img``            | ``np.array`` | ``None``        | Image to display.             |
+        | ``circles``        | ``np.array`` | ``None``        | Circles to paint.             |
+        | ``circle_radius``  |   scalar     | ``1``           | Radius of circles.            |
+        | ``circle_color``   |   RGB hex    | ``0x000000``    | Color of circles.             |
+        | ``background_color`` | RGB hex    | ``0x000000``    | Color of circles.             |
+        | ``title``          |   string     | ``'Animation'`` | Title of the window.          |
+        | ``has_input``      |   boolean    | ``False``       | Use ``self.iXXX`` or not?     |
+        | ``screenshot_dir`` |   boolean    | ``None``        | Path to save screenshots.     |
+        | ``resolution``     |   tuple      | ``img.shape()`` | The size of window / screen.  |
+        +--------------------+--------------+-----------------+-------------------------------+
+        '''
         pass
 
     def on_advance(self):
@@ -291,10 +313,10 @@ class Animation:
             self.gui.circles(self.circles.to_numpy(), self.circle_color,
                              self.circle_radius)
         self.on_show()
-        if self.screenshot_directory is None:
+        if self.screenshot_dir is None:
             self.gui.show()
         else:
-            self.gui.show(f'{self.screenshot_directory}/{self.frame:06d}.png')
+            self.gui.show(f'{self.screenshot_dir}/{self.frame:06d}.png')
         if hasattr(self, 'video_manager'):
             self.video_manager.write_frame(self.img.to_numpy())
             ti.debug('Frame {} recorded', self.gui.frame)

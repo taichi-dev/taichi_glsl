@@ -63,6 +63,13 @@ Linear alegbra
 
     :no-heading:
 
+GUI Base Class 
+--------------
+
+.. automodapi:: taichi_glsl.gui
+
+    :no-heading:
+
 Random generator
 ----------------
 
