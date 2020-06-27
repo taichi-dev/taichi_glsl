@@ -22,7 +22,33 @@ class Animation:
 
     4. Callback style event processing system incuding ``self.on_click(x, y)``.
 
-    See `examples/particles.py <https://github.com/taichi-dev/taichi_glsl/blob/master/examples/particles.py>`_ for usage example:
+    See `examples/export_video.py <https://github.com/taichi-dev/taichi_glsl/blob/master/examples/export_video.py>`_ for example:
+
+    .. code-block:: python
+
+        import taichi as ti
+        import taichi_glsl as ts
+
+        ti.init()
+
+
+        class MyAnimation(ts.Animation):
+            def on_init(self):
+                self.img = ti.Vector(3, ti.f32, (512, 512))
+                self.set_output_video('/tmp/video.gif')
+                self.define_input()
+
+            @ti.kernel
+            def on_render(self):
+                for I in ti.grouped(self.img):
+                    uv = I / self.iResolution
+                    self.img[I] = ti.cos(uv.xyx + self.iTime +
+                                         ts.vec(0, 2, 4)) * 0.5 + 0.5
+
+
+        MyAnimation().start()
+
+    And what's more, `examples/particles.py <https://github.com/taichi-dev/taichi_glsl/blob/master/examples/particles.py>`_:
 
     .. code-block:: python
 
@@ -94,6 +120,9 @@ class Animation:
     def set_output_video(self, path, framerate=24):
         '''
         Export frames painted in GUI to a video.
+
+        FIXME: Only work for ``self.img`` render, doesn't work for ``self.circles`` for now.
+        Use ``self.screenshot_dir = '/tmp'``, then ``cd /tmp && ti video`` if you wish to.
         '''
         output_dir = os.path.dirname(path)
         output_file = os.path.basename(path)

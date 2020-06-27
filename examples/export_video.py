@@ -1,12 +1,14 @@
 import taichi as ti
 import taichi_glsl as ts
 
+ti.init()
+
 
 class MyAnimation(ts.Animation):
     def on_init(self):
         self.img = ti.Vector(3, ti.f32, (512, 512))
-        self.define_input()
         self.set_output_video('/tmp/video.gif')
+        self.define_input()
 
     @ti.kernel
     def on_render(self):
