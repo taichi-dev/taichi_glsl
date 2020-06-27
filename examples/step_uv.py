@@ -16,7 +16,7 @@ class MyAnimation(Animation):
             # TODO(archibate): for coor in view(self.img):
             uv = view(self.img, i, j)
             self.img[i, j] = smoothstep(distance(uv, vec(0.5, 0.5)), t,
-                                     t - 0.06) * vec(uv.xy, 0.0)
+                                        t - 0.06) * vec(uv.xy, 0.0)
 
 
 MyAnimation().start()
