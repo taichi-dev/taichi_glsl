@@ -21,7 +21,7 @@ class MyAnimation(ts.Animation):
     @ti.kernel
     def on_start(self):
         for I in ti.grouped(self.color):
-            self.color.old[I] = 1 - ts.insideTaichi(I / self.iResolution)
+            self.color.old[I] = ts.imageTaichi(I / self.iResolution, 0.9)
 
     @ti.kernel
     def on_advance(self):

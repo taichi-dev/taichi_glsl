@@ -12,8 +12,8 @@ def _inside(p, c, r):
 
 
 @ti.func
-def imageTaichi(p):
-    p = ti.Vector([0.5, 0.5]) + (p - ti.Vector([0.5, 0.5])) * 1.11
+def imageTaichi(p, size=1):
+    p = ti.Vector([0.5, 0.5]) + (p - ti.Vector([0.5, 0.5])) * 1.11 / size
     ret = -1
     if not _inside(p, ti.Vector([0.50, 0.50]), 0.55):
         if ret == -1:
