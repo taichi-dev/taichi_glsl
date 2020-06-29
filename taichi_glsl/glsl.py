@@ -137,7 +137,7 @@ def fract(x):
     :return:
         The return value is calculated as `x - floor(x)`.
     '''
-    return x - floor(x)
+    return x - floor(float(x))
 
 
 @ti.func

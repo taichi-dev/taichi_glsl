@@ -7,4 +7,5 @@
 /docs/api
 /.*_localrc
 /GNUmakefile
+/tags
 __pycache__

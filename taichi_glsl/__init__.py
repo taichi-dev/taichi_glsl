@@ -15,4 +15,6 @@ from .transform import *
 from .rand import *
 from .phys import *
 from .odop import *
+from .fluid import *
 from .gui import *
+from .fun import *

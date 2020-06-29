@@ -23,13 +23,13 @@ class TaichiClass:
     def _var(cls):
         raise NotImplementedError
 
-    @ti.func
-    def _subscript(self, I):
-        return self.__class__(*(e[I] for e in self.entries))
+    def _subscript(self, *indices):
+        args = [ti.subscript(e, *indices) for e in self.entries]
+        return self.__class__(*args)
 
     @ti.taichi_scope
-    def subscript(self, I):
-        return self._subscript(I)
+    def subscript(self, *indices):
+        return self._subscript(*indices)
 
     @ti.func
     def loop_range(self):
