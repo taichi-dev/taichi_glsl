@@ -9,6 +9,7 @@ class MyAnimation(ts.Animation):
         res = 512, 512
         self.color = ts.Maccormack.make(lambda: ti.var(ti.f32, res))
         self.vel = ts.Maccormack.make(lambda: ti.Vector(2, ti.f32, res))
+        self.div = ti.var(ti.f32, res)
         self.img = self.color.new
         self.dt = 0.002
         self.dx = 1 / res[0]
@@ -17,6 +18,13 @@ class MyAnimation(ts.Animation):
     @ti.func
     def velocity(self, P):
         return ts.linearSample(self.vel.old, P)
+
+    @ti.func
+    def clearDiv(self):
+        for I in ti.grouped(self.div):
+            self.div[I] = vgridDivergence(self.vel.old, I)
+        for I in ti.grouped(self.vel.old):
+            self.vel.old[I]
 
     @ti.kernel
     def on_start(self):

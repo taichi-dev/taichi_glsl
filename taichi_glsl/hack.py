@@ -38,3 +38,13 @@ def _new_element_wise_binary(self, foo, other):
         foo.__name__ == '_assign'
     return _old_element_wise_binary(self, foo, other)
 ti.Matrix.element_wise_binary = _new_element_wise_binary
+
+
+@ti.func
+def _vector_product(self: ti.template()):
+    ret = self[0]
+    for i in ti.static(range(1, self.n)):
+        ret *= self[i]
+    return ret
+
+ti.Matrix.product = _vector_product

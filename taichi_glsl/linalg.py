@@ -196,6 +196,12 @@ def normalize(v):
     return v.normalized()
 
 
+@ti.func
+def normalizePow(v, n, eps=0):
+    l2 = v.norm_sqr() + eps
+    return v * (l2 ** ((n - 1) / 2))
+
+
 def summation(v):
     '''
     Calculate the sum of all elements in a vector.
@@ -436,7 +442,7 @@ def shuffle(a, *ks):
     ret = []
     for k in ks:
         t = a.subscript(k)
-        ret.append(t)
+        ret.append(ti.expr_init(t))
     return ti.Vector(ret)
 
 

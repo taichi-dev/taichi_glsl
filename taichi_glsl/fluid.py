@@ -9,11 +9,23 @@ import taichi_glsl as ts
 from .odop import TaichiClass
 
 
+D = ts.vec(1, 0, -1)
+
+
 @ti.func
 def clampSample(field: ti.template(), P):
     shape = ti.Vector(field.shape())
-    P = ts.clamp(P, 1, shape - 1)
+    P = ts.clamp(P, 0, shape - 1)
     return field[P]
+
+
+@ti.func
+def blackSample(field: ti.template(), P):
+    shape = ti.Vector(field.shape())
+    ret = field[P] * 0
+    if all(0 <= P and P < shape):
+        ret = field[P]
+    return ret
 
 
 @ti.func
@@ -21,12 +33,18 @@ def linearSample(field: ti.template(), P):
     I = int(P)
     x = ts.fract(P)
     y = 1 - x
-    D = ts.vec(1, 0)
     return (clampSample(field, I + D.xx) * x.x * x.y +
             clampSample(field, I + D.xy) * x.x * y.y +
             clampSample(field, I + D.yy) * y.x * y.y +
             clampSample(field, I + D.yx) * y.x * x.y)
 
+
+@ti.func
+def vgridDivergence(field: ti.template(), I):
+    return ( clampSample(field, I + D.xy).x
+           + clampSample(field, I + D.yx).y
+           - clampSample(field, I + D.xz).x
+           - clampSample(field, I + D.zx).y)
 
 
 class Pair(TaichiClass):
@@ -56,7 +74,7 @@ class SemiLagrangianRK1(Pair):
             self.new[I] = linearSample(self.old, btI)
 
 
-class SemiLagrangianRK2(SemiLagrangianRK1):
+class SemiLagrangianRK2(Pair):
     @ti.func
     def advance(self, world):
         for I in ti.grouped(self.old):
@@ -66,12 +84,15 @@ class SemiLagrangianRK2(SemiLagrangianRK1):
 
 
 class Maccormack(Pair):
+    def __init__(self, a, b, c, base=None):
+        base = base or SemiLagrangianRK2
+        super(Maccormack, self).__init__(a, b, c)
+        self.forth, self.back = base(a, b), base(b, c)
+
     @classmethod
-    def make(cls, init, base=SemiLagrangianRK2):
+    def make(cls, init, base=None):
         a, b, c = init(), init(), init()
-        ret = cls(a, b, c)
-        ret.forth, ret.back = base(a, b), base(b, c)
-        return ret
+        return cls(a, b, c, base)
 
     @property
     def aux(self):

@@ -3,6 +3,7 @@
 '''
 
 import taichi as ti
+import taichi_glsl as ts
 
 
 @ti.func
@@ -11,7 +12,7 @@ def _inside(p, c, r):
 
 
 @ti.func
-def insideTaichi(p):
+def imageTaichi(p):
     p = ti.Vector([0.5, 0.5]) + (p - ti.Vector([0.5, 0.5])) * 1.11
     ret = -1
     if not _inside(p, ti.Vector([0.50, 0.50]), 0.55):
@@ -38,4 +39,14 @@ def insideTaichi(p):
     else:
         if ret == -1:
             ret = 0
-    return ret
+    return 1 - ret
+
+
+@ti.func
+def imageChess(p, n=20):
+    return (p // (1 / n)).sum() % 2
+
+
+@ti.func
+def imageGrid(p, n=20, tol=0.2):
+    return ts.smoothstep(abs(ts.fract(p * n) - 0.5).min(), 0.0, tol)
