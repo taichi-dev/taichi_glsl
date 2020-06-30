@@ -32,10 +32,10 @@ class MyAnimation(ts.Animation):
         for I in ti.grouped(self.color):
             p = I / self.iResolution
             self.color.old[I] = ts.imageChess(p)
-        self.vorts[0] = ts.vec(0.25, 0.20)
-        self.vorts[1] = ts.vec(0.25, 0.35)
-        self.vorts[2] = ts.vec(0.25, 0.65)
-        self.vorts[3] = ts.vec(0.25, 0.80)
+        self.vorts[0] = ts.vec(0.25, 0.25)
+        self.vorts[1] = ts.vec(0.25, 0.40)
+        self.vorts[2] = ts.vec(0.25, 0.60)
+        self.vorts[3] = ts.vec(0.25, 0.75)
         self.vorty[0] = -1.0
         self.vorty[1] = -1.0
         self.vorty[2] = +1.0
