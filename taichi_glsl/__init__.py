@@ -17,6 +17,7 @@ from .lagrangian import *
 from .experimental_array import *
 from .experimental_transform import *
 from .experimental_cfd import *
-from .mkimages import *
 from .colormap import *
+from .painting import *
+from .mkimages import *
 from .gui import *

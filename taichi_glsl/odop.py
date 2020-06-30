@@ -10,6 +10,7 @@ class DataOriented:
     pass
 
 
+@ti.data_oriented
 class TaichiClass:
     is_taichi_class = True
 
@@ -36,7 +37,6 @@ class TaichiClass:
     def subscript(self, *indices):
         return self._subscript(*indices)
 
-    @ti.func
     def loop_range(self):
         return self.entries[0].loop_range()
 
