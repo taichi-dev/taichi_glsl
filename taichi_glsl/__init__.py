@@ -8,14 +8,15 @@ import math
 
 from .version import version as __version__
 from .hack import *
-from .glsl import *
-from .array import *
-from .linalg import *
-from .transform import *
-from .rand import *
-from .phys import *
+from .scalar import *
+from .vector import *
 from .odop import *
-from .field import *
-from .fluid import *
+from .randgen import *
+from .sampling import *
+from .lagrangian import *
+from .experimental.array import *
+from .experimental.transform import *
+from .experimental.cfd import *
+from .mkimages import *
+from .colormap import *
 from .gui import *
-from .fun import *

@@ -5,7 +5,7 @@
 import taichi as ti
 import taichi_glsl as ts
 
-from .field import *
+from taichi_glsl.sampling import *
 
 
 class Pair(TaichiClass):
