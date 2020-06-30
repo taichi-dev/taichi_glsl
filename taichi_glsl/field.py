@@ -2,12 +2,10 @@
 Some helper functions in processing fields & images.
 '''
 
-
 import taichi as ti
 import taichi_glsl as ts
 
 from .odop import TaichiClass
-
 
 D = ts.vec(1, 0, -1)
 
@@ -57,31 +55,27 @@ def linearSample(field: ti.template(), P):
 
 @ti.func
 def superSample2x2(fieldFunc: ti.template(), P):
-    return ( fieldFunc(P + 0.5 * D.yy)
-           + fieldFunc(P + 0.5 * D.yz)
-           + fieldFunc(P + 0.5 * D.zz)
-           + fieldFunc(P + 0.5 * D.zy)) * 0.25
+    return (fieldFunc(P + 0.5 * D.yy) + fieldFunc(P + 0.5 * D.yz) +
+            fieldFunc(P + 0.5 * D.zz) + fieldFunc(P + 0.5 * D.zy)) * 0.25
 
 
 @ti.func
 def vgridDivergence(field: ti.template(), I):
-    return ( clampSample(field, I + D.xy).x
-           + clampSample(field, I + D.yx).y
-           - clampSample(field, I + D.xz).x
-           - clampSample(field, I + D.zx).y)
+    return (clampSample(field, I + D.xy).x + clampSample(field, I + D.yx).y -
+            clampSample(field, I + D.xz).x - clampSample(field, I + D.zx).y)
 
 
 @ti.func
 def vgridGradient(field: ti.template(), I):
     return ts.vec2(
-            clampSample(field, I + D.yx) - clampSample(field, I + D.zx),
-            clampSample(field, I + D.xy) - clampSample(field, I + D.xz))
+        clampSample(field, I + D.yx) - clampSample(field, I + D.zx),
+        clampSample(field, I + D.xy) - clampSample(field, I + D.xz))
 
 
 @ti.func
 def vgridSumAround(field: ti.template(), I):
-    return ( clampSample(field, I + D.yx) + clampSample(field, I + D.zx)
-           + clampSample(field, I + D.xy) + clampSample(field, I + D.xz))
+    return (clampSample(field, I + D.yx) + clampSample(field, I + D.zx) +
+            clampSample(field, I + D.xy) + clampSample(field, I + D.xz))
 
 
 bilerp = linearSample

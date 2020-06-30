@@ -199,7 +199,7 @@ def normalize(v):
 @ti.func
 def normalizePow(v, n, eps=0):
     l2 = v.norm_sqr() + eps
-    return v * (l2 ** ((n - 1) / 2))
+    return v * (l2**((n - 1) / 2))
 
 
 def summation(v):

@@ -102,7 +102,8 @@ class Animation:
                  img=None,
                  circles=None,
                  title='Animation',
-                 res=(512, 512)):
+                 res=(512, 512),
+                 **kwargs):
         self.title = title
         self.img = img
         self.circles = circles
@@ -115,7 +116,7 @@ class Animation:
         self.output_video = None
         self.start_time = time.time()
         self._resolution = res
-        self.on_init()
+        self.on_init(**kwargs)
 
     def set_output_video(self, path, framerate=24):
         '''
