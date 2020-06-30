@@ -49,6 +49,14 @@ def linearSample(field: ti.template(), P):
 
 
 @ti.func
+def superSample2x2(fieldFunc: ti.template(), P):
+    return ( fieldFunc(P + 0.5 * D.yy)
+           + fieldFunc(P + 0.5 * D.yz)
+           + fieldFunc(P + 0.5 * D.zz)
+           + fieldFunc(P + 0.5 * D.zy)) * 0.25
+
+
+@ti.func
 def vgridDivergence(field: ti.template(), I):
     return ( clampSample(field, I + D.xy).x
            + clampSample(field, I + D.yx).y
