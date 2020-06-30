@@ -14,9 +14,9 @@ from .odop import *
 from .randgen import *
 from .sampling import *
 from .lagrangian import *
-from .experimental.array import *
-from .experimental.transform import *
-from .experimental.cfd import *
+from .experimental_array import *
+from .experimental_transform import *
+from .experimental_cfd import *
 from .mkimages import *
 from .colormap import *
 from .gui import *

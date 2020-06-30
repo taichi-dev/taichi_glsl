@@ -5,6 +5,11 @@ Enhanced Taichi Objective Data-Oriented Programming (ODOP)
 import taichi as ti
 
 
+@ti.data_oriented
+class DataOriented:
+    pass
+
+
 class TaichiClass:
     is_taichi_class = True
 

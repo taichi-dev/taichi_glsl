@@ -3,12 +3,12 @@ Display images or animations using Taichi GUI (WIP)
 '''
 
 import taichi as ti
+import taichi_glsl as ts
 import time
 import os
 
 
-@ti.data_oriented
-class Animation:
+class Animation(ts.DataOriented):
     '''
     Handy Shadertoy-alike GUI base class.
 
