@@ -72,13 +72,6 @@ GUI Base Class
     :no-heading:
     :no-inheritance-diagram:
 
-Field sampling
---------------
-
-.. automodapi:: taichi_glsl.sampling
-
-    :no-heading:
-
 Random generator
 ----------------
 
@@ -86,8 +79,15 @@ Random generator
 
     :no-heading:
 
-Particle physics
-----------------
+Field sampling
+--------------
+
+.. automodapi:: taichi_glsl.sampling
+
+    :no-heading:
+
+Particle simluation
+-------------------
 
 .. automodapi:: taichi_glsl.lagrangian
 

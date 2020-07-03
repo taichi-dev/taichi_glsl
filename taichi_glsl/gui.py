@@ -169,7 +169,9 @@ class Animation(ts.DataOriented):
         +--------------------+--------------+-----------------+-------------------------------+
         | ``screenshot_dir`` |   boolean    | ``None``        | Path to save screenshots.     |
         +--------------------+--------------+-----------------+-------------------------------+
-        | ``resolution``     |   tuple      | ``img.shape()`` | The size of window / screen.  |
+        | ``resolution``     |   tuple      | ``img.shape``   | The size of window / screen.  |
+        +--------------------+--------------+-----------------+-------------------------------+
+        | ``auto_clean``     |   boolean    | ``False``       | Zero the image before render. |
         +--------------------+--------------+-----------------+-------------------------------+
         '''
         pass
