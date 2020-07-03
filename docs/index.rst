@@ -6,9 +6,9 @@ Taichi GLSL is an extension library of the `Taichi Programming Language <https:/
 1. Handy scalar functions like ``clamp``, ``smoothstep``, ``mix``, ``round``.
 2. GLSL-alike vector functions like ``normalize``, ``distance``, ``reflect``.
 3. Well-behaved random generators including ``randUnit3D``, ``randNDRange``.
-5. Handy vector and matrix initializer: ``vec`` and ``mat``.
-6. Handy vector component shuffle accessor like ``v.xy``.
-4. Handy field sampler including ``bilerp`` and ``sample``.
+4. Handy vector and matrix initializer: ``vec`` and ``mat``.
+5. Handy vector component shuffle accessor like ``v.xy``.
+6. Handy field sampler including ``bilerp`` and ``sample``.
 7. Useful physics helper functions like ``boundReflect``.
 8. Shadertoy-alike inputed GUI base class ``Animation``.
 
