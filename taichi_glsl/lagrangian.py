@@ -38,6 +38,20 @@ def boundReflect(pos, vel, pmin=0, pmax=1, gamma=1, gamma_perpendicular=1):
 
 
 @ti.func
+def ballBoundReflect(pos, vel, center, radius, anti_fall=0, anti_depth=0.1):
+    ret = vel
+    above = tl.distance(pos, center) - radius
+    if above <= 0:
+        normal = tl.normalize(pos - center)
+        NoV = tl.dot(vel, normal)
+        if ti.static(anti_fall):
+            NoV -= anti_fall * tl.smoothstep(above, 0, -anti_depth)
+        if NoV < 0:
+            ret -= NoV * normal
+    return ret
+
+
+@ti.func
 def momentumExchange(v1, v2, disp, m1=1, m2=1, gamma=1):
     '''
     Exchange momentum (bounce) between two objects.

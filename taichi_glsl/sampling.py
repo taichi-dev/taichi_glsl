@@ -11,46 +11,62 @@ D = ts.vec(1, 0, -1)
 
 
 @ti.func
-def clampSample(field: ti.template(), P):
+def sample(field: ti.template(), P):
+    '''
+    Sampling a field with indices clampped into the field shape.
+
+    :parameter field: (Tensor)
+        Specify the field to sample.
+
+    :parameter P: (Vector)
+        Specify the index in field.
+
+    :return:
+        The return value is calcuated as::
+
+            P = clamp(P, 0, vec(*field.shape) - 1)
+            return field[int(P)]
+    '''
     shape = ti.Vector(field.shape())
     P = ts.clamp(P, 0, shape - 1)
-    return field[P]
+    return field[int(P)]
 
 
 @ti.func
-def blackSample(field: ti.template(), P):
-    shape = ti.Vector(field.shape())
-    ret = field[P] * 0
-    if all(0 <= P and P < shape):
-        ret = field[P]
-    return ret
+def bilerp(field: ti.template(), P):
+    '''
+    Bilinear sampling an 2D field with a real index.
 
+    :parameter field: (2D Tensor)
+        Specify the field to sample.
 
-@ti.func
-def whiteSample(field: ti.template(), P):
-    shape = ti.Vector(field.shape())
-    ret = field[P] * 0 + 1
-    if all(0 <= P and P < shape):
-        ret = field[P]
-    return ret
+    :parameter P: (2D Vector of float)
+        Specify the index in field.
 
+    :note:
+        If one of the element to be accessed is out of `field.shape`, then
+        `bilerp` will automatically do a clamp for you, see :func:`sample`. 
 
-@ti.func
-def nearestSample(field: ti.template(), P):
-    shape = ti.Vector(field.shape())
-    P = int(ts.round(ts.clamp(P, 0, shape - 1)))
-    return field[P]
+    :return:
+        The return value is calcuated as::
 
+            I = int(P)
+            x = fract(P)
+            y = 1 - x
+            return (sample(field, I + D.xx) * x.x * x.y +
+                    sample(field, I + D.xy) * x.x * y.y +
+                    sample(field, I + D.yy) * y.x * y.y +
+                    sample(field, I + D.yx) * y.x * x.y)
 
-@ti.func
-def linearSample(field: ti.template(), P):
+        .. where D = vec(1, 0, -1)
+    '''
     I = int(P)
     x = ts.fract(P)
     y = 1 - x
-    return (clampSample(field, I + D.xx) * x.x * x.y +
-            clampSample(field, I + D.xy) * x.x * y.y +
-            clampSample(field, I + D.yy) * y.x * y.y +
-            clampSample(field, I + D.yx) * y.x * x.y)
+    return (sample(field, I + D.xx) * x.x * x.y +
+            sample(field, I + D.xy) * x.x * y.y +
+            sample(field, I + D.yy) * y.x * y.y +
+            sample(field, I + D.yx) * y.x * x.y)
 
 
 @ti.func
@@ -58,25 +74,3 @@ def superSample2x2(fieldFunc: ti.template(), P, dx=1):
     dD = dx / 2 * D
     return (fieldFunc(P + dD.yy) + fieldFunc(P + dD.yz) +
             fieldFunc(P + dD.zz) + fieldFunc(P + dD.zy)) * 0.25
-
-
-@ti.func
-def vgridDivergence(field: ti.template(), I):
-    return (clampSample(field, I + D.xy).x + clampSample(field, I + D.yx).y -
-            clampSample(field, I + D.xz).x - clampSample(field, I + D.zx).y)
-
-
-@ti.func
-def vgridGradient(field: ti.template(), I):
-    return ts.vec2(
-        clampSample(field, I + D.yx) - clampSample(field, I + D.zx),
-        clampSample(field, I + D.xy) - clampSample(field, I + D.xz))
-
-
-@ti.func
-def vgridSumAround(field: ti.template(), I):
-    return (clampSample(field, I + D.yx) + clampSample(field, I + D.zx) +
-            clampSample(field, I + D.xy) + clampSample(field, I + D.xz))
-
-
-bilerp = linearSample

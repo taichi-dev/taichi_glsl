@@ -8,6 +8,25 @@ import taichi_glsl as ts
 from taichi_glsl.sampling import *
 
 
+@ti.func
+def vgridDivergence(field: ti.template(), I):
+    return (sample(field, I + D.xy).x + sample(field, I + D.yx).y -
+            sample(field, I + D.xz).x - sample(field, I + D.zx).y)
+
+
+@ti.func
+def vgridGradient(field: ti.template(), I):
+    return ts.vec2(
+        sample(field, I + D.yx) - sample(field, I + D.zx),
+        sample(field, I + D.xy) - sample(field, I + D.xz))
+
+
+@ti.func
+def vgridSumAround(field: ti.template(), I):
+    return (sample(field, I + D.yx) + sample(field, I + D.zx) +
+            sample(field, I + D.xy) + sample(field, I + D.xz))
+
+
 class Pair(TaichiClass):
     @classmethod
     def make(cls, init):

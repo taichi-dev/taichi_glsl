@@ -51,17 +51,16 @@ Note that this will import ``taichi`` as name ``ti`` as well.
 Scalar math
 -----------
 
-.. automodapi:: taichi_glsl.glsl
+.. automodapi:: taichi_glsl.scalar
 
     :no-heading:
 
     :skip: acos, asin, ceil, cos, exp, floor, log, sin, sqrt, tan
 
+Vector math
+-----------
 
-Linear alegbra
---------------
-
-.. automodapi:: taichi_glsl.linalg
+.. automodapi:: taichi_glsl.vector
 
     :no-heading:
 
@@ -73,16 +72,24 @@ GUI Base Class
     :no-heading:
     :no-inheritance-diagram:
 
+Field sampling
+--------------
+
+.. automodapi:: taichi_glsl.sampling
+
+    :no-heading:
+
 Random generator
 ----------------
 
-.. automodapi:: taichi_glsl.rand
+.. automodapi:: taichi_glsl.randgen
 
     :no-heading:
 
-Physics computation
--------------------
+Particle physics
+----------------
 
-.. automodapi:: taichi_glsl.phys
+.. automodapi:: taichi_glsl.lagrangian
 
     :no-heading:
+
