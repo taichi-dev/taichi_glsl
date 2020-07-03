@@ -18,8 +18,9 @@ Taichi GLSL is an extension library of the `Taichi Programming Language <https:/
 7. Useful physics helper functions like ``boundReflect``.
 8. Shadertoy-alike inputed GUI base class ``Animation``.
 
-<[Clike me for documentation] (https://taichi-glsl.readthedocs.io)>_
-<[Clike me for GitHub repo] (https://github.com/taichi-dev/taichi_glsl)>_
+`[Clike me for documentation] <https://taichi-glsl.readthedocs.io>`_
+
+`[Clike me for GitHub repo] <https://github.com/taichi-dev/taichi_glsl>`_
 '''
 classifiers = [
     'Intended Audience :: Developers',

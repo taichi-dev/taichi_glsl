@@ -9,6 +9,10 @@ class MyAnimation(ts.Animation):
         self.title = 'Taichi Logo AA2x2'
         self.img = ti.var(ti.f32, (512, 512))
 
+    @ti.func
+    def fetch(self, uv):
+        return ts.imageTaichi(uv)
+
     @ti.kernel
     def on_render(self):
         for i, j in self.img:
