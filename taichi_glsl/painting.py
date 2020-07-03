@@ -20,8 +20,15 @@ def sdLine(u, v, p):
         ret = puXvu * ts.invLength(vu)
     return ret
 
+
 @ti.func
-def paintArrow(img: ti.template(), orig, dir, color=1, width=3, max_size=12, min_scale=0.4):
+def paintArrow(img: ti.template(),
+               orig,
+               dir,
+               color=1,
+               width=3,
+               max_size=12,
+               min_scale=0.4):
     res = ts.vec(*img.shape)
     I = orig * res
     D = dir * res
@@ -33,7 +40,9 @@ def paintArrow(img: ti.template(), orig, dir, color=1, width=3, max_size=12, min
     D1 = ti.Matrix.rotation2d(+math.pi * 3 / 4) @ DS
     D2 = ti.Matrix.rotation2d(-math.pi * 3 / 4) @ DS
     bmin, bmax = ti.floor(min(I, J)), ti.ceil(max(I, J))
-    for P in ti.grouped(ti.ndrange((bmin.x - SW, bmax.x + SW), (bmin.y - SW, bmax.y + SW))):
+    for P in ti.grouped(
+            ti.ndrange((bmin.x - SW, bmax.x + SW),
+                       (bmin.y - SW, bmax.y + SW))):
         c0 = ts.smoothstep(abs(sdLine(I, J, P)), width, width / 2)
         c1 = ts.smoothstep(abs(sdLine(J, J + D1, P)), width, width / 2)
         c2 = ts.smoothstep(abs(sdLine(J, J + D2, P)), width, width / 2)

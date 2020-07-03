@@ -15,6 +15,9 @@ def vecSimple(*xs):
     :return:
         The return value is a n-D vector, where `n = len(xs)`.
         And the i-th component is initialized to be `xs[i]`.
+
+    :see also:
+        :func:`vec`, :func:`vecFill`.
     '''
     return ti.Vector(xs)
 
@@ -137,9 +140,22 @@ def vec4(*xs):
     return vecND(4, *xs)
 
 
+def vecAngle(a):
+    '''
+    Return a 2D vector of specific phase angle.
+
+    :parameter a:
+        Specify the phase angle of vector.
+
+    :return:
+        The return value is computed as `vec(cos(a), sin(a))`.
+    '''
+    return vecSimple(ti.cos(a), ti.sin(a))
+
+
 def mat(*xs):
     '''
-    Matrix initializer
+    Matrix initializer (WIP).
 
     :parameter xs:
         A row-major list of list, which contains the elements of matrix.
@@ -198,6 +214,20 @@ def normalize(v):
 
 @ti.func
 def normalizePow(v, n, eps=0):
+    '''
+    Return a vector with same direction but with a `n`-powered length.
+
+    This can be used in calculating gravitational force or speed around vortex.
+
+    :parameter v:
+        Specifies the vector to normalize.
+
+    :parameter n:
+        Specifies the power number to tweak the length.
+
+    :return:
+        The return value can be calculated as `normalize(v) * length(v) ** n`.
+    '''
     l2 = v.norm_sqr() + eps
     return v * (l2**((n - 1) / 2))
 

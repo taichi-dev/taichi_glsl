@@ -3,17 +3,20 @@
 - bilerp (bilinear+clamp sample)
 - superSample2x2 (anti-aliasing)
 
-**Particle simulation**:
-- ballBoundReflect
+**Vector math**:
+- normalizePow (use `normalizePow(x_ij, -2)` to calcuate gravity)
 
 **Painting helpers**:
-- paintArrow
-- sdLine
+- paintArrow (simply feed the image tensor)
+- sdLine (SDF of a line segment)
 
 **Builtin images**:
 - imageTaichi (from `taichi/examples/taichi_logo.py`)
 - imageChess (NxN black-white checkers)
 - imageGrid (NxN black stroke grid)
+
+**Particle simulation**:
+- ballBoundReflect (often used in cloth simulation)
 
 **Color mapping**:
 - grayscale
