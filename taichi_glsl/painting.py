@@ -21,21 +21,20 @@ def sdLine(u, v, p):
     return ret
 
 @ti.func
-def paintArrow(img: ti.template(), orig, dir):
+def paintArrow(img: ti.template(), orig, dir, color=1, width=3, max_size=12, min_scale=0.4):
     res = ts.vec(*img.shape)
     I = orig * res
     D = dir * res
     J = I + D
-    W = 3
     DL = ts.length(D)
-    S = min(22, DL * 0.5)
+    S = min(max_size, DL * min_scale)
     DS = D / (DL + 1e-4) * S
-    SW = S + W
+    SW = S + width
     D1 = ti.Matrix.rotation2d(+math.pi * 3 / 4) @ DS
     D2 = ti.Matrix.rotation2d(-math.pi * 3 / 4) @ DS
     bmin, bmax = ti.floor(min(I, J)), ti.ceil(max(I, J))
     for P in ti.grouped(ti.ndrange((bmin.x - SW, bmax.x + SW), (bmin.y - SW, bmax.y + SW))):
-        c0 = ts.smoothstep(abs(sdLine(I, J, P)), W, W / 2)
-        c1 = ts.smoothstep(abs(sdLine(J, J + D1, P)), W, W / 2)
-        c2 = ts.smoothstep(abs(sdLine(J, J + D2, P)), W, W / 2)
-        img[P] = max(c0, c1, c2)
+        c0 = ts.smoothstep(abs(sdLine(I, J, P)), width, width / 2)
+        c1 = ts.smoothstep(abs(sdLine(J, J + D1, P)), width, width / 2)
+        c2 = ts.smoothstep(abs(sdLine(J, J + D2, P)), width, width / 2)
+        img[P] = max(c0, c1, c2) * color

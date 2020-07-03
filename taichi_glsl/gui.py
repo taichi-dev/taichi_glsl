@@ -112,6 +112,7 @@ class Animation(ts.DataOriented):
         self.background_color = 0x000000
         self.gui = None
         self.has_input = False
+        self.auto_clean = False
         self.screenshot_dir = None
         self.output_video = None
         self.start_time = time.time()
@@ -180,6 +181,10 @@ class Animation(ts.DataOriented):
         I.e. update ``self.circles`` if you're using it.
         '''
         pass
+
+    def on_pre_render(self):
+        if self.auto_clean:
+            self.img.fill(0)
 
     def on_render(self):
         '''
@@ -473,6 +478,7 @@ class Animation(ts.DataOriented):
             self.on_event(e)
         self.on_update_input()
         self.on_advance()
+        self.on_pre_render()
         self.on_render()
         self.on_post_render()
         if self.img is not None:

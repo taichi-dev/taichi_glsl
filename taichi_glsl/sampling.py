@@ -54,9 +54,10 @@ def linearSample(field: ti.template(), P):
 
 
 @ti.func
-def superSample2x2(fieldFunc: ti.template(), P):
-    return (fieldFunc(P + 0.5 * D.yy) + fieldFunc(P + 0.5 * D.yz) +
-            fieldFunc(P + 0.5 * D.zz) + fieldFunc(P + 0.5 * D.zy)) * 0.25
+def superSample2x2(fieldFunc: ti.template(), P, dx=1):
+    dD = dx / 2 * D
+    return (fieldFunc(P + dD.yy) + fieldFunc(P + dD.yz) +
+            fieldFunc(P + dD.zz) + fieldFunc(P + dD.zy)) * 0.25
 
 
 @ti.func
