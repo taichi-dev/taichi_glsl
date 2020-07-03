@@ -51,7 +51,7 @@ class SemiLagrangianRK1(Pair):
     def advance(self, world):
         for I in ti.grouped(self.old):
             btI = I - world.velocity(I) * (world.dt / world.dx)
-            self.new[I] = linearSample(self.old, btI)
+            self.new[I] = bilerp(self.old, btI)
 
 
 class SemiLagrangianRK2(Pair):
@@ -60,7 +60,7 @@ class SemiLagrangianRK2(Pair):
         for I in ti.grouped(self.old):
             spI = I - world.velocity(I) * (0.5 * world.dt / world.dx)
             btI = I - world.velocity(spI) * (world.dt / world.dx)
-            self.new[I] = linearSample(self.old, btI)
+            self.new[I] = bilerp(self.old, btI)
 
 
 class Maccormack(Pair):

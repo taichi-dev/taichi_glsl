@@ -18,7 +18,7 @@ class MyAnimation(ts.Animation):
 
     @ti.func
     def velocity(self, P):
-        return ts.linearSample(self.vel.old, P)
+        return ts.bilerp(self.vel.old, P)
 
     @ti.func
     def clearDiv(self):
