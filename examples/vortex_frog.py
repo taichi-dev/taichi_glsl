@@ -11,6 +11,8 @@ class MyAnimation(ts.Animation):
         self.vorts = ti.Vector(2, ti.f32, 4)
         self.vorty = ti.var(ti.f32, 4)
         self.circles = self.vorts
+        self.circle_radius = 3
+        self.circle_color = 0x000000
         self.img = self.color.new
         self.dt = 0.04
         self.dx = 1 / res[0]

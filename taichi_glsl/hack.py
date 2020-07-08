@@ -12,15 +12,10 @@ ti_static = ti.static
 
 
 def _ts_static(x, *xs):
-    def _static(x):
-        if ti.is_taichi_class(x):
-            return x
-        else:
-            return ti_static(x)
-
     if len(xs) == 0:
-        return _static(x)
-    return [_static(x)] + [_static(_) for _ in xs]
+        return x
+
+    return [x] + xs
 
 
 ti.static = _ts_static
@@ -34,7 +29,7 @@ _old_element_wise_binary = ti.Matrix.element_wise_binary
 
 def _new_element_wise_binary(self, foo, other):
     if foo.__name__ == 'assign':
-        foo.__name__ == '_assign'
+        foo.__name__ = '_assign'
     return _old_element_wise_binary(self, foo, other)
 
 
