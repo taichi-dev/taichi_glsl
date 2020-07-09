@@ -20,4 +20,5 @@ from .experimental_cfd import *
 from .colormap import *
 from .painting import *
 from .mkimages import *
+from .sphcore import *
 from .gui import *
