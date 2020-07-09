@@ -21,4 +21,5 @@ from .colormap import *
 from .painting import *
 from .mkimages import *
 from .sphcore import *
+from .classes import *
 from .gui import *
