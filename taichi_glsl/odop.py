@@ -10,7 +10,6 @@ class DataOriented:
     pass
 
 
-@ti.data_oriented
 class TaichiClass:
     is_taichi_class = True
 
