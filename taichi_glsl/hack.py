@@ -5,16 +5,6 @@ Some hacks / hooks on Taichi to make Taichi GLSL work
 import taichi as ti
 
 
-# Ensure ti.Vector.var:
-if not hasattr(ti.Vector, 'var'):
-    ti.Vector.var = ti.Vector
-
-
-# Ensure ti.pyfunc:
-if not hasattr(ti, 'pyfunc'):
-    ti.pyfunc = ti.func
-
-
 # Make ti.static support Taichi classes:
 ti_static = ti.static
 

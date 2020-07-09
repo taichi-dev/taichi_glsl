@@ -40,15 +40,29 @@ class TaichiClass:
         return self.entries[0].loop_range()
 
     def get_tensor_members(self):
-        ret = []
-        for e in self.entries:
-            if hasattr(e, 'get_tensor_members'):
-                e = e.get_tensor_members()
-            else:
-                e = [e]
-            ret += e
-        return ret
+        if hasattr(e, 'get_tensor_members'):
+            e = e.get_tensor_members()
+        else:
+            e = [e]
+        ret += e
 
     @ti.taichi_scope
     def variable(self):
-        return self.__class__(*(e.variable() for e in self.entries))
+        return self.__class__(*(ti.expr_init(e) for e in self.entries))
+
+    def snode(self):
+        return self.loop_range().snode()
+
+    @property
+    def shape(self):
+        return self.snode().shape
+
+    @ti.taichi_scope
+    def __ti_repr__(self):
+        raise NotImplementedError
+
+    def __repr__(self):
+        ret = []
+        for e in self.__ti_repr__():
+            ret.append(e)
+        return ''.join(map(str, ret))
