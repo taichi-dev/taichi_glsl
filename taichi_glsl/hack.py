@@ -44,3 +44,15 @@ def _vector_product(self: ti.template()):
 
 
 ti.Matrix.product = _vector_product
+
+
+# Add ti.Matrix.mag property:
+@ti.func
+def _vector_mag(self: ti.template()):
+    ret = self[0]
+    for i in ti.static(range(1, self.n)):
+        ret *= self[i]
+    return ret
+
+
+ti.Matrix.mag = property(_vector_mag)

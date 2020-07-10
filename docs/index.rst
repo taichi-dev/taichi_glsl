@@ -64,6 +64,21 @@ Vector math
 
     :no-heading:
 
+Field sampling
+--------------
+
+.. automodapi:: taichi_glsl.sampling
+
+    :no-heading:
+
+Taichi Classes
+--------------
+
+.. automodapi:: taichi_glsl.classes
+
+    :no-heading:
+    :no-inheritance-diagram:
+
 GUI Base Class
 --------------
 
@@ -76,13 +91,6 @@ Random generator
 ----------------
 
 .. automodapi:: taichi_glsl.randgen
-
-    :no-heading:
-
-Field sampling
---------------
-
-.. automodapi:: taichi_glsl.sampling
 
     :no-heading:
 

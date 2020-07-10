@@ -227,6 +227,10 @@ class Animation(ts.DataOriented):
         pass
 
     def on_drag(self, x, y):
+        # TODO: add (dx, dy) for drag
+        pass
+
+    def on_wheel(self, x, y, dx, dy):
         pass
 
     def on_close(self):
@@ -234,6 +238,13 @@ class Animation(ts.DataOriented):
 
     def on_escape(self):
         self.on_close()
+
+    @property
+    def _img(self):
+        if hasattr(self, 'colormap'):
+            return self.colormap(self.img.to_numpy())
+        else:
+            return self.img
 
     def on_pre_event(self):
         '''
@@ -409,13 +420,16 @@ class Animation(ts.DataOriented):
             else:
                 self.on_release(e.key)
         elif e.type == ti.GUI.MOTION:
-            had_any = False
-            for btn in MOUSE:
-                if gui.is_pressed(btn):
-                    self.on_drag(*e.pos, btn)
-                    had_any = True
-            if not had_any:
-                self.on_hover(*e.pos)
+            if e.type == ti.GUI.MOVE:
+                had_any = False
+                for btn in MOUSE:
+                    if self.gui.is_pressed(btn):
+                        self.on_drag(*e.pos, btn)
+                        had_any = True
+                if not had_any:
+                    self.on_hover(*e.pos)
+            elif e.type == ti.GUI.WHEEL:
+                self.on_wheel(*e.pos, *e.delta)
 
     @property
     def mouse(self):
@@ -468,6 +482,10 @@ class Animation(ts.DataOriented):
                 self.gui.frame = 0
             if not hasattr(ti.GUI, 'EXIT'):
                 ti.GUI.EXIT = 'WMClose'
+            if not hasattr(ti.GUI, 'MOVE'):
+                ti.GUI.MOVE = 'Motion'
+            if not hasattr(ti.GUI, 'WHEEL'):
+                ti.GUI.WHEEL = 'Wheel'
             while self.gui.running:
                 self._per_loop()
         self.on_pre_exit()
@@ -484,7 +502,7 @@ class Animation(ts.DataOriented):
         self.on_render()
         self.on_post_render()
         if self.img is not None:
-            self.gui.set_image(self.img)
+            self.gui.set_image(self._img)
         if self.circles is not None:
             self.gui.circles(self.circles.to_numpy(), self.circle_color,
                              self.circle_radius)
