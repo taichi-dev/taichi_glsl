@@ -113,6 +113,7 @@ class Animation(ts.DataOriented):
         self.gui = None
         self.has_input = False
         self.auto_clean = False
+        self.colormap = None
         self.screenshot_dir = None
         self.output_video = None
         self.start_time = time.time()
@@ -172,6 +173,8 @@ class Animation(ts.DataOriented):
         | ``resolution``     |   tuple      | ``img.shape``   | The size of window / screen.  |
         +--------------------+--------------+-----------------+-------------------------------+
         | ``auto_clean``     |   boolean    | ``False``       | Zero the image before render. |
+        +--------------------+--------------+-----------------+-------------------------------+
+        | ``colormap``       |  MPL CMap    | ``None``        | ``matplotlib.cm`` color map.  |
         +--------------------+--------------+-----------------+-------------------------------+
         '''
         pass
@@ -241,7 +244,7 @@ class Animation(ts.DataOriented):
 
     @property
     def _img(self):
-        if hasattr(self, 'colormap'):
+        if self.colormap is not None:
             return self.colormap(self.img.to_numpy())
         else:
             return self.img

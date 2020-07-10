@@ -18,7 +18,7 @@ def grayscale(rgb):
     return ret
 
 
-@ti.func
+@ti.pyfunc
 def normalmap(n):
     '''
     Convert XYZ normal vector into RGB values.
@@ -30,3 +30,19 @@ def normalmap(n):
         The return value is calculated as `n * 0.5 + 0.5`.
     '''
     return n * 0.5 + 0.5
+
+
+@ti.func
+def blueorange(rgb):
+    '''
+    Convert RGB value (vector) into blue-orange colormap (vector).
+
+    :parameter rgb: (3D vector)
+        The RGB value, X compoment is the R value, can be eitier float or int.
+
+    :return:
+        The return value is calculated as `sqrt(mix(vec(0, 0.01, 0.05), vec(1.19, 1.04, 0.98), color))`.
+    '''
+    blue = ts.vec(0.00, 0.01, 0.05)
+    orange = ts.vec(1.19, 1.04, 0.98)
+    return ti.sqrt(ts.mix(blue, orange, rgb))
