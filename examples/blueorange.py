@@ -5,7 +5,7 @@ ti.init()
 
 
 class MyAnimation(tl.Animation):
-    def on_init(self, n=512):
+    def on_init(self, n=320):
         self.n = n
         self.title = 'Julia Set'
         self.img = ti.Vector(3, ti.f32, (self.n * 2, self.n))
