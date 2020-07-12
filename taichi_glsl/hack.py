@@ -13,7 +13,7 @@ def _ts_static(x, *xs):
     if len(xs) == 0:
         return x
 
-    return [x] + xs
+    return [x] + list(xs)
 
 
 ti.static = _ts_static
@@ -56,3 +56,10 @@ def _vector_mag(self: ti.template()):
 
 
 ti.Matrix.mag = property(_vector_mag)
+
+
+# Add ti.pi and ti.tau:
+import math
+
+pi = ti.pi = math.pi
+tau = ti.tau = math.tau
