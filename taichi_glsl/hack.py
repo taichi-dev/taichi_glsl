@@ -46,16 +46,38 @@ def _vector_product(self: ti.template()):
 ti.Matrix.product = _vector_product
 
 
-# Add ti.Matrix.mag property:
+# Add ti.Matrix.{L,L2,N,T} property:
 @ti.func
-def _vector_mag(self: ti.template()):
+def _vector_L(self: ti.template()):
     ret = self[0]
     for i in ti.static(range(1, self.n)):
         ret *= self[i]
     return ret
 
 
-ti.Matrix.mag = property(_vector_mag)
+@ti.func
+def _vector_L2(self: ti.template()):
+    ret = self[0]
+    for i in ti.static(range(1, self.n)):
+        ret *= self[i]
+    return ret
+
+
+@ti.func
+def _vector_N(self: ti.template()):
+    return self.normalized()
+
+
+@ti.func
+def _matrix_T(self: ti.template()):
+    return self.transpose()
+
+
+ti.Matrix.L = property(_vector_L)
+ti.Matrix.L2 = property(_vector_L2)
+ti.Matrix.N = property(_vector_N)
+if not hasattr(ti.Matrix, T):
+    ti.Matrix.T = property(_matrix_T)
 
 
 # Add ti.pi and ti.tau:

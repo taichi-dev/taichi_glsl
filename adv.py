@@ -35,11 +35,21 @@ def initrotv():
         vel.o[I] = (I - N / 2).yx * tl.D.zx
 
 
+@ti.func
+def backtrace(v: ti.template(), I, dt):
+    midI = I - 0.5 * tl.bilerp(v, I) * dt
+    finI = I - dt * tl.bilerp(v, midI)
+    return finI
+
+
 @ti.kernel
 def advect(fn: ti.template(), f: ti.template(), v: ti.template()):
     for I in ti.grouped(f):
-        btI = I - v[I] * dt
-        fn[I] = tl.bilerp(f, btI)
+        btI = backtrace(v, I, dt)
+        ftI = backtrace(v, btI, -dt)
+        f_btI = tl.bilerp(f, btI)
+        f_ftI = tl.bilerp(f, ftI)
+        fn[I] = f_btI + 0.5 * (f_ftI - f[I])
 
 
 @ti.kernel
@@ -65,6 +75,26 @@ def jacobi(pn: ti.template(), p: ti.template()):
 
 
 @ti.kernel
+def gauss_seidel(pn: ti.template(), p: ti.template()):
+    for I in ti.grouped(p):
+        if I.sum() % 2 == 0:
+            l = tl.sample(p, I + tl.D.zy)
+            r = tl.sample(p, I + tl.D.xy)
+            b = tl.sample(p, I + tl.D.yz)
+            t = tl.sample(p, I + tl.D.yx)
+            sa = r + l + t + b
+            pn[I] = (sa - dx**2 * div[I]) * 0.25
+    for I in ti.grouped(p):
+        if I.sum() % 2 == 1:
+            l = tl.sample(pn, I + tl.D.zy)
+            r = tl.sample(pn, I + tl.D.xy)
+            b = tl.sample(pn, I + tl.D.yz)
+            t = tl.sample(pn, I + tl.D.yx)
+            sa = r + l + t + b
+            pn[I] = (sa - dx**2 * div[I]) * 0.25
+
+
+@ti.kernel
 def subgrad(v: ti.template(), p: ti.template()):
     for I in ti.grouped(v):
         l = tl.sample(p, I + tl.D.zy)
@@ -78,12 +108,12 @@ def subgrad(v: ti.template(), p: ti.template()):
 @ti.kernel
 def pump(v: ti.template(), d: ti.template(), a: ti.f32):
     pump_strength = ti.static(0.1)
-    X, Y = ti.static(10, 15)
+    X, Y = ti.static(15, 15)
     for x, y in ti.ndrange((-X, X + 1), (-Y + 1, Y)):
         I = tl.vec(N // 2 + x, Y + y)
         s = ((Y - abs(y)) / Y * (X - abs(x)) / X) ** 2
         v[I] += tl.vecAngle(a + tl.pi / 2) * s * (pump_strength / dt) * 7.8
-        d[I] += s * (dt / pump_strength) * 19.3
+        d[I] += s * (dt / pump_strength) * 21.3
 
 
 #initdye()
@@ -108,8 +138,12 @@ while gui.running:
     vel.swap()
 
     compute_div(vel.o)
-    for _ in range(30):
+    for _ in range(5):
         jacobi(pre.n, pre.o)
+        pre.swap()
+
+    for _ in range(20):
+        gauss_seidel(pre.n, pre.o)
         pre.swap()
 
     subgrad(vel.o, pre.o)
