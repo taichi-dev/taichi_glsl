@@ -3,7 +3,6 @@ import taichi_glsl as tl
 import matplotlib.cm as cm
 cmap = cm.get_cmap('magma')
 
-
 N = 512
 dx = 1 / N
 dt = 0.001
@@ -28,6 +27,7 @@ div = ti.var(ti.f32, (N, N))
 def initdye():
     for I in ti.grouped(dye.o):
         dye.o[I] = tl.imageChess(I / N)
+
 
 @ti.kernel
 def initrotv():
@@ -111,7 +111,7 @@ def pump(v: ti.template(), d: ti.template(), a: ti.f32):
     X, Y = ti.static(15, 15)
     for x, y in ti.ndrange((-X, X + 1), (-Y + 1, Y)):
         I = tl.vec(N // 2 + x, Y + y)
-        s = ((Y - abs(y)) / Y * (X - abs(x)) / X) ** 2
+        s = ((Y - abs(y)) / Y * (X - abs(x)) / X)**2
         v[I] += tl.vecAngle(a + tl.pi / 2) * s * (pump_strength / dt) * 7.8
         d[I] += s * (dt / pump_strength) * 21.3
 

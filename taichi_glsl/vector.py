@@ -493,7 +493,6 @@ def _vector_getattr(self, key):
 
         stk.append((i, sgn))
 
-
     else:
         for i, sgn in stk:
             if ti.inside_kernel():

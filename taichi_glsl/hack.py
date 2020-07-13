@@ -4,7 +4,6 @@ Some hacks / hooks on Taichi to make Taichi GLSL work
 
 import taichi as ti
 
-
 # Make ti.static support Taichi classes:
 ti_static = ti.static
 
@@ -67,7 +66,6 @@ ti.Matrix.L = property(_vector_L)
 ti.Matrix.L2 = property(_vector_L2)
 ti.Matrix.N = property(_vector_N)
 ti.Matrix.T = property(_matrix_T)
-
 
 # Add ti.pi and ti.tau:
 import math

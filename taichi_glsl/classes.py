@@ -10,7 +10,6 @@ class Complex(tl.TaichiClass, ti.TaichiOperations):
         `complex * complex` is the **element-wise** multiplication.
         Use `complex @ complex` if you mean to use complex number multiplication.
     '''
-
     def __init__(self, x, y=None):
         '''Construct a complex from a vector / two scalars'''
         if y is None:
@@ -37,7 +36,7 @@ class Complex(tl.TaichiClass, ti.TaichiOperations):
     @property
     def mag2(self):
         '''Squared magnitude of the complex'''
-        return self.x ** 2 + self.y ** 2
+        return self.x**2 + self.y**2
 
     @property
     def mag(self):

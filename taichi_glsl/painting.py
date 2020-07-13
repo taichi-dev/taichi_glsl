@@ -39,10 +39,11 @@ def paintArrow(img: ti.template(),
     SW = S + width
     D1 = ti.Matrix.rotation2d(+math.pi * 3 / 4) @ DS
     D2 = ti.Matrix.rotation2d(-math.pi * 3 / 4) @ DS
-    bmin, bmax = ti.floor(max(0, min(I, J) - SW)), ti.ceil(min(res - 1, max(I, J) + SW))
-    for P in ti.grouped(
-            ti.ndrange((bmin.x, bmax.x),
-                       (bmin.y, bmax.y))):
+    bmin, bmax = ti.floor(max(0,
+                              min(I, J) - SW)), ti.ceil(
+                                  min(res - 1,
+                                      max(I, J) + SW))
+    for P in ti.grouped(ti.ndrange((bmin.x, bmax.x), (bmin.y, bmax.y))):
         c0 = ts.smoothstep(abs(sdLine(I, J, P)), width, width / 2)
         c1 = ts.smoothstep(abs(sdLine(J, J + D1, P)), width, width / 2)
         c2 = ts.smoothstep(abs(sdLine(J, J + D2, P)), width, width / 2)

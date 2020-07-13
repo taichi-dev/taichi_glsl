@@ -5,7 +5,7 @@ import taichi_glsl as tl
 @ti.host_arch_only
 def test_subscript_0d():
     c = tl.Complex.var(ti.f32, ())
-    
+
     @ti.kernel
     def func() -> ti.f32:
         return c[None].x + c[None].y
@@ -19,7 +19,7 @@ def test_subscript_0d():
 @ti.host_arch_only
 def test_subscript_1d():
     c = tl.Complex.var(ti.f32, 4)
-    
+
     @ti.kernel
     def func(i: ti.i32) -> ti.f32:
         return c[i].x + c[i].y
@@ -34,7 +34,7 @@ def test_subscript_1d():
 def test_loop_range_1d():
     c = tl.Complex.var(ti.f32, 4)
     count = ti.var(ti.i32, ())
-    
+
     @ti.kernel
     def func() -> ti.f32:
         res = 0.0
@@ -55,7 +55,7 @@ def test_loop_range_1d():
 def test_loop_range_2d():
     c = tl.Complex.var(ti.f32, (2, 4))
     count = ti.var(ti.i32, ())
-    
+
     @ti.kernel
     def func() -> ti.f32:
         res = 0.0
@@ -77,7 +77,7 @@ def test_loop_range_2d():
 def test_loop_atomic_add():
     c = tl.Complex.var(ti.f32, 4)
     r = tl.Complex.var(ti.f32, ())
-    
+
     @ti.kernel
     def func():
         r[None] = 0.0
@@ -97,7 +97,7 @@ def test_loop_atomic_add():
 def test_loop_matmul():
     c = tl.Complex.var(ti.f32, 2)
     r = tl.Complex.var(ti.f32, ())
-    
+
     @ti.kernel
     def func():
         r[None] = tl.Complex(1.0, 0.0)
