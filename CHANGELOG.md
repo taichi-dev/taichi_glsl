@@ -8,10 +8,8 @@
 - dploy6
 
 **ODOP classes**:
-- Complex (use `c @ c` for complex multiply, experimental)
-
-**Field sampling**:
-- D = tl.vec(1, 0, -1), e.g.: `D.xyy` to get `tl.vec(1, 0, 0)`
+- `TaichiClass` for generic base of Taichi ODOP data classes (WIP)
+- `Complex` based on `TaichiClass` (use `c @ c` for multiply, WIP)
 
 **Taichi hacks**:
 - matrix.T
@@ -20,4 +18,10 @@
 - vector.N, a shortcut for `vector.normalized()`
 - ti.pi, a shortcut for `math.pi`
 - ti.tau, a shortcut for `math.tau`
-- vector.Yx, a shortcut for `tl.vec(vector.y, vector.x)`, and more :)
+
+**Vector math**:
+- vector.Yx, a shortcut for `tl.vec(vector.y, vector.x)`, and what's more:
+- If `u = tl.vec(2, 3, 4, 5)`, then `u.y_xW` is `(3, 0, 2, -5)`
+
+**Field sampling**:
+- D = tl.vec(1, 0, -1), e.g.: use `D.xyy` or `D.x__` to get `tl.vec(1, 0, 0)`

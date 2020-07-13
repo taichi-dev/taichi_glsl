@@ -476,15 +476,37 @@ def shuffle(a, *ks):
     return ti.Vector(ret)
 
 
-for num in range(2, 4):
+def _vector_getattr(self, key):
+    ret = []
+    stk = []
+    for k in key:
+        sgn = 0
+        i = 0
+        if k != '_':
+            sgn = 1
+            i = 'xyzw'.find(k)
+            if i == -1:
+                sgn = -1
+                i = 'XYZW'.find(k)
+                if i == -1:
+                    break
 
-    def _make_shuffler(indices):
-        def wrapped(u):
-            return shuffle(u, *indices)
+        stk.append((i, sgn))
 
-        return wrapped
 
-    from itertools import product
-    for indices in product(list(range(4)), repeat=num):
-        name = ''.join('xyzw'[i] for i in indices)
-        setattr(ti.Matrix, name, property(_make_shuffler(indices)))
+    else:
+        for i, sgn in stk:
+            if ti.inside_kernel():
+                t = self.subscript(i) * sgn
+                ret.append(ti.expr_init(t))
+            else:
+                t = self[i] * sgn
+                ret.append(t)
+
+        return ti.Vector(ret)
+
+    _taichi_skip_traceback = 1
+    raise AttributeError(f"'Matrix' object has no attribute {key}")
+
+
+ti.Matrix.__getattr__ = _vector_getattr

@@ -16,7 +16,7 @@ class MyAnimation(ts.Animation):
     @ti.func
     def velocity(self, P):
         p = P * self.dx
-        return (2 * p - 1).yx * ts.vec(-1, 1)
+        return (2 * p - 1).Yx
 
     @ti.kernel
     def on_start(self):
