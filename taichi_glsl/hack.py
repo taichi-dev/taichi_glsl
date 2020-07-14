@@ -70,5 +70,5 @@ ti.Matrix.T = property(_matrix_T)
 # Add ti.pi and ti.tau:
 import math
 
-pi = ti.pi = math.pi
-tau = ti.tau = math.tau
+pi = math.pi
+tau = math.tau

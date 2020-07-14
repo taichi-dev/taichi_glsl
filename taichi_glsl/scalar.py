@@ -6,7 +6,7 @@ import taichi as ti
 from taichi import sin, cos, tan, asin, acos, floor, ceil, sqrt, exp, log
 
 
-@ti.func
+@ti.pyfunc
 def clamp(x, xmin=0, xmax=1):
     '''
     Constrain a value to lie between two further values.
@@ -25,7 +25,7 @@ def clamp(x, xmin=0, xmax=1):
     return min(xmax, max(xmin, x))
 
 
-@ti.func
+@ti.pyfunc
 def mix(x, y, a):
     '''
     Linearly interpolate between two values.
@@ -46,7 +46,7 @@ def mix(x, y, a):
     return x * (1 - a) + y * a
 
 
-@ti.func
+@ti.pyfunc
 def sign(x, edge=0):
     '''
     Extract the sign of the parameter.
@@ -71,7 +71,7 @@ def sign(x, edge=0):
     return ret
 
 
-@ti.func
+@ti.pyfunc
 def step(edge, x):
     '''
     Generate a step function by comparing two values.
@@ -93,7 +93,7 @@ def step(edge, x):
     return ret
 
 
-@ti.func
+@ti.pyfunc
 def atan(y, x=1):
     '''
     Return the arc-tangent of the parameters
@@ -124,7 +124,7 @@ def atan(y, x=1):
     return ti.atan2(y, x)
 
 
-@ti.func
+@ti.pyfunc
 def fract(x):
     '''
     Compute the fractional part of the argument.
@@ -140,7 +140,7 @@ def fract(x):
     return x - floor(float(x))
 
 
-@ti.func
+@ti.pyfunc
 def round(x):
     '''
     Find the nearest integer less than or equal to the parameter.
@@ -158,7 +158,7 @@ def round(x):
     return floor(x + 0.5)
 
 
-@ti.func
+@ti.pyfunc
 def smoothstep(x, a=0, b=1):
     '''
     Perform Hermite interpolation between two values.
@@ -186,7 +186,7 @@ def smoothstep(x, a=0, b=1):
     return t * t * (3 - 2 * t)
 
 
-@ti.func
+@ti.pyfunc
 def inversesqrt(x):
     '''
     Return the inverse of the square root of the parameter.
