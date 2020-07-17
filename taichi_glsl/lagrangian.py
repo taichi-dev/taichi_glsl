@@ -3,6 +3,7 @@ Some helper functions that might be useful in physics simulation.
 '''
 
 import taichi as ti
+import taichi_glsl as tl
 
 
 @ti.func
