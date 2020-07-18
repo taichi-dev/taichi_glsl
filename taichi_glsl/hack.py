@@ -62,10 +62,25 @@ def _matrix_T(self):
     return self.transpose()
 
 
+def _matrix_det(self):
+    return self.determinant()
+
+
+def _matrix_inv(self):
+    return self.inverse()
+
+
+def _matrix_tr(self):
+    return self.trace()
+
+
 ti.Matrix.L = property(_vector_L)
 ti.Matrix.L2 = property(_vector_L2)
 ti.Matrix.N = property(_vector_N)
 ti.Matrix.T = property(_matrix_T)
+ti.Matrix.det = property(_matrix_det)
+ti.Matrix.inv = property(_matrix_inv)
+ti.Matrix.tr = property(_matrix_tr)
 
 # Add ti.pi and ti.tau:
 import math
