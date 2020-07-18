@@ -34,7 +34,7 @@ ti.Matrix.element_wise_binary = _new_element_wise_binary
 
 
 # Add ti.Matrix.product method:
-@ti.func
+@ti.pyfunc
 def _vector_product(self: ti.template()):
     ret = self[0]
     for i in ti.static(range(1, self.n)):

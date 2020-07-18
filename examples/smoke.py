@@ -1,6 +1,8 @@
 import taichi as ti
 import taichi_glsl as tl
 import matplotlib.cm as cm
+ti.init(arch=ti.gpu)
+
 cmap = cm.get_cmap('magma')
 
 N = 512
