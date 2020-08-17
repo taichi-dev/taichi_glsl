@@ -4,7 +4,7 @@ import taichi_glsl as ts
 ti.init()
 
 
-class MyAnimation(ts.Animation):
+class TaichiLogo(ts.Animation):
     def on_init(self):
         self.title = 'Taichi Logo'
         self.img = ti.var(ti.f32, (512, 512))
@@ -15,5 +15,6 @@ class MyAnimation(ts.Animation):
             uv = ts.view(self.img, i, j)
             self.img[i, j] = ts.imageTaichi(uv)
 
-
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = TaichiLogo()
+    animation.start()

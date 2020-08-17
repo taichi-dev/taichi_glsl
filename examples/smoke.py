@@ -1,6 +1,8 @@
-import taichi as ti
-import taichi_glsl as tl
 import matplotlib.cm as cm
+import taichi as ti
+
+import taichi_glsl as tl
+
 ti.init(arch=ti.gpu)
 
 cmap = cm.get_cmap('magma')
@@ -73,7 +75,7 @@ def jacobi(pn: ti.template(), p: ti.template()):
         b = tl.sample(p, I + tl.D.yz)
         t = tl.sample(p, I + tl.D.yx)
         sa = r + l + t + b
-        pn[I] = (sa - dx**2 * div[I]) * 0.25
+        pn[I] = (sa - dx ** 2 * div[I]) * 0.25
 
 
 @ti.kernel
@@ -85,7 +87,7 @@ def gauss_seidel(pn: ti.template(), p: ti.template()):
             b = tl.sample(p, I + tl.D.yz)
             t = tl.sample(p, I + tl.D.yx)
             sa = r + l + t + b
-            pn[I] = (sa - dx**2 * div[I]) * 0.25
+            pn[I] = (sa - dx ** 2 * div[I]) * 0.25
     for I in ti.grouped(p):
         if I.sum() % 2 == 1:
             l = tl.sample(pn, I + tl.D.zy)
@@ -93,7 +95,7 @@ def gauss_seidel(pn: ti.template(), p: ti.template()):
             b = tl.sample(pn, I + tl.D.yz)
             t = tl.sample(pn, I + tl.D.yx)
             sa = r + l + t + b
-            pn[I] = (sa - dx**2 * div[I]) * 0.25
+            pn[I] = (sa - dx ** 2 * div[I]) * 0.25
 
 
 @ti.kernel
@@ -113,42 +115,41 @@ def pump(v: ti.template(), d: ti.template(), a: ti.f32):
     X, Y = ti.static(15, 15)
     for x, y in ti.ndrange((-X, X + 1), (-Y + 1, Y)):
         I = tl.vec(N // 2 + x, Y + y)
-        s = ((Y - abs(y)) / Y * (X - abs(x)) / X)**2
+        s = ((Y - abs(y)) / Y * (X - abs(x)) / X) ** 2
         v[I] += tl.vecAngle(a + tl.pi / 2) * s * (pump_strength / dt) * 7.8
         d[I] += s * (dt / pump_strength) * 21.3
 
 
-#initdye()
-#initrotv()
-gui = ti.GUI('advect', N)
-while gui.running:
-    for e in gui.get_events(gui.PRESS):
-        if e.key == gui.ESCAPE:
-            gui.running = False
+if __name__ == '__main__':
+    gui = ti.GUI('advect', N)
+    while gui.running:
+        for e in gui.get_events(gui.PRESS):
+            if e.key == gui.ESCAPE:
+                gui.running = False
 
-    if not gui.is_pressed(gui.SPACE):
-        a = 0
-        if gui.is_pressed('a', gui.LEFT):
-            a += 0.7
-        if gui.is_pressed('d', gui.RIGHT):
-            a -= 0.7
-        pump(vel.o, dye.o, a)
+        if not gui.is_pressed(gui.SPACE):
+            a = 0
+            if gui.is_pressed('a', gui.LEFT):
+                a += 0.7
+            if gui.is_pressed('d', gui.RIGHT):
+                a -= 0.7
+            pump(vel.o, dye.o, a)
 
-    advect(dye.n, dye.o, vel.o)
-    advect(vel.n, vel.o, vel.o)
-    dye.swap()
-    vel.swap()
+        advect(dye.n, dye.o, vel.o)
+        advect(vel.n, vel.o, vel.o)
+        dye.swap()
+        vel.swap()
 
-    compute_div(vel.o)
-    for _ in range(5):
-        jacobi(pre.n, pre.o)
-        pre.swap()
+        compute_div(vel.o)
+        for _ in range(5):
+            jacobi(pre.n, pre.o)
+            pre.swap()
 
-    for _ in range(20):
-        gauss_seidel(pre.n, pre.o)
-        pre.swap()
+        for _ in range(20):
+            gauss_seidel(pre.n, pre.o)
+            pre.swap()
 
-    subgrad(vel.o, pre.o)
+        subgrad(vel.o, pre.o)
 
-    gui.set_image(cmap(dye.o.to_numpy()))
-    gui.show()
+        gui.set_image(cmap(dye.o.to_numpy()))
+        gui.show()

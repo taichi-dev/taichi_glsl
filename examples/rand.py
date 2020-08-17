@@ -11,14 +11,14 @@ def render():
         img[i, j] *= 0.94
     for i in range(200):
         # Try comment and uncomment these:
-        #p = randND(2)
-        #p = 0.5 + 0.3 * randUnit2D()
+        # p = randND(2)
+        # p = 0.5 + 0.3 * randUnit2D()
         p = 0.5 + 0.3 * randSolid2D()
         img[int(p * res + 0.5)] = 1
 
-
 gui = ti.GUI('Random')
-while not gui.get_event(ti.GUI.ESCAPE):
-    render()
-    gui.set_image(img)
-    gui.show()
+if __name__ == '__main__':
+    while not gui.get_event(ti.GUI.ESCAPE):
+        render()
+        gui.set_image(img)
+        gui.show()

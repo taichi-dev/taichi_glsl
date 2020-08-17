@@ -1,6 +1,9 @@
-import taichi as ti
-import taichi_glsl as ts
 import warnings
+
+import taichi as ti
+
+import taichi_glsl as ts
+
 ti.init()
 
 
@@ -27,7 +30,7 @@ class MyAnimation(ts.Animation):
         for _ in ti.static(range(5)):
             for I in ti.grouped(ti.ndrange(*self.pre.old.shape)):
                 pa = ts.vgridSumAround(self.pre.old, I)
-                self.pre.new[I] = (pa - self.div[I] * self.dx**2) * 0.25
+                self.pre.new[I] = (pa - self.div[I] * self.dx ** 2) * 0.25
             self.pre.update()
             for I in ti.grouped(ti.ndrange(*self.pre.old.shape)):
                 grad = ts.vgridGradient(self.div, I) / self.dx
@@ -51,4 +54,6 @@ class MyAnimation(ts.Animation):
             self.clearDiv()
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()
