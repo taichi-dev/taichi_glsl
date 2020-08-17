@@ -1,4 +1,5 @@
 import taichi as ti
+
 import taichi_glsl as ts
 
 ti.init()
@@ -15,5 +16,6 @@ class MyAnimation(ts.Animation):
     def on_render(self):
         ts.paintArrow(self.img, ts.vec2(0.0), self.iMouse)
 
-
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

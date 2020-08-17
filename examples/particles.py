@@ -1,4 +1,5 @@
 import taichi as ti
+
 import taichi_glsl as ts
 
 ti.init()
@@ -41,5 +42,6 @@ class MyAnimation(ts.Animation):
         for i in self.pos:
             self.pos[i] += self.vel[i] * self.dt
 
-
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

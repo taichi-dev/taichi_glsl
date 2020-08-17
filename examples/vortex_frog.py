@@ -1,10 +1,11 @@
 import taichi as ti
+
 import taichi_glsl as ts
-import warnings
+
 ti.init()
 
 
-class MyAnimation(ts.Animation):
+class VortexFrog(ts.Animation):
     def on_init(self):
         res = 512, 512
         self.color = ts.Maccormack.make(lambda: ti.var(ti.f32, res))
@@ -52,4 +53,6 @@ class MyAnimation(ts.Animation):
         self.color.update()
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = VortexFrog()
+    animation.start()

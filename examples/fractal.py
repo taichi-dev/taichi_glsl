@@ -1,6 +1,7 @@
-import taichi as ti
-import taichi_glsl as tl
 import matplotlib.cm as cm
+import taichi as ti
+
+import taichi_glsl as tl
 
 ti.init()
 
@@ -16,7 +17,6 @@ class MyAnimation(tl.Animation):
     @ti.kernel
     def on_render(self):
         for p in ti.grouped(self.img):
-            #c = tl.Complex(-0.8, ti.cos(self.iTime) * 0.2)
             c = tl.Complex(self.iMouse * 2 - 1)
             z = tl.Complex(p / self.n - tl.vec(1, 0.5)) @ 2
             iterations = 0
@@ -26,4 +26,6 @@ class MyAnimation(tl.Animation):
             self.img[p] = 1 - iterations * 0.01
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

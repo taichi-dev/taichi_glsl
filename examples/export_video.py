@@ -18,4 +18,6 @@ class MyAnimation(ts.Animation):
                                  ts.vec(0, 2, 4)) * 0.5 + 0.5
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

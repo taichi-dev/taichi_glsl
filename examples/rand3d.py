@@ -1,23 +1,25 @@
-from taichi_glsl import *
+import taichi as ti
 
-res = 512
-
-img = vec_array(3, float, res, res)
+from taichi_glsl import ts
 
 
-@ti.kernel
-def render():
-    for i, j in img:
-        img[i, j] *= 0.94
-    for i in range(200):
-        p = 0.5 + 0.3 * randUnit3D()
-        img[int(shuffle(p, 0, 1) * res + 0.5)][0] = 1
-        img[int(shuffle(p, 1, 2) * res + 0.5)][1] = 1
-        img[int(shuffle(p, 2, 0) * res + 0.5)][2] = 1
+class MyAnimation(ts.Animation):
+    def on_init(self):
+        self._resolution = 512
+        self.img = ts.vec_array(3, float, self.iResolution, self.iResolution)
+
+    @ti.kernel
+    def on_render(self):
+        for i, j in self.img:
+            self.img[i, j] *= 0.94
+
+        for i in range(200):
+            p = 0.5 + 0.3 * ts.randUnit3D()
+            self.img[int(ts.shuffle(p, 0, 1) * self.iResolution + 0.5)][0] = 1
+            self.img[int(ts.shuffle(p, 1, 2) * self.iResolution + 0.5)][1] = 1
+            self.img[int(ts.shuffle(p, 2, 0) * self.iResolution + 0.5)][2] = 1
 
 
-gui = ti.GUI('Random')
-while not gui.get_event(ti.GUI.ESCAPE):
-    render()
-    gui.set_image(img)
-    gui.show()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()
