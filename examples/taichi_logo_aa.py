@@ -1,4 +1,5 @@
 import taichi as ti
+
 import taichi_glsl as ts
 
 ti.init()
@@ -20,4 +21,6 @@ class MyAnimation(ts.Animation):
             self.img[i, j] = ts.superSample2x2(self.fetch, uv, 0.5 / 512)
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

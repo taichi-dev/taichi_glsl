@@ -1,6 +1,7 @@
 import taichi as ti
+
 import taichi_glsl as ts
-import warnings
+
 ti.init()
 
 
@@ -29,4 +30,6 @@ class MyAnimation(ts.Animation):
         self.color.update()
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

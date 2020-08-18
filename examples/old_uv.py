@@ -10,5 +10,6 @@ def paint():
         image[i, j] = vec(coor.xy, 0.0)
 
 
-paint()
-ti.imshow(image)
+if __name__ == '__main__':
+    paint()
+    ti.imshow(image)
