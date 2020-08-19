@@ -1,6 +1,5 @@
 from taichi_glsl import *
 ti.init(ti.opengl)
-ti.core.toggle_advanced_optimization(False)
 
 fov = math.tan(math.radians(26))
 img = vec_array(3, float, 512, 512)
