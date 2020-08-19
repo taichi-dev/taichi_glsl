@@ -23,4 +23,6 @@ class MyAnimation(tl.Animation):
             self.img[p] = tl.blueorange(1 - iterations * 0.02)
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()

@@ -15,4 +15,6 @@ class MyAnimation(Animation):
             self.img[i, j] = vec(uv.xy, 0.0)
 
 
-MyAnimation().start()
+if __name__ == '__main__':
+    animation = MyAnimation()
+    animation.start()
