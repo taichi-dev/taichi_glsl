@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         taichi:
-          - 0.6.29
+          - 0.6.28
         python:
           - 3.6
           - 3.7
