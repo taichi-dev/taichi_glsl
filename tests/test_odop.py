@@ -4,7 +4,7 @@ import taichi_glsl as tl
 
 @ti.host_arch_only
 def test_subscript_0d():
-    c = tl.Complex.var(ti.f32, ())
+    c = tl.Complex.field(ti.f32, ())
 
     @ti.kernel
     def func() -> ti.f32:
@@ -18,7 +18,7 @@ def test_subscript_0d():
 
 @ti.host_arch_only
 def test_subscript_1d():
-    c = tl.Complex.var(ti.f32, 4)
+    c = tl.Complex.field(ti.f32, 4)
 
     @ti.kernel
     def func(i: ti.i32) -> ti.f32:
@@ -32,8 +32,8 @@ def test_subscript_1d():
 
 @ti.host_arch_only
 def test_loop_range_1d():
-    c = tl.Complex.var(ti.f32, 4)
-    count = ti.var(ti.i32, ())
+    c = tl.Complex.field(ti.f32, 4)
+    count = ti.field(ti.i32, ())
 
     @ti.kernel
     def func() -> ti.f32:
@@ -53,8 +53,8 @@ def test_loop_range_1d():
 
 @ti.host_arch_only
 def test_loop_range_2d():
-    c = tl.Complex.var(ti.f32, (2, 4))
-    count = ti.var(ti.i32, ())
+    c = tl.Complex.field(ti.f32, (2, 4))
+    count = ti.field(ti.i32, ())
 
     @ti.kernel
     def func() -> ti.f32:
@@ -75,8 +75,8 @@ def test_loop_range_2d():
 
 @ti.host_arch_only
 def test_loop_atomic_add():
-    c = tl.Complex.var(ti.f32, 4)
-    r = tl.Complex.var(ti.f32, ())
+    c = tl.Complex.field(ti.f32, 4)
+    r = tl.Complex.field(ti.f32, ())
 
     @ti.kernel
     def func():
@@ -95,8 +95,8 @@ def test_loop_atomic_add():
 
 @ti.host_arch_only
 def test_loop_matmul():
-    c = tl.Complex.var(ti.f32, 2)
-    r = tl.Complex.var(ti.f32, ())
+    c = tl.Complex.field(ti.f32, 2)
+    r = tl.Complex.field(ti.f32, ())
 
     @ti.kernel
     def func():

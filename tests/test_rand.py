@@ -105,3 +105,6 @@ def test_rand_unit_2d():
     ang = np.arctan2(x[:, 1], x[:, 0])
     assert len == approx(np.ones(n))
     mean_approx_test(ang, -math.pi, math.pi, rel=4e-1)
+
+
+test_rand_int()

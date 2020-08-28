@@ -41,7 +41,7 @@ def randInt(a, b):
         evenly" when (b - a) is large (at the scalr of INT_MAX).
     '''
 
-    return ti.random(ti.i32) % (b - a) + a
+    return abs(ti.random(ti.i32)) % (b - a) + a
 
 
 def randND(n):
