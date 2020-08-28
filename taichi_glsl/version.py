@@ -1,5 +1,5 @@
 version = (0, 0, 8)
-taichi_version = (0, 6, 17)
+taichi_version = (0, 6, 29)
 
 print(f'[TaiGLSL] version {".".join(map(str, version))}')
 print(

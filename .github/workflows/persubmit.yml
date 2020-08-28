@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         taichi:
-          - 0.6.17
+          - 0.6.29
         python:
           - 3.6
           - 3.7
@@ -35,7 +35,7 @@ jobs:
           coverage run -m pytest tests
 
       - name: Upload to Codecov
-        if: ${{ matrix.python == '3.8' && matrix.taichi == '0.6.11' }}
+        if: ${{ matrix.python == '3.8' }}
         run: |
           coverage report
           bash <(curl -s https://codecov.io/bash)
