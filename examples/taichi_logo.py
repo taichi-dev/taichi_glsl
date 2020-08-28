@@ -15,6 +15,7 @@ class TaichiLogo(ts.Animation):
             uv = ts.view(self.img, i, j)
             self.img[i, j] = ts.imageTaichi(uv)
 
+
 if __name__ == '__main__':
     animation = TaichiLogo()
     animation.start()

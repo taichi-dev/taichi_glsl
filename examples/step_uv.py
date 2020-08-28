@@ -18,6 +18,7 @@ class MyAnimation(Animation):
             self.img[i, j] = smoothstep(distance(uv, vec(0.5, 0.5)), t,
                                         t - 0.06) * vec(uv.xy, 0.0)
 
+
 if __name__ == '__main__':
     animation = MyAnimation()
     animation.start()

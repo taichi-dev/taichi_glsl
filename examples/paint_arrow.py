@@ -16,6 +16,7 @@ class MyAnimation(ts.Animation):
     def on_render(self):
         ts.paintArrow(self.img, ts.vec2(0.0), self.iMouse)
 
+
 if __name__ == '__main__':
     animation = MyAnimation()
     animation.start()

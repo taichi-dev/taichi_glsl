@@ -75,7 +75,7 @@ def jacobi(pn: ti.template(), p: ti.template()):
         b = ts.sample(p, I + ts.D.yz)
         t = ts.sample(p, I + ts.D.yx)
         sa = r + l + t + b
-        pn[I] = (sa - dx ** 2 * div[I]) * 0.25
+        pn[I] = (sa - dx**2 * div[I]) * 0.25
 
 
 @ti.kernel
@@ -87,7 +87,7 @@ def gauss_seidel(pn: ti.template(), p: ti.template()):
             b = ts.sample(p, I + ts.D.yz)
             t = ts.sample(p, I + ts.D.yx)
             sa = r + l + t + b
-            pn[I] = (sa - dx ** 2 * div[I]) * 0.25
+            pn[I] = (sa - dx**2 * div[I]) * 0.25
     for I in ti.grouped(p):
         if I.sum() % 2 == 1:
             l = ts.sample(pn, I + ts.D.zy)
@@ -95,7 +95,7 @@ def gauss_seidel(pn: ti.template(), p: ti.template()):
             b = ts.sample(pn, I + ts.D.yz)
             t = ts.sample(pn, I + ts.D.yx)
             sa = r + l + t + b
-            pn[I] = (sa - dx ** 2 * div[I]) * 0.25
+            pn[I] = (sa - dx**2 * div[I]) * 0.25
 
 
 @ti.kernel
@@ -115,7 +115,7 @@ def pump(v: ti.template(), d: ti.template(), a: ti.f32):
     X, Y = ti.static(15, 15)
     for x, y in ti.ndrange((-X, X + 1), (-Y + 1, Y)):
         I = ts.vec(N // 2 + x, Y + y)
-        s = ((Y - abs(y)) / Y * (X - abs(x)) / X) ** 2
+        s = ((Y - abs(y)) / Y * (X - abs(x)) / X)**2
         v[I] += ts.vecAngle(a + ts.pi / 2) * s * (pump_strength / dt) * 7.8
         d[I] += s * (dt / pump_strength) * 21.3
 

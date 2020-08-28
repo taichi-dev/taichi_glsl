@@ -22,7 +22,6 @@ gravity = 0.4
 stiff = 20
 damp = 2.6
 
-
 ### Generic helpers
 
 x = ti.Vector(3, ti.f32, NN)
@@ -73,6 +72,7 @@ def ballBoundReflect(pos, vel, center, radius):
 
 
 ### Explicit method
+
 
 @ti.kernel
 def explicit_accel():
@@ -142,7 +142,6 @@ def implicit():
 
 
 ### Rendering GUI
-
 
 scene = t3.Scene()
 model = t3.Model()

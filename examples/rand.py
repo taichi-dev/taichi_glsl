@@ -16,6 +16,7 @@ def render():
         p = 0.5 + 0.3 * randSolid2D()
         img[int(p * res + 0.5)] = 1
 
+
 gui = ti.GUI('Random')
 if __name__ == '__main__':
     while not gui.get_event(ti.GUI.ESCAPE):
