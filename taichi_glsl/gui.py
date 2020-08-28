@@ -34,7 +34,7 @@ class Animation(ts.DataOriented):
 
         class MyAnimation(ts.Animation):
             def on_init(self):
-                self.img = ti.Vector(3, ti.f32, (512, 512))
+                self.img = ti.Vector.field(3, ti.f32, (512, 512))
                 self.set_output_video('/tmp/video.gif')
                 self.define_input()
 
@@ -62,11 +62,11 @@ class Animation(ts.DataOriented):
             def on_init(self):
                 self.N = 8192
                 self.dt = 0.01
-                self.pos = ti.Vector(2, ti.f32, self.N)
-                self.vel = ti.Vector(2, ti.f32, self.N)
+                self.pos = ti.Vector.field(2, ti.f32, self.N)
+                self.vel = ti.Vector.field(2, ti.f32, self.N)
                 self.circles = self.pos  # alias to make ts.Animation know
-                self.attract_strength = ti.var(ti.f32, ())
-                self.attract_pos = ti.Vector(2, ti.f32, ())
+                self.attract_strength = ti.field(ti.f32, ())
+                self.attract_pos = ti.Vector.field(2, ti.f32, ())
                 self.resolution = (512, 512)
                 self.title = 'Particles'
                 self.define_input()
@@ -296,11 +296,11 @@ class Animation(ts.DataOriented):
 
         If you are familiar with `Shadertoy <https://shadertoy.com>`_, then this is for you :)
         '''
-        self._iTime = ti.var(ti.f32, ())
-        self._iFrame = ti.var(ti.i32, ())
-        self._iMouse = ti.Vector(2, ti.f32, ())
-        self._iMouseButton = ti.Vector(3, ti.i32, ())
-        self._iKeyDirection = ti.Vector(2, ti.f32, ())
+        self._iTime = ti.field(ti.f32, ())
+        self._iFrame = ti.field(ti.i32, ())
+        self._iMouse = ti.Vector.field(2, ti.f32, ())
+        self._iMouseButton = ti.Vector.field(3, ti.i32, ())
+        self._iKeyDirection = ti.Vector.field(2, ti.f32, ())
         self.has_input = True
 
     def on_update_input(self):

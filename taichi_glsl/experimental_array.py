@@ -33,37 +33,37 @@ DataType = NewType('DataType', (str, type))
 
 
 def array(dt: DataType, *shape: List[int]):
-    return ti.var(dt=dtype(dt), shape=shape)
+    return ti.field(dt=dtype(dt), shape=shape)
 
 
 # TODO: use array(Vec[n, dt], *shape) instead:
 def vec_array(n: int, dt, *shape: List[int]):
-    return ti.Vector(n, dt=dtype(dt), shape=shape)
+    return ti.Vector.field(n, dt=dtype(dt), shape=shape)
 
 
 def mat_array(n: int, m: int, dt: DataType, *shape: List[int]):
-    return ti.Matrix(n, m, dt=dtype(dt), shape=shape)
+    return ti.Matrix.field(n, m, dt=dtype(dt), shape=shape)
 
 
 def uniform(dt: DataType):
-    return ti.var(dt=dtype(dt), shape=())
+    return ti.field(dt=dtype(dt), shape=())
 
 
 def vec_uniform(n: int, dt: DataType):
-    return ti.Vector(n, dt=dtype(dt), shape=())
+    return ti.Vector.field(n, dt=dtype(dt), shape=())
 
 
 def mat_uniform(n: int, m: int, dt: DataType):
-    return ti.Matrix(n, m, dt=dtype(dt), shape=())
+    return ti.Matrix.field(n, m, dt=dtype(dt), shape=())
 
 
 def tensor(dt: DataType, shape: (List[int], None) = None):
-    return ti.var(dt=dtype(dt), shape=shape)
+    return ti.field(dt=dtype(dt), shape=shape)
 
 
 def vec_tensor(n: int, dt: DataType, shape: (List[int], None) = None):
-    return ti.Vector(n, dt=dtype(dt), shape=shape)
+    return ti.Vector.field(n, dt=dtype(dt), shape=shape)
 
 
 def mat_tensor(n: int, m: int, dt: DataType, shape: (List[int], None) = None):
-    return ti.Matrix(n, m, dt=dtype(dt), shape=shape)
+    return ti.Matrix.field(n, m, dt=dtype(dt), shape=shape)

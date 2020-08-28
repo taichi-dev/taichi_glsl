@@ -49,9 +49,9 @@ class Complex(tl.TaichiClass, ti.TaichiOperations):
         return ti.atan2(self.y, self.x)
 
     @classmethod
-    def _var(cls, *args, **kwargs):
-        x = ti.var(*args, **kwargs)
-        y = ti.var(*args, **kwargs)
+    def _field(cls, *args, **kwargs):
+        x = ti.field(*args, **kwargs)
+        y = ti.field(*args, **kwargs)
         return x, y
 
     def element_wise_unary(a, foo):

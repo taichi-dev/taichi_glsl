@@ -6,7 +6,7 @@ ti.init()
 
 class MyAnimation(ts.Animation):
     def on_init(self):
-        self.img = ti.Vector(3, ti.f32, (512, 512))
+        self.img = ti.Vector.field(3, ti.f32, (512, 512))
         self.set_output_video('/tmp/video.gif')
         self.define_input()
 

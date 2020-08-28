@@ -18,14 +18,14 @@ class TaichiClass:
 
     @classmethod
     @ti.python_scope
-    def var(cls, *args, **kwargs):
-        var_list = cls._var(*args, **kwargs)
-        if not isinstance(var_list, (list, tuple)):
-            var_list = [var_list]
-        return cls(*var_list)
+    def field(cls, *args, **kwargs):
+        field_list = cls._field(*args, **kwargs)
+        if not isinstance(field_list, (list, tuple)):
+            field_list = [field_list]
+        return cls(*field_list)
 
     @classmethod
-    def _var(cls):
+    def _field(cls):
         raise NotImplementedError
 
     def _subscript(self, *indices):
@@ -39,9 +39,9 @@ class TaichiClass:
     def loop_range(self):
         return self.entries[0].loop_range()
 
-    def get_tensor_members(self):
-        if hasattr(e, 'get_tensor_members'):
-            e = e.get_tensor_members()
+    def get_field_members(self):
+        if hasattr(e, 'get_field_members'):
+            e = e.get_field_members()
         else:
             e = [e]
         ret += e
@@ -50,8 +50,9 @@ class TaichiClass:
     def variable(self):
         return self.__class__(*(ti.expr_init(e) for e in self.entries))
 
+    @property
     def snode(self):
-        return self.loop_range().snode()
+        return self.loop_range().snode
 
     @property
     def shape(self):
