@@ -27,7 +27,7 @@ jobs:
       - name: Install Requirements
         run: |
           pip install taichi==${{ matrix.taichi }}
-          pip install coverage
+          pip install pytest coverage
 
       - name: Functionallity Test
         run: |
