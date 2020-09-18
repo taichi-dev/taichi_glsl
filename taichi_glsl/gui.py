@@ -22,6 +22,8 @@ class Animation(ts.DataOriented):
 
     4. Callback style event processing system incuding ``self.on_click(x, y)``.
 
+    5. Easily port to Jupyter notebook by simply ``self.gui_backend = 'ipython'``.
+
     See `examples/export_video.py <https://github.com/taichi-dev/taichi_glsl/blob/master/examples/export_video.py>`_ for example:
 
     .. code-block:: python

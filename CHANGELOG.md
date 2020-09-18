@@ -1,8 +1,9 @@
-**Hot Fixes**:
+**PyPI packages**:
 
-- Remove unexpected `p` and `s` directory in wheel file.
+- Remove unexpected `p` and `s` directory in wheel file (sorry!)
+- Bump Taichi requirement to v0.6.32.
 
-**GUI**:
+**GUI system**:
 
 - Support choosing `ipython` or `matplotlib` as backend in `ts.Animation`, e.g.:
 ```py
