@@ -17,7 +17,7 @@ def _ts_static(x, *xs):
 
 ti.static = _ts_static
 
-# Get rid of the annoying deprecation warnings:
+## Get rid of the annoying deprecation warnings:
 __import__('warnings').filterwarnings('ignore')
 
 # Get rid of `maybe you want to use a.fill(b)?` limitation.
@@ -45,7 +45,7 @@ def _vector_product(self: ti.template()):
 ti.Matrix.product = _vector_product
 
 
-# Add ti.Matrix.{L,L2,N,T} property:
+# Add ti.Matrix.{L,L2,N,T,det,inv,tr} property:
 def _vector_L(self):
     return self.norm()
 
@@ -87,3 +87,5 @@ import math
 
 pi = math.pi
 tau = math.tau
+ti.pi = pi
+ti.tau = tau

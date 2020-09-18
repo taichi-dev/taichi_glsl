@@ -27,9 +27,33 @@ def sample(field: ti.template(), P):
             P = clamp(P, 0, vec(*field.shape) - 1)
             return field[int(P)]
     '''
-    shape = ti.Vector(field.shape())
+    shape = ti.Vector(field.shape)
     P = ts.clamp(P, 0, shape - 1)
     return field[int(P)]
+
+
+@ti.func
+def dflSample(field: ti.template(), P, dfl):
+    '''
+    Sampling a field, when indices out of the field shape, return the given default value.
+
+    :parameter field: (Tensor)
+        Specify the field to sample.
+
+    :parameter P: (Vector)
+        Specify the index in field.
+
+    :parameter dfl: (with the same type of field)
+        Specify the index in field.
+
+    :return:
+        The return value is calcuated as::
+
+            return field[int(P)] if 0 <= P < vec(*field.shape) else dfl
+    '''
+    shape = ti.Vector(field.shape)
+    inside = 0 <= P < shape
+    return field[int(P)] if inside else dfl
 
 
 @ti.func
