@@ -116,6 +116,7 @@ class Animation(ts.DataOriented):
         self.colormap = None
         self.screenshot_dir = None
         self.output_video = None
+        self.gui_backend = 'native'
         self.start_time = time.time()
         self._resolution = res
         self.on_init(**kwargs)
@@ -168,13 +169,15 @@ class Animation(ts.DataOriented):
         +--------------------+--------------+-----------------+-------------------------------+
         | ``title``          |   string     | ``"Animation"`` | Title of the window.          |
         +--------------------+--------------+-----------------+-------------------------------+
-        | ``screenshot_dir`` |   boolean    | ``None``        | Path to save screenshots.     |
+        | ``screenshot_dir`` |   string     | ``None``        | Path to save screenshots.     |
         +--------------------+--------------+-----------------+-------------------------------+
         | ``resolution``     |   tuple      | ``img.shape``   | The size of window / screen.  |
         +--------------------+--------------+-----------------+-------------------------------+
         | ``auto_clean``     |   boolean    | ``False``       | Zero the image before render. |
         +--------------------+--------------+-----------------+-------------------------------+
         | ``colormap``       |  MPL CMap    | ``None``        | ``matplotlib.cm`` color map.  |
+        +--------------------+--------------+-----------------+-------------------------------+
+        | ``gui_backend``    |   string     | ``native``      | native, matplotlib, or none   |
         +--------------------+--------------+-----------------+-------------------------------+
         '''
         pass
@@ -469,6 +472,22 @@ class Animation(ts.DataOriented):
         '''
         return self.gui.frame
 
+    def _show_mpl_animation(self):
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from matplotlib.animation import FuncAnimation
+        
+        fig = plt.figure(figsize=(4, 4))
+        fim = plt.figimage(np.zeros((*self.resolution, 3), dtype=np.float32) + 0.5)
+        
+        def update(frame):
+            img = self._per_loop(do_get_img=True)[:, :, :3]
+            fim.set_array(img)
+            return fim,
+
+        anim = FuncAnimation(fig, update, frames=50, interval=1)
+        plt.show()
+
     def start(self):
         '''
         Call me when GUI is ready to start shows up.
@@ -478,24 +497,18 @@ class Animation(ts.DataOriented):
         self.on_start()
         with ti.GUI(self.title,
                     self.resolution,
-                    background_color=self.background_color) as self.gui:
-            if not hasattr(self.gui, 'running'):
-                self.gui.running = True
-            if not hasattr(self.gui, 'frame'):
-                self.gui.frame = 0
-            if not hasattr(ti.GUI, 'EXIT'):
-                ti.GUI.EXIT = 'WMClose'
-            if not hasattr(ti.GUI, 'MOVE'):
-                ti.GUI.MOVE = 'Motion'
-            if not hasattr(ti.GUI, 'WHEEL'):
-                ti.GUI.WHEEL = 'Wheel'
-            while self.gui.running:
-                self._per_loop()
+                    background_color=self.background_color,
+                    show_gui=(self.gui_backend == 'native')) as self.gui:
+            if self.gui_backend == 'matplotlib':
+                self._show_mpl_animation()
+            else:
+                while self.gui.running:
+                    self._per_loop()
         self.on_pre_exit()
         self.on_exit()
         self.gui = None
 
-    def _per_loop(self):
+    def _per_loop(self, do_get_img=False):
         self.on_pre_event()
         for e in self.gui.get_events():
             self.on_event(e)
@@ -509,6 +522,13 @@ class Animation(ts.DataOriented):
         if self.circles is not None:
             self.gui.circles(self.circles.to_numpy(), self.circle_color,
                              self.circle_radius)
+        if self.gui_backend == 'ipython':
+            from IPython.display import clear_output
+            clear_output(wait=True)
+            img = self.gui.get_image()[:, :, :3]
+            ti.imdisplay(img)
+        if do_get_img:
+            img = self.gui.get_image()
         self.on_show()
         if self.screenshot_dir is None:
             self.gui.show()
@@ -517,4 +537,7 @@ class Animation(ts.DataOriented):
         if hasattr(self, 'video_manager'):
             self.video_manager.write_frame(self.img.to_numpy())
             ti.debug('Frame {} recorded', self.gui.frame)
-        self.gui.frame += 1
+        if do_get_img:
+            return img
+        else:
+            return None
