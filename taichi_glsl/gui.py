@@ -116,7 +116,7 @@ class Animation(ts.DataOriented):
         self.colormap = None
         self.screenshot_dir = None
         self.output_video = None
-        self.gui_backend = 'native'
+        self.gui_backend = os.environ.get('TI_GUI_BACKEND', 'native')
         self.start_time = time.time()
         self._resolution = res
         self.on_init(**kwargs)
