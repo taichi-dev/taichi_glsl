@@ -61,13 +61,14 @@ def sign(x, edge=0):
 
     :note:
         `sign(x, edge)` is equivalent with `sign(x - edge)`.
+        Currently Taichi use -1 to represent True, so add ti.abs here.
 
     :return:
         The return value is computed as `(x >= edge) - (x <= edge)`,
         with type promoted.
     '''
     ret = x + edge  # type promotion
-    ret = (x >= edge) - (x <= edge)
+    ret = ti.abs(x >= edge) - ti.abs(x <= edge)
     return ret
 
 
