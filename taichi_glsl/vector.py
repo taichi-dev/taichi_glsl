@@ -53,8 +53,7 @@ def vecND(n, *xs):
     Create a n-D vector by scalars or vectors in arguments (GLSL-alike).
 
     The return vector dimension depends on **the specified argument n**.
-    If the dimension mismatch the count of scalars in xs, an error
-    will be raised.
+    If the dimension mismatch, the function would either clamp or pad with zero
     However, if only one scalar is specified, then `vecND(n, x)` is
     equivalent to `vecFill(n, x)`, see :func:`vecFill`.
 
@@ -87,9 +86,13 @@ def vecND(n, *xs):
         else:
             ys.append(x)
 
-    if len(ys) != n:
-        raise ValueError(f'Cannot generate {n}-D vector from '
-                         f'{len(ys)} scalars')
+    if len(ys) > n:
+        ys = ys[:n]
+    else:
+        ys.extend((n - len(ys)) * [0])
+    # if len(ys) != n:
+    #     raise ValueError(f'Cannot generate {n}-D vector from '
+    #                      f'{len(ys)} scalars')
 
     return vecSimple(*ys)
 
