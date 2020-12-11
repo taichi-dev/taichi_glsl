@@ -68,7 +68,7 @@ def sign(x, edge=0):
         with type promoted.
     '''
     ret = x + edge  # type promotion
-    ret = isTrue(x >= edge) - isTrue(x <= edge)
+    ret = Truth(x >= edge) - Truth(x <= edge)
     return ret
 
 
@@ -241,7 +241,7 @@ def isinf(x):
 
 
 @ti.pyfunc
-def isTrue(cond):
+def Truth(cond):
     '''
         return 1 if condition is not false, return 0 vice versa
     :param x:
