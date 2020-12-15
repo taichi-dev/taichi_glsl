@@ -61,14 +61,14 @@ def sign(x, edge=0):
 
     :note:
         `sign(x, edge)` is equivalent with `sign(x - edge)`.
-        Currently Taichi use -1 to represent True. Consequently we add isTrue here.
+        Currently Taichi use -1 to represent True. Consequently we add truth here.
 
     :return:
         The return value is computed as `(x >= edge) - (x <= edge)`,
         with type promoted.
     '''
     ret = x + edge  # type promotion
-    ret = Truth(x >= edge) - Truth(x <= edge)
+    ret = truth(x >= edge) - truth(x <= edge)
     return ret
 
 
@@ -241,15 +241,15 @@ def isinf(x):
 
 
 @ti.pyfunc
-def Truth(cond):
+def truth(cond):
     '''
         return 1 if condition is not false, return 0 vice versa
     :param x:
 
     :return:
-        The return value is computed as `return abs(cond != 0)`
+        The return value is computed as `return ti.select(cond, 1, 0)`
         note: Currently Taichi use -1 to represent True.
         This function serves as a helper function to those who want 1 to represent True
 
     '''
-    return abs(cond != 0)
+    return ti.select(cond, 1, 0)
