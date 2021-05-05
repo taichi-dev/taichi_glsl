@@ -2,7 +2,7 @@ import taichi as ti
 import taichi_glsl as tl
 
 
-class Complex(tl.TaichiClass, ti.TaichiOperations):
+class Complex(tl.TaichiClass, ti.lang.common_ops.TaichiOperations):
     '''
     Complex number support in Taichi GLSL
 
