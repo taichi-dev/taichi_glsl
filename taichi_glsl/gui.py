@@ -478,10 +478,11 @@ class Animation(ts.DataOriented):
         import numpy as np
         import matplotlib.pyplot as plt
         from matplotlib.animation import FuncAnimation
-        
+
         fig = plt.figure(figsize=(4, 4))
-        fim = plt.figimage(np.zeros((*self.resolution, 3), dtype=np.float32) + 0.5)
-        
+        fim = plt.figimage(
+            np.zeros((*self.resolution, 3), dtype=np.float32) + 0.5)
+
         def update(frame):
             img = self._per_loop(do_get_img=True)[:, :, :3]
             fim.set_array(img)

@@ -1,4 +1,5 @@
 from taichi_glsl import *
+
 ti.init(ti.opengl)
 
 fov = math.tan(math.radians(26))
