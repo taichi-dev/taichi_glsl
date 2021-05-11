@@ -87,6 +87,10 @@ def vecND(n, *xs):
         else:
             ys.append(x)
 
+    # if len(ys) > n:
+    #     ys = ys[:n]
+    # else:
+    #     ys.extend((n - len(ys)) * [0])
     if len(ys) != n:
         raise ValueError(f'Cannot generate {n}-D vector from '
                          f'{len(ys)} scalars')
