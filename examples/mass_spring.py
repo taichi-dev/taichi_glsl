@@ -4,6 +4,7 @@ import taichi_three as t3
 
 import numpy as np
 import math
+
 ti.init(ti.gpu)
 
 ### Parameters
