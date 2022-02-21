@@ -17,7 +17,7 @@ class TaichiClass:
         self.entries = entries
 
     @classmethod
-    @ti.python_scope
+    @ti.lang.util.python_scope
     def field(cls, *args, **kwargs):
         field_list = cls._field(*args, **kwargs)
         if not isinstance(field_list, (list, tuple)):
@@ -32,7 +32,7 @@ class TaichiClass:
         args = [ti.subscript(e, *indices) for e in self.entries]
         return self.__class__(*args)
 
-    @ti.taichi_scope
+    @ti.lang.util.taichi_scope
     def subscript(self, *indices):
         return self._subscript(*indices)
 
@@ -46,7 +46,7 @@ class TaichiClass:
             e = [e]
         ret += e
 
-    @ti.taichi_scope
+    @ti.lang.util.taichi_scope
     def variable(self):
         return self.__class__(*(ti.expr_init(e) for e in self.entries))
 
@@ -58,7 +58,7 @@ class TaichiClass:
     def shape(self):
         return self.snode().shape
 
-    @ti.taichi_scope
+    @ti.lang.util.taichi_scope
     def __ti_repr__(self):
         raise NotImplementedError
 
