@@ -2,7 +2,7 @@ import taichi as ti
 import taichi_glsl as ts
 
 
-@ti.pyfunc
+@ti.lang.kernel_impl.pyfunc
 def grayscale(rgb):
     '''
     Convert RGB value (vector) into grayscale (scalar).
@@ -18,7 +18,7 @@ def grayscale(rgb):
     return ret
 
 
-@ti.pyfunc
+@ti.lang.kernel_impl.pyfunc
 def normalmap(n):
     '''
     Convert XYZ normal vector into RGB values.
@@ -32,7 +32,7 @@ def normalmap(n):
     return n * 0.5 + 0.5
 
 
-@ti.pyfunc
+@ti.lang.kernel_impl.pyfunc
 def blueorange(rgb):
     '''
     Convert RGB value (vector) into blue-orange colormap (vector).
