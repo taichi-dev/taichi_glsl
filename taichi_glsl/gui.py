@@ -330,7 +330,7 @@ class Animation(ts.DataOriented):
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
                 'wish to use inputs')
-        if ti.inside_kernel():
+        if ti.lang.impl.inside_kernel():
             return ti.subscript(self._iTime, None)
         else:
             return self._iTime[None]
@@ -344,7 +344,7 @@ class Animation(ts.DataOriented):
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
                 'wish to use inputs')
-        if ti.inside_kernel():
+        if ti.lang.impl.inside_kernel():
             return ti.subscript(self._iFrame, None)
         else:
             return self._iFrame[None]
@@ -358,7 +358,7 @@ class Animation(ts.DataOriented):
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
                 'wish to use inputs')
-        if ti.inside_kernel():
+        if ti.lang.impl.inside_kernel():
             return self._iMouse.subscript(None)
         else:
             return self._iMouse[None]
@@ -377,7 +377,7 @@ class Animation(ts.DataOriented):
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
                 'wish to use inputs')
-        if ti.inside_kernel():
+        if ti.lang.impl.inside_kernel():
             return self._iMouseButton.subscript(None)
         else:
             return self._iMouseButton[None]
@@ -396,7 +396,7 @@ class Animation(ts.DataOriented):
             raise Exception(
                 'Add ``self.define_input()`` to ``on_init`` if you '
                 'wish to use inputs')
-        if ti.inside_kernel():
+        if ti.lang.impl.inside_kernel():
             return self._iKeyDirection.subscript(None)
         else:
             return self._iKeyDirection[None]

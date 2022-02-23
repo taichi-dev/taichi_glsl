@@ -499,7 +499,7 @@ def _vector_getattr(self, key):
 
     else:
         for i, sgn in stk:
-            if ti.inside_kernel():
+            if ti.lang.impl.inside_kernel():
                 t = self.subscript(i) * sgn
                 ret.append(ti.expr_init(t))
             else:
